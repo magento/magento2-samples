@@ -6,6 +6,10 @@ This most basic skeleton module for Magento 2.
 
 This is one of a collection of examples to demonstrate the features of Magento 2.  The intent is to learn by example, following our best practices for developing a modular site using Magento 2.
 
+## Technical feature
+
+This component demonstrates the modularity of Magento 2.  The [module.xml](etc/module.xml) is read by the system and used to manage isolated modules of the system.  By enabling this module by name, you can see how the system becomes aware and would load the features packaged within a module.
+
 ## Installation
 
 This module is intended to be installed using composer.  Using you have including this component and enabled it, you can verify it is installed by going the backend at:
@@ -24,7 +28,7 @@ Magento Core team
 
 ## License
 
-[Open Source License](LICENSE.TXT)
+[Open Source License](LICENSE.txt)
 
 
 
