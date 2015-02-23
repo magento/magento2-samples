@@ -1,5 +1,5 @@
 {
-  "name": "magento/module-sample-minimal",
+  "name": "m2sample/module-minimal",
   "description": "A minimal skeleton magento 2 module",
   "type": "magento2-module",
   "version": "1.0.0",

@@ -1,5 +1,5 @@
 {
-  "name": "magento/m2-samples",
+  "name": "m2sample/bundle-all",
   "description": "A package that pulls in all m2 sample modules",
   "version": "1.0.0",
   "type": "metapackage",
@@ -8,6 +8,6 @@
     "AFL-3.0"
   ],
   "require": {
-    "magento/module-sample-minimal": "~1.0"
+    "m2sample/module-minimal": "~1.0"
   }
 }
