@@ -1,0 +1,13 @@
+{
+  "name": "magento/sample-bundle-all",
+  "description": "A package that pulls in all Magento 2 sample modules",
+  "type": "metapackage",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "magento/sample-module-minimal": "~1.0"
+  }
+}
