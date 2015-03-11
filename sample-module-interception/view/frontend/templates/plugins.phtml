@@ -1,0 +1,64 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Plugin viewer template
+ *
+ * @var $this \M2Demo\PluginDemo\Block\Page
+ */
+?>
+<?php
+$inputString = 'johnny cash';
+$helperBefore = $this->getHelperBefore();
+?>
+
+<ul>
+    <li>This page uses helper methods that CAPITALIZE input.</li>
+    <li>The three identical helper methods are modified by three different plugins.</li>
+    <li>The plugin types are "before", "after", and "around".</li>
+    <li>Each plugin wraps content in a lowercase tag, like (before)content(/before).</li>
+</ul>
+
+<?php
+$pluginType = "\"before\"";
+$output = $helperBefore->baseMethod($inputString);
+?>
+
+<b>Plugin type: </b> <?php echo $pluginType;?><br/>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+<br/><p>The "before" plugin modified the input to the helper, so the tags became capitalized.</p>
+
+<?php
+$pluginType = "\"after\"";
+$helperAfter = $this->getHelperAfter();
+$output = $helperAfter->baseMethod($inputString);
+?>
+
+<b>Plugin type: </b> <?php echo $pluginType;?><br/>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+<br/><p>The "after" plugin modified the output of the helper after it executed, so the tags did not become capitalized.</p>
+
+<?php
+$pluginType = "\"around\"";
+$helperAround = $this->getHelperAround();
+$output = $helperAround->baseMethod($inputString);
+?>
+
+<b>Plugin type: </b> <?php echo $pluginType;?><br/>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+<br/><p>
+    The "around" plugin modifies the input the the helper with one set of tags, then calls the helper, then modifies the output with the second set of tags.
+</p>

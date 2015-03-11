@@ -1,0 +1,23 @@
+{
+  "name": "magento/sample-module-interception",
+  "description": "Demonstrate plugin functionality",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "magento/framework": "0.42.0-beta4",
+    "php": "~5.5.0|~5.6.0",
+    "magento/magento-composer-installer": "*"
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "M2Demo/PluginDemo"
+      ]
+    ]
+  }
+}
