@@ -8,8 +8,8 @@ class PluginAroundTest extends \PHPUnit_Framework_TestCase
 {
     public function testAroundBaseMethod()
     {
-        $model = new \M2Demo\PluginDemo\Plugin\PluginAround();
-        $subjectMock = $this->getMock('M2Demo\PluginDemo\Helper\Intercepted\ChildAround');
+        $model = new \Magento\SampleInterception\Plugin\PluginAround();
+        $subjectMock = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildAround');
         $inStr = 'zosima';
         $outStr =
             "(around: after helper) (around: before helper) $inStr (/around: before helper) (/around: after helper)";

@@ -1,5 +1,5 @@
 <?php
-namespace M2Demo\PluginDemo\Controller\Index;
+namespace Magento\SampleInterception\Controller\Index;
 
 /**
  * Loads the demo page.

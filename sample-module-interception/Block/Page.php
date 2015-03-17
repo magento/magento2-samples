@@ -3,10 +3,10 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace M2Demo\PluginDemo\Block;
+namespace Magento\SampleInterception\Block;
 
-use M2Demo\PluginDemo\Helper\Intercepted;
-use M2Demo\PluginDemo\Block\Context;
+use Magento\SampleInterception\Helper\Intercepted;
+use Magento\SampleInterception\Block\Context;
 
 
 /**
@@ -17,21 +17,21 @@ class Page extends \Magento\Framework\View\Element\Template
     /**
      * Helper method used for generating content for the page. It is intercepted by a 'before' type plugin
      *
-     * @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildBefore
+     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildBefore
      */
     protected $helperBefore;
 
     /**
      * Helper method used for generating content for the page. It is intercepted by an 'after' type plugin
      *
-     * @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildAfter
+     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildAfter
      */
     protected $helperAfter;
 
     /**
      * Helper method used for generating content for the page. It is intercepted by an 'around' type plugin
      *
-     * @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildAround
+     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildAround
      */
     protected $helperAround;
 

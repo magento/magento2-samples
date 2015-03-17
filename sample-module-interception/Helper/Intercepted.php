@@ -1,5 +1,5 @@
 <?php
-namespace M2Demo\PluginDemo\Helper;
+namespace Magento\SampleInterception\Helper;
 
 /**
  * This class has no plugins directly assigned to it. But three classes inherit from it, and they have plugins assigned

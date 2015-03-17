@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace M2Demo\PluginDemo\Test\Unit\Block;
+namespace Magento\SampleInterception\Test\Unit\Block;
 
 use Magento\TestFramework\Bootstrap;
 
@@ -14,11 +14,11 @@ class PageTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\TestFramework\Helper\ObjectManager($this);
 
-        /** @var \M2Demo\PluginDemo\Block\Page $model */
-        $model = $objectManager->getObject('M2Demo\PluginDemo\Block\Page');
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildBefore', $model->getHelperBefore());
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildAfter', $model->getHelperAfter());
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildAround', $model->getHelperAround());
+        /** @var \Magento\SampleInterception\Block\Page $model */
+        $model = $objectManager->getObject('Magento\SampleInterception\Block\Page');
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildBefore', $model->getHelperBefore());
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildAfter', $model->getHelperAfter());
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildAround', $model->getHelperAround());
 
     }
 }

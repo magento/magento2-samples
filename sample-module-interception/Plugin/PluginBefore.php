@@ -1,6 +1,6 @@
 <?php
-namespace M2Demo\PluginDemo\Plugin;
-use M2Demo\PluginDemo\Helper\Intercepted\ChildBefore;
+namespace Magento\SampleInterception\Plugin;
+use Magento\SampleInterception\Helper\Intercepted\ChildBefore;
 
 class PluginBefore
 {

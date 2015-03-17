@@ -4,19 +4,17 @@
  * See COPYING.txt for license details.
  */
 
-// @codingStandardsIgnoreFile
-
 ?>
 <?php
 /**
  * Plugin viewer template
  *
- * @var $this \M2Demo\PluginDemo\Block\Page
+ * @var $block \Magento\SampleInterception\Block\Page
  */
 ?>
 <?php
 $inputString = 'johnny cash';
-$helperBefore = $this->getHelperBefore();
+$helperBefore = $block->getHelperBefore();
 ?>
 
 <ul>
@@ -39,7 +37,7 @@ $output = $helperBefore->baseMethod($inputString);
 
 <?php
 $pluginType = "\"after\"";
-$helperAfter = $this->getHelperAfter();
+$helperAfter = $block->getHelperAfter();
 $output = $helperAfter->baseMethod($inputString);
 ?>
 
@@ -51,7 +49,7 @@ $output = $helperAfter->baseMethod($inputString);
 
 <?php
 $pluginType = "\"around\"";
-$helperAround = $this->getHelperAround();
+$helperAround = $block->getHelperAround();
 $output = $helperAround->baseMethod($inputString);
 ?>
 

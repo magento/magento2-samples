@@ -8,8 +8,8 @@ class PluginBeforeTest extends \PHPUnit_Framework_TestCase
 {
     public function testBeforeBaseMethod()
     {
-        $model = new \M2Demo\PluginDemo\Plugin\PluginBefore();
-        $subjectMock = $this->getMock('M2Demo\PluginDemo\Helper\Intercepted\ChildBefore');
+        $model = new \Magento\SampleInterception\Plugin\PluginBefore();
+        $subjectMock = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildBefore');
         $inStr = 'gruchenka';
         $output = ["(before) $inStr (/before)"];
         $this->assertSame($output, $model->beforeBaseMethod($subjectMock, $inStr));

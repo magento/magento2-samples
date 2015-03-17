@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace M2Demo\PluginDemo\Test\Unit\Block;
+namespace Magento\SampleInterception\Test\Unit\Block;
 
 use Magento\TestFramework\Bootstrap;
 
@@ -14,19 +14,19 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\TestFramework\Helper\ObjectManager($this);
 
-        $before = $this->getMockBuilder('M2Demo\PluginDemo\Helper\Intercepted\ChildBefore')
+        $before = $this->getMockBuilder('Magento\SampleInterception\Helper\Intercepted\ChildBefore')
             ->disableOriginalConstructor()
             ->getMock();
-        $after = $this->getMockBuilder('M2Demo\PluginDemo\Helper\Intercepted\ChildAfter')
+        $after = $this->getMockBuilder('Magento\SampleInterception\Helper\Intercepted\ChildAfter')
             ->disableOriginalConstructor()
             ->getMock();
-        $around = $this->getMockBuilder('M2Demo\PluginDemo\Helper\Intercepted\ChildAround')
+        $around = $this->getMockBuilder('Magento\SampleInterception\Helper\Intercepted\ChildAround')
             ->disableOriginalConstructor()
             ->getMock();
 
-        /** @var \M2Demo\PluginDemo\Block\Page $model */
+        /** @var \Magento\SampleInterception\Block\Page $model */
         $model = $objectManager->getObject(
-            'M2Demo\PluginDemo\Block\Context',
+            'Magento\SampleInterception\Block\Context',
             [
                 'helperBefore' => $before,
                 'helperAfter' => $after,
@@ -34,9 +34,9 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildBefore', $model->getHelperBefore());
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildAfter', $model->getHelperAfter());
-        $this->assertInstanceOf('M2Demo\PluginDemo\Helper\Intercepted\ChildAround', $model->getHelperAround());
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildBefore', $model->getHelperBefore());
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildAfter', $model->getHelperAfter());
+        $this->assertInstanceOf('Magento\SampleInterception\Helper\Intercepted\ChildAround', $model->getHelperAround());
 
     }
 }

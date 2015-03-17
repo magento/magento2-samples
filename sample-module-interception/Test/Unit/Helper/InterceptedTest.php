@@ -8,7 +8,7 @@ class InterceptedTest extends \PHPUnit_Framework_TestCase
 {
     public function testBaseMethod()
     {
-        $model = new \M2Demo\PluginDemo\Helper\Intercepted();
+        $model = new \Magento\SampleInterception\Helper\Intercepted();
         $inStr = 'capitalize me';
         $outStr = 'CAPITALIZE ME';
         $this->assertSame($outStr, $model->baseMethod($inStr));

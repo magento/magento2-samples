@@ -3,7 +3,7 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace M2Demo\PluginDemo\Block;
+namespace Magento\SampleInterception\Block;
 
 /**
  * A container for the Block class's dependencies. This Context adds three new dependencies on top of its parent.
@@ -13,13 +13,13 @@ namespace M2Demo\PluginDemo\Block;
  */
 class Context extends \Magento\Framework\View\Element\Template\Context
 {
-    /** @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildBefore */
+    /** @var  \Magento\SampleInterception\Helper\Intercepted\ChildBefore */
     protected $helperBefore;
 
-    /** @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildAfter */
+    /** @var  \Magento\SampleInterception\Helper\Intercepted\ChildAfter */
     protected $helperAfter;
 
-    /** @var  \M2Demo\PluginDemo\Helper\Intercepted\ChildAround */
+    /** @var  \Magento\SampleInterception\Helper\Intercepted\ChildAround */
     protected $helperAround;
 
     /**
@@ -47,9 +47,9 @@ class Context extends \Magento\Framework\View\Element\Template\Context
      * @param \Magento\Framework\App\State $appState
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\View\Page\Config $pageConfig
-     * @param \M2Demo\PluginDemo\Helper\Intercepted\ChildBefore $helperBefore
-     * @param \M2Demo\PluginDemo\Helper\Intercepted\ChildAfter $helperAfter
-     * @param \M2Demo\PluginDemo\Helper\Intercepted\ChildAround $helperAround
+     * @param \Magento\SampleInterception\Helper\Intercepted\ChildBefore $helperBefore
+     * @param \Magento\SampleInterception\Helper\Intercepted\ChildAfter $helperAfter
+     * @param \Magento\SampleInterception\Helper\Intercepted\ChildAround $helperAround
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -78,9 +78,9 @@ class Context extends \Magento\Framework\View\Element\Template\Context
         \Magento\Framework\App\State $appState,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\View\Page\Config $pageConfig,
-        \M2Demo\PluginDemo\Helper\Intercepted\ChildBefore $helperBefore,
-        \M2Demo\PluginDemo\Helper\Intercepted\ChildAfter $helperAfter,
-        \M2Demo\PluginDemo\Helper\Intercepted\ChildAround $helperAround
+        \Magento\SampleInterception\Helper\Intercepted\ChildBefore $helperBefore,
+        \Magento\SampleInterception\Helper\Intercepted\ChildAfter $helperAfter,
+        \Magento\SampleInterception\Helper\Intercepted\ChildAround $helperAround
     ) {
         parent::__construct(
             $request,
@@ -114,7 +114,7 @@ class Context extends \Magento\Framework\View\Element\Template\Context
     }
 
     /**
-     * @return \M2Demo\PluginDemo\Helper\Intercepted\ChildBefore
+     * @return \Magento\SampleInterception\Helper\Intercepted\ChildBefore
      */
     public function getHelperBefore()
     {
@@ -122,7 +122,7 @@ class Context extends \Magento\Framework\View\Element\Template\Context
     }
 
     /**
-     * @return \M2Demo\PluginDemo\Helper\Intercepted\ChildAfter
+     * @return \Magento\SampleInterception\Helper\Intercepted\ChildAfter
      */
     public function getHelperAfter()
     {
@@ -130,7 +130,7 @@ class Context extends \Magento\Framework\View\Element\Template\Context
     }
 
     /**
-     * @return \M2Demo\PluginDemo\Helper\Intercepted\ChildAround
+     * @return \Magento\SampleInterception\Helper\Intercepted\ChildAround
      */
     public function getHelperAround()
     {

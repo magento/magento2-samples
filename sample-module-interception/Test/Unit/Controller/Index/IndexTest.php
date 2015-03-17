@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace M2Demo\PluginDemo\Test\Unit\Block;
+namespace Magento\SampleInterception\Test\Unit\Block;
 
 class IndexTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,7 @@ class IndexTest extends \PHPUnit_Framework_TestCase
             $this->getMock('Magento\Framework\App\ResponseInterface')
         );
 
-        $model = new \M2Demo\PluginDemo\Controller\Index\Index($context);
+        $model = new \Magento\SampleInterception\Controller\Index\Index($context);
 
         // Expectations of test
         $viewMock->expects($this->once())->method('loadLayout');

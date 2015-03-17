@@ -6,13 +6,13 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
-    <type name="M2Demo\PluginDemo\Helper\Intercepted\ChildBefore">
-            <plugin name="demoPluginBefore" type="M2Demo\PluginDemo\Plugin\PluginBefore" sortOrder="1" />
+    <type name="Magento\SampleInterception\Helper\Intercepted\ChildBefore">
+            <plugin name="demoPluginBefore" type="Magento\SampleInterception\Plugin\PluginBefore" />
     </type>
-    <type name="M2Demo\PluginDemo\Helper\Intercepted\ChildAfter">
-        <plugin name="demoPluginAfter" type="M2Demo\PluginDemo\Plugin\PluginAfter" sortOrder="1" />
+    <type name="Magento\SampleInterception\Helper\Intercepted\ChildAfter">
+        <plugin name="demoPluginAfter" type="Magento\SampleInterception\Plugin\PluginAfter" />
     </type>
-    <type name="M2Demo\PluginDemo\Helper\Intercepted\ChildAround">
-        <plugin name="demoPluginAround" type="M2Demo\PluginDemo\Plugin\PluginAround" sortOrder="1" />
+    <type name="Magento\SampleInterception\Helper\Intercepted\ChildAround">
+        <plugin name="demoPluginAround" type="Magento\SampleInterception\Plugin\PluginAround" />
     </type>
 </config>

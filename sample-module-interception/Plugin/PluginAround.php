@@ -1,6 +1,6 @@
 <?php
-namespace M2Demo\PluginDemo\Plugin;
-use M2Demo\PluginDemo\Helper\Intercepted\ChildAround;
+namespace Magento\SampleInterception\Plugin;
+use Magento\SampleInterception\Helper\Intercepted\ChildAround;
 
 class PluginAround
 {
