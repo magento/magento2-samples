@@ -6,13 +6,11 @@
 
 namespace Magento\SampleInterception\Test\Unit\Block;
 
-use Magento\TestFramework\Bootstrap;
-
 class PageTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetters()
     {
-        $objectManager = new \Magento\TestFramework\Helper\ObjectManager($this);
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
         /** @var \Magento\SampleInterception\Block\Page $model */
         $model = $objectManager->getObject('Magento\SampleInterception\Block\Page');
