@@ -6,7 +6,7 @@
 namespace Magento\SampleInterception\Block;
 
 use Magento\SampleInterception\Helper\Intercepted;
-use Magento\SampleInterception\Block\Context;
+use Magento\Framework\View\Element\Template\Context;
 
 
 /**
@@ -37,13 +37,21 @@ class Page extends \Magento\Framework\View\Element\Template
 
     /**
      * @param Context $context
+     * @param Intercepted\ChildBefore $helperBefore
+     * @param Intercepted\ChildAfter $helperAfter
+     * @param Intercepted\ChildARound $helperAround
      * @param array $data
      */
-    public function __construct(Context $context, array $data = [])
-    {
-        $this->helperBefore = $context->getHelperBefore();
-        $this->helperAfter = $context->getHelperAfter();
-        $this->helperAround = $context->getHelperAround();
+    public function __construct(
+        Context $context,
+        Intercepted\ChildBefore $helperBefore,
+        Intercepted\ChildAfter $helperAfter,
+        Intercepted\ChildARound $helperAround,
+        array $data = []
+    ) {
+        $this->helperBefore = $helperBefore;
+        $this->helperAfter = $helperAfter;
+        $this->helperAround = $helperAround;
 
         parent::__construct($context, $data);
     }

@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SampleInterception\Test\Unit\Block;
+namespace Magento\SampleInterception\Test\Unit\Controller\Index;
 
 class IndexTest extends \PHPUnit_Framework_TestCase
 {
