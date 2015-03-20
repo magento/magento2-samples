@@ -13,7 +13,7 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="Magento\Framework\View\Element\Template" template="M2Demo_WebFlow::secondpage.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" template="Magento_SampleWebFlow::secondpage.phtml"/>
         </referenceContainer>
     </body>
 </page>

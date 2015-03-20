@@ -19,10 +19,10 @@ abstract class AbstractWebflowControllerTest extends \PHPUnit_Framework_TestCase
     /** @var  \Magento\Framework\App\ViewInterface|\PHPUnit_Framework_MockObject_MockObject */
     protected $view;
 
-    /** @var  \Magento\TestFramework\Helper\ObjectManager|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var  \Magento\Framework\TestFramework\Unit\Helper\ObjectManager */
     protected $objectManager;
 
-    /** @var  \Magento\Framework\App\Action\Action|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var  \Magento\Framework\App\Action\Action */
     protected $controller;
 
     /** @var string The name of the specific instance  */
@@ -40,12 +40,12 @@ abstract class AbstractWebflowControllerTest extends \PHPUnit_Framework_TestCase
         $this->request = $this->getMock('Magento\Framework\App\RequestInterface');
         $this->view = $this->getMock('Magento\Framework\App\ViewInterface');
 
-        $this->context->expects($this->any())->method('getRequest')->will($this->returnValue($request));
-        $this->context->expects($this->any())->method('getResponse')->will($this->returnValue($response));
-        $this->context->expects($this->any())->method('getView')->will($this->returnValue($view));
+        $this->context->expects($this->any())->method('getRequest')->will($this->returnValue($this->request));
+        $this->context->expects($this->any())->method('getResponse')->will($this->returnValue($this->response));
+        $this->context->expects($this->any())->method('getView')->will($this->returnValue($this->view));
 
         // Set up SUT
-        $this->objectManager = new \Magento\TestFramework\Helper\ObjectManager($this);
+        $this->objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
         $this->controller = $this->objectManager->getObject(
             $this->className,
             ['context' => $this->context]
