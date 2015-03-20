@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+namespace Magento\SampleInterception\Test\Unit\Plugin;
+
 class PluginAroundTest extends \PHPUnit_Framework_TestCase
 {
     public function testAroundBaseMethod()
