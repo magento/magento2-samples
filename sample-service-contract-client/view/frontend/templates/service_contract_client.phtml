@@ -12,16 +12,16 @@
 <div class="toolbar toolbar-products">
     <form method="get">
         <div class="toolbar-sorter sorter">
-            <label class="sorter-label" for="filter">Type</label>
+            <label class="sorter-label" for="filter"><?php echo __('Type') ?></label>
             <select id="filter" name="type" class="sorter-options">
                 <option value="">All</option>
                 <?php foreach ($productTypes as $id => $type) : ?>
                     <option value="<?php echo $id ?>"
                             <?php if ($type['is_active']) : ?>selected="selected"<?php endif ?>
-                        ><?php echo $type['label'] ?></option>
+                        ><?php echo $block->escapeHtml($type['label']) ?></option>
                 <?php endforeach ?>
             </select>
-            <button type="submit" class="action">Filter</button>
+            <button type="submit" class="action"><?php echo __('Filter') ?></button>
         </div>
     </form>
 </div>
@@ -37,13 +37,13 @@
         <tbody>
         <?php foreach ($products->getItems() as $product) : ?>
             <tr>
-                <td><?php echo $product->getSku() ?></td>
-                <td><?php echo $product->getName() ?></td>
-                <td><?php echo $productTypes[$product->getTypeId()]['label'] ?></td>
+                <td><?php echo $block->escapeHtml($product->getSku()) ?></td>
+                <td><?php echo $block->escapeHtml($product->getName()) ?></td>
+                <td><?php echo $block->escapeHtml($productTypes[$product->getTypeId()]['label']) ?></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
 <?php else: ?>
-    Products not found
+    <?php echo __('Products not found') ?>
 <?php endif ?>
