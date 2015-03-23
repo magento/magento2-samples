@@ -1,14 +1,14 @@
 ## Synopsis
 
-This most basic skeleton module for Magento 2.
+This module contains a page which can be viewed at <m2root>/samplewebapiclient. This page features a demo of REST API being used to query products
 
 ## Motivation
 
-This is one of a collection of examples to demonstrate the features of Magento 2.  The intent is to learn by example, following our best practices for developing a modular site using Magento 2.
+This is one of a collection of examples to demonstrate the features of Magento 2.  The intent of this sample is to demonstrate how to use REST API.
 
 ## Technical feature
 
-This component demonstrates the modularity of Magento 2.  The [module.xml](etc/module.xml) is read by the system and used to manage isolated modules of the system.  By enabling this module, you can see how the system becomes aware of a module and loads the features packaged within a module.
+This component demonstrates usage of Product REST API to get list of products filtered with help of SearchCriteria filters
 
 ## Installation
 
@@ -17,10 +17,6 @@ This module is intended to be installed using composer.  After including this co
 STORES -> Configuration -> ADVANCED/Advanced ->  Disable Modules Output
 
 Once there check that the module name shows up in the list to confirm that it was installed correctly.
-
-## Tests
-
-Any tests would typically be found in the [Test](Test) directory.  Since this module has no code, no tests are provided.
 
 ## Contributors
 
