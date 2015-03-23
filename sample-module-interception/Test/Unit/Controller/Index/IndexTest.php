@@ -16,25 +16,16 @@ class IndexTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $resultFactory = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
             ->disableOriginalConstructor()
-            ->getMock();;
-
-        $context = $this->getMockBuilder('Magento\Framework\App\Action\Context')
-            ->disableOriginalConstructor()
             ->getMock();
-        $context->expects($this->any())->method('getView')->willReturn($resultFactory);
-        $context->expects($this->any())->method('getRequest')->willReturn(
-            $this->getMock('Magento\Framework\App\RequestInterface')
-        );
-        $context->expects($this->any())->method('getResponse')->willReturn(
-            $this->getMock('Magento\Framework\App\ResponseInterface')
-        );
 
         // Set up SUT
-        $model = new \Magento\SampleInterception\Controller\Index\Index($context, $resultFactory);
+        $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
+        $model = $objectManager->getObject('Magento\SampleInterception\Controller\Index\Index',
+            ['resultPageFactory' => $resultFactory]
+        );
 
         // Expectations of test
         $resultFactory->expects($this->once())->method('create')->willReturn($page);
-
         $this->assertSame($page, $model->execute());
     }
 }
