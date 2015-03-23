@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+
+<fieldset class="fieldset" data-role="filter">
+    <div class="field filter required">
+        <label class="label" for="filter_field"><span><?php echo __('Filter field') ?></span></label>
+        <div class="control">
+            <select id="filter_field" data-role="filter-field" class="select"">
+                <option value=""><?php echo __('--Please Select--')?></option>
+                <option value="sku"><?php echo __('SKU')?></option>
+                <option value="name"><?php echo __('Name')?></option>
+                <option value="status"><?php echo __('Status')?></option>
+                <option value="price"><?php echo __('Price')?></option>
+                <option value="weight"><?php echo __('Weight')?></option>
+                <option value="type_id"><?php echo __('Type')?></option>
+            </select>
+        </div>
+    </div>
+    <div class="field condition required">
+        <label class="label" for="condition_type"><span><?php echo __('Condition') ?></span></label>
+        <div class="control">
+            <select id="condition_type" data-role="condition-type" class="select">
+                <option value=""><?php echo __('--Please Select--')?></option>
+                <option value="eq"><?php echo __('=')?></option>
+                <option value="neq"><?php echo __('!=')?></option>
+                <option value="like"><?php echo __('Like')?></option>
+                <option value="gt"><?php echo __('Greater Than')?></option>
+                <option value="lt"><?php echo __('Less Than')?></option>
+            </select>
+        </div>
+    </div>
+    <div class="field value required">
+        <label class="label" for="filter_value"><span><?php echo __('Field value') ?></span></label>
+
+        <div class="control">
+            <input type="text" class="input-text" data-role="filter-value" id="filter_value">
+        </div>
+    </div>
+</fieldset>

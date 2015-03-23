@@ -3,91 +3,18 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-
+/** @var Magento\Framework\View\Element\Template $block */
 ?>
-<div id="container" data-mage-init='{"sampleWebapi":{}}'>
-    <fieldset class="fieldset" id="filter_group">
-        <fieldset class="fieldset" id="filter">
-            <div class="field filter required">
-                <label class="label" for="filter-field"><span><?php echo __('Filter field') ?></span></label>
-
-                <div class="control">
-                    <select name="filter_field" id="filter-field" class="select"">
-                        <option value=""><?php echo __('--Please Select--')?></option>
-                        <option value="<?php echo __('sku')?>"><?php echo __('SKU')?></option>
-                        <option value="<?php echo __('name')?>"><?php echo __('Name')?></option>
-                        <option value="<?php echo __('status')?>"><?php echo __('Status')?></option>
-                        <option value="<?php echo __('price')?>"><?php echo __('Price')?></option>
-                        <option value="<?php echo __('weight')?>"><?php echo __('Weight')?></option>
-                        <option value="<?php echo __('type_id')?>"><?php echo __('Type')?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="field condition required">
-                <label class="label" for="condition-type"><span><?php echo __('Condition') ?></span></label>
-
-                <div class="control">
-                    <select name="condition_type" id="condition-type" class="select">
-                        <option value=""><?php echo __('--Please Select--')?></option>
-                        <option value="<?php echo __('eq')?>"><?php echo __('=')?></option>
-                        <option value="<?php echo __('neq')?>"><?php echo __('!=')?></option>
-                        <option value="<?php echo __('like')?>"><?php echo __('Like')?></option>
-                        <option value="<?php echo __('gt')?>"><?php echo __('Greater Than')?></option>
-                        <option value="<?php echo __('lt')?>"><?php echo __('Less Than')?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="field value required">
-                <label class="label" for="filter-value"><span><?php echo __('Field value') ?></span></label>
-
-                <div class="control">
-                    <input type="text" class="input-text" id="filter-value" name="filter_value">
-                </div>
-            </div>
-        </fieldset>
+<div data-mage-init='{"sampleWebapi":{"url": "<?php echo $block->getUrl('', ['rest' => 'default/V1/products']) ?>"}}'>
+    <fieldset class="fieldset" data-role="filter_group">
+        <?php include($block->getTemplateFile('Magento_SampleWebapiClient::filter.phtml')); ?>
         <p>OR</p>
-        <fieldset class="fieldset" id="filter">
-            <div class="field filter required">
-                <label class="label" for="filter-field"><span><?php echo __('Filter field') ?></span></label>
-
-                <div class="control">
-                    <select name="filter_field" id="filter-field" class="select"">
-                    <option value=""><?php echo __('--Please Select--')?></option>
-                    <option value="<?php echo __('sku')?>"><?php echo __('SKU')?></option>
-                    <option value="<?php echo __('name')?>"><?php echo __('Name')?></option>
-                    <option value="<?php echo __('status')?>"><?php echo __('Status')?></option>
-                    <option value="<?php echo __('price')?>"><?php echo __('Price')?></option>
-                    <option value="<?php echo __('weight')?>"><?php echo __('Weight')?></option>
-                    <option value="<?php echo __('type_id')?>"><?php echo __('Type')?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="field condition required">
-                <label class="label" for="condition-type"><span><?php echo __('Condition') ?></span></label>
-
-                <div class="control">
-                    <select name="condition_type" id="condition-type" class="select">
-                        <option value=""><?php echo __('--Please Select--')?></option>
-                        <option value="<?php echo __('eq')?>"><?php echo __('=')?></option>
-                        <option value="<?php echo __('neq')?>"><?php echo __('!=')?></option>
-                        <option value="<?php echo __('like')?>"><?php echo __('Like')?></option>
-                        <option value="<?php echo __('gt')?>"><?php echo __('Greater Than')?></option>
-                        <option value="<?php echo __('lt')?>"><?php echo __('Less Than')?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="field value required">
-                <label class="label" for="filter-value"><span><?php echo __('Field value') ?></span></label>
-
-                <div class="control">
-                    <input type="text" class="input-text" id="filter-value" name="filter_value">
-                </div>
-            </div>
-        </fieldset>
+        <?php include($block->getTemplateFile('Magento_SampleWebapiClient::filter.phtml')); ?>
     </fieldset>
+
     <div class="actions-toolbar">
         <div class="primary">
-            <button id="search_products" type="submit" title="<?php echo __('Search') ?>" class="action submit primary">
+            <button data-role="search_products" type="submit" title="<?php echo __('Search') ?>" class="action submit primary">
                 <span><?php echo __('Search') ?></span>
             </button>
         </div>

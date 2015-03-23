@@ -5,20 +5,24 @@
 /*jshint browser:true jquery:true*/
 define([
     'jquery',
-    'jquery/ui',
     'mage/template',
-    'text!./templates/result.html'
-], function($, ui, mageTemplate, resultTmpl){
+    'text!./templates/result.html',
+    'jquery/ui'
+], function ($, mageTemplate, resultTmpl){
     "use strict";
 
     $.widget('mage.sampleWebapi', {
         options: {
-            filterGroup: "#filter_group",
-            filter: "#filter",
-            filterField: "#filter-field",
-            filterValue: "#filter-value",
-            filterCondition: "#condition-type",
+            filterGroup: "[data-role='filter_group']",
+            filter: "[data-role='filter']",
+            filterField: "[data-role='filter-field']",
+            filterValue: "[data-role='filter-value']",
+            filterCondition: "[data-role='condition-type']",
             resultContainer: "[data-role='result']",
+            messagesSelector: '[data-placeholder="messages"]',
+            url: '',
+            pageSize: 10,
+            currentPage: 1,
             template: resultTmpl
         },
 
@@ -26,7 +30,7 @@ define([
          * Bind handlers to events
          */
         _create: function () {
-            this._on({'click #search_products': $.proxy(this._search, this)});
+            this._on({'click [data-role="search_products"]': $.proxy(this._search, this)});
         },
 
         /**
@@ -36,14 +40,13 @@ define([
         _search: function () {
             var self = this;
 
-            $("div[class='message notice']").remove();
+            $('body').find(self.options.messagesSelector).empty();
             this.element.find(this.options.resultContainer).empty();
-            var url = this._prepareUrl();
             var params = {
                 "searchCriteria": {
                     "filter_groups": [],
-                    "current_page": 1,
-                    "page_size": 2
+                    "current_page": self.options.currentPage,
+                    "page_size": self.options.pageSize
                 }
             };
             $(self.options.filterGroup).each(function () {
@@ -58,26 +61,17 @@ define([
                 params.searchCriteria.filter_groups.push({"filters": filters});
             });
             $.ajax({
-                url: url,
+                url: self.options.url,
                 dataType: 'json',
-                data: params
+                data: params,
+                context: $('body'),
+                showLoader: true
             }).done(function (data) {
-                console.dir(data);
                 self._drawResultTable(data);
             }).fail(function (response) {
-                self.element.prepend('<div class="message notice">' + response.responseJSON.message + "</div>");
+                var msg = $("<div/>").addClass("message notice").text(response.responseJSON.message);
+                this.find(self.options.messagesSelector).prepend(msg);
             });
-        },
-
-        /**
-         * Build API url
-         * @returns {string}
-         * @private
-         */
-        _prepareUrl: function () {
-            var path = $(location).attr("pathname").split('/');
-            path.pop();
-            return path.join('/') + '/index.php/rest/default/V1/products';
         },
 
         /**
