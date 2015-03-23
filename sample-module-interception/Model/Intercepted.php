@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SampleInterception\Helper;
+namespace Magento\SampleInterception\Model;
 
 /**
  * This class has no plugins directly assigned to it. But three classes inherit from it, and they have plugins assigned

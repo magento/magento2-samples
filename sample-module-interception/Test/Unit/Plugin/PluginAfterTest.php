@@ -11,7 +11,7 @@ class PluginAfterTest extends \PHPUnit_Framework_TestCase
     public function testAfterBaseMethod()
     {
         $model = new \Magento\SampleInterception\Plugin\PluginAfter();
-        $subjectMock = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildAfter');
+        $subjectMock = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildAfter');
         $inStr = 'raskolnikov';
         $outStr = "(after) $inStr (/after)";
         $this->assertSame($outStr, $model->afterBaseMethod($subjectMock, $inStr));

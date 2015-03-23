@@ -6,7 +6,7 @@
 
 namespace Magento\SampleInterception\Plugin;
 
-use Magento\SampleInterception\Helper\Intercepted\ChildAfter;
+use Magento\SampleInterception\Model\Intercepted\ChildAfter;
 
 class PluginAfter
 {

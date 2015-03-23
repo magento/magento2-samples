@@ -10,13 +10,18 @@ class IndexTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
-        $viewMock = $this->getMock('Magento\Framework\App\ViewInterface');
+        // Create dependency mocks
+        $page = $this->getMockBuilder('Magento\Framework\View\Result\Page')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $resultFactory = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
+            ->disableOriginalConstructor()
+            ->getMock();;
 
         $context = $this->getMockBuilder('Magento\Framework\App\Action\Context')
             ->disableOriginalConstructor()
             ->getMock();
-        
-        $context->expects($this->any())->method('getView')->willReturn($viewMock);
+        $context->expects($this->any())->method('getView')->willReturn($resultFactory);
         $context->expects($this->any())->method('getRequest')->willReturn(
             $this->getMock('Magento\Framework\App\RequestInterface')
         );
@@ -24,13 +29,12 @@ class IndexTest extends \PHPUnit_Framework_TestCase
             $this->getMock('Magento\Framework\App\ResponseInterface')
         );
 
-        $model = new \Magento\SampleInterception\Controller\Index\Index($context);
+        // Set up SUT
+        $model = new \Magento\SampleInterception\Controller\Index\Index($context, $resultFactory);
 
         // Expectations of test
-        $viewMock->expects($this->once())->method('loadLayout');
-        $viewMock->expects($this->once())->method('renderLayout');
+        $resultFactory->expects($this->once())->method('create')->willReturn($page);
 
-        $model->execute();
-
+        $this->assertSame($page, $model->execute());
     }
 }

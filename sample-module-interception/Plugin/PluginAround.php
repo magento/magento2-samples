@@ -6,13 +6,13 @@
 
 namespace Magento\SampleInterception\Plugin;
 
-use Magento\SampleInterception\Helper\Intercepted\ChildAround;
+use Magento\SampleInterception\Model\Intercepted\ChildAround;
 
 class PluginAround
 {
     /**
-     * 1) Wraps the input to the base method in (around: before helper)(/around: before helper) tags
-     * 2) Wraps the output of the base method in (around: after helper)(/around: after helper) tags
+     * 1) Wraps the input to the base method in (around: before base method)(/around: before base method) tags
+     * 2) Wraps the output of the base method in (around: after base method)(/around: after base method) tags
      *
      * The base method capitalizes strings, so the "before base" tags will be affected, and the "after base"
      * tags will not.
@@ -29,8 +29,8 @@ class PluginAround
      */
     public function aroundBaseMethod(ChildAround $subject, \Closure $proceed, $interceptedInput)
     {
-        $argument = "(around: before helper) $interceptedInput (/around: before helper)";
+        $argument = "(around: before base method) $interceptedInput (/around: before base method)";
         $result = $proceed($argument);
-        return "(around: after helper) $result (/around: after helper)";
+        return "(around: after base method) $result (/around: after base method)";
     }
 }

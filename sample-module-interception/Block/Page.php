@@ -5,7 +5,7 @@
  */
 namespace Magento\SampleInterception\Block;
 
-use Magento\SampleInterception\Helper\Intercepted;
+use Magento\SampleInterception\Model\Intercepted;
 use Magento\Framework\View\Element\Template\Context;
 
 
@@ -15,43 +15,43 @@ use Magento\Framework\View\Element\Template\Context;
 class Page extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Helper method used for generating content for the page. It is intercepted by a 'before' type plugin
+     * Contains method used for generating content for the page. It is intercepted by a 'before' type plugin
      *
-     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildBefore
+     * @var  \Magento\SampleInterception\Model\Intercepted\ChildBefore
      */
-    protected $helperBefore;
+    protected $beforeModel;
 
     /**
-     * Helper method used for generating content for the page. It is intercepted by an 'after' type plugin
+     * Contains method used for generating content for the page. It is intercepted by an 'after' type plugin
      *
-     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildAfter
+     * @var  \Magento\SampleInterception\Model\Intercepted\ChildAfter
      */
-    protected $helperAfter;
+    protected $afterModel;
 
     /**
-     * Helper method used for generating content for the page. It is intercepted by an 'around' type plugin
+     * Contains method used for generating content for the page. It is intercepted by an 'around' type plugin
      *
-     * @var  \Magento\SampleInterception\Helper\Intercepted\ChildAround
+     * @var  \Magento\SampleInterception\Model\Intercepted\ChildAround
      */
-    protected $helperAround;
+    protected $aroundModel;
 
     /**
      * @param Context $context
-     * @param Intercepted\ChildBefore $helperBefore
-     * @param Intercepted\ChildAfter $helperAfter
-     * @param Intercepted\ChildARound $helperAround
+     * @param Intercepted\ChildBefore $beforeModel
+     * @param Intercepted\ChildAfter $afterModel
+     * @param Intercepted\ChildARound $aroundModel
      * @param array $data
      */
     public function __construct(
         Context $context,
-        Intercepted\ChildBefore $helperBefore,
-        Intercepted\ChildAfter $helperAfter,
-        Intercepted\ChildARound $helperAround,
+        Intercepted\ChildBefore $beforeModel,
+        Intercepted\ChildAfter $afterModel,
+        Intercepted\ChildARound $aroundModel,
         array $data = []
     ) {
-        $this->helperBefore = $helperBefore;
-        $this->helperAfter = $helperAfter;
-        $this->helperAround = $helperAround;
+        $this->beforeModel = $beforeModel;
+        $this->afterModel = $afterModel;
+        $this->aroundModel = $aroundModel;
 
         parent::__construct($context, $data);
     }
@@ -59,24 +59,24 @@ class Page extends \Magento\Framework\View\Element\Template
     /**
      * @return Intercepted\ChildBefore
      */
-    public function getHelperBefore()
+    public function getModelBefore()
     {
-        return $this->helperBefore;
+        return $this->beforeModel;
     }
 
     /**
      * @return Intercepted\ChildAfter
      */
-    public function getHelperAfter()
+    public function getModelAfter()
     {
-        return $this->helperAfter;
+        return $this->afterModel;
     }
 
     /**
      * @return Intercepted\ChildAround
      */
-    public function getHelperAround()
+    public function getModelAround()
     {
-        return $this->helperAround;
+        return $this->aroundModel;
     }
 }

@@ -12,23 +12,23 @@ class PageTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
 
-        $helperBefore = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildBefore');
-        $helperAfter = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildAfter');
-        $helperAround = $this->getMock('Magento\SampleInterception\Helper\Intercepted\ChildAround');
+        $before = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildBefore');
+        $after = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildAfter');
+        $around = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildAround');
 
 
         /** @var \Magento\SampleInterception\Block\Page $model */
         $model = $objectManager->getObject(
             'Magento\SampleInterception\Block\Page',
             [
-                'helperBefore' => $helperBefore,
-                'helperAfter' => $helperAfter,
-                'helperAround' => $helperAround
+                'beforeModel' => $before,
+                'afterModel' => $after,
+                'aroundModel' => $around
             ]
         );
-        $this->assertSame($helperBefore, $model->getHelperBefore());
-        $this->assertSame($helperAfter, $model->getHelperAfter());
-        $this->assertSame($helperAround, $model->getHelperAround());
+        $this->assertSame($before, $model->getModelBefore());
+        $this->assertSame($after, $model->getModelAfter());
+        $this->assertSame($around, $model->getModelAround());
 
     }
 }

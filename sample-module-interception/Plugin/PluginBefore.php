@@ -6,7 +6,7 @@
 
 namespace Magento\SampleInterception\Plugin;
 
-use Magento\SampleInterception\Helper\Intercepted\ChildBefore;
+use Magento\SampleInterception\Model\Intercepted\ChildBefore;
 
 class PluginBefore
 {

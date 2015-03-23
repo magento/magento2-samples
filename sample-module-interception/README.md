@@ -14,7 +14,7 @@ The intent of this sample is to demonstrate the following:
 
 ### Plugin Subject
 
-The code being modified by the plugins is a simple capitalization method, located in \Magento\SampleInterception\Helper\Intercepted.
+The code being modified by the plugins is a simple capitalization method, located in \Magento\SampleInterception\Model\Intercepted.
 Three empty classes extend this. In order to clearly demonstrate each plugin acting in isolation from other plugins, each 
 plugin is only assigned to one of the classes, and will modify the method's behavior when called through that class.
 
@@ -25,22 +25,22 @@ to the content it modifies.
 
 #### Before Plugin
 
-\Magento\SampleInterception\Plugin\PluginBefore::beforeBaseMethod modifies \Magento\SampleInterception\Helper\Intercepted\ChildBefore::baseMethod
+\Magento\SampleInterception\Plugin\PluginBefore::beforeBaseMethod modifies \Magento\SampleInterception\Model\Intercepted\ChildBefore::baseMethod
 
 Wraps (before)(/before) tags around the base method's input.
 
 #### After Plugin
 
-\Magento\SampleInterception\Plugin\PluginAfter::afterBaseMethod modifies \Magento\SampleInterception\Helper\Intercepted\ChildAfter::baseMethod
+\Magento\SampleInterception\Plugin\PluginAfter::afterBaseMethod modifies \Magento\SampleInterception\Model\Intercepted\ChildAfter::baseMethod
 
 Wraps (after)(/after) tags around the base method's output.
 
 #### Around Plugin
 
-\Magento\SampleInterception\Plugin\PluginAround::aroundBaseMethod modifies \Magento\SampleInterception\Helper\Intercepted\ChildAround::baseMethod
+\Magento\SampleInterception\Plugin\PluginAround::aroundBaseMethod modifies \Magento\SampleInterception\Model\Intercepted\ChildAround::baseMethod
 
-Wraps the input to the base method in (around: before helper)(/around: before helper) tags
-Wraps the output of the base method in (around: after helper)(/around: after helper) tags
+Wraps the input to the base method in (around: before base method)(/around: before base method) tags
+Wraps the output of the base method in (around: after base method)(/around: after base method) tags
 
 ### Registering the Plugin
 

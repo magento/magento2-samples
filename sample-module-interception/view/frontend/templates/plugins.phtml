@@ -14,43 +14,43 @@
 ?>
 <?php
 $inputString = 'johnny cash';
-$helperBefore = $block->getHelperBefore();
+$beforeModel = $block->getModelBefore();
 ?>
 
 <ul>
-    <li>This page uses helper methods that CAPITALIZE input.</li>
-    <li>The three identical helper methods are modified by three different plugins.</li>
+    <li>This page uses methods that CAPITALIZE input.</li>
+    <li>The three identical methods are modified by three different plugins.</li>
     <li>The plugin types are "before", "after", and "around".</li>
     <li>Each plugin wraps content in a lowercase tag, like (before)content(/before).</li>
 </ul>
 
 <?php
 $pluginType = "\"before\"";
-$output = $helperBefore->baseMethod($inputString);
+$output = $beforeModel->baseMethod($inputString);
 ?>
 
 <b>Plugin type: </b> <?php echo $pluginType;?><br/>
 <b>Input: </b> <?php echo $inputString;?><br/>
 <b>Output: </b> <?php echo $output;?><br/>
 
-<br/><p>The "before" plugin modified the input to the helper, so the tags became capitalized.</p>
+<br/><p>The "before" plugin modified the input, so the tags became capitalized.</p>
 
 <?php
 $pluginType = "\"after\"";
-$helperAfter = $block->getHelperAfter();
-$output = $helperAfter->baseMethod($inputString);
+$afterModel = $block->getModelAfter();
+$output = $afterModel->baseMethod($inputString);
 ?>
 
 <b>Plugin type: </b> <?php echo $pluginType;?><br/>
 <b>Input: </b> <?php echo $inputString;?><br/>
 <b>Output: </b> <?php echo $output;?><br/>
 
-<br/><p>The "after" plugin modified the output of the helper after it executed, so the tags did not become capitalized.</p>
+<br/><p>The "after" plugin modified the output after it executed, so the tags did not become capitalized.</p>
 
 <?php
 $pluginType = "\"around\"";
-$helperAround = $block->getHelperAround();
-$output = $helperAround->baseMethod($inputString);
+$aroundModel = $block->getModelAround();
+$output = $aroundModel->baseMethod($inputString);
 ?>
 
 <b>Plugin type: </b> <?php echo $pluginType;?><br/>
@@ -58,5 +58,5 @@ $output = $helperAround->baseMethod($inputString);
 <b>Output: </b> <?php echo $output;?><br/>
 
 <br/><p>
-    The "around" plugin modifies the input the the helper with one set of tags, then calls the helper, then modifies the output with the second set of tags.
+    The "around" plugin modifies the input with one set of tags, then calls the method, then modifies the output with the second set of tags.
 </p>

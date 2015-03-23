@@ -4,11 +4,11 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\SampleInterception\Helper\Intercepted;
+namespace Magento\SampleInterception\Model\Intercepted;
 
 /**
  * A 'before' type plugin is assigned to this class, for "baseMethod". The method is implemented in the parent.
  */
-class ChildBefore extends \Magento\SampleInterception\Helper\Intercepted
+class ChildBefore extends \Magento\SampleInterception\Model\Intercepted
 {
 }
