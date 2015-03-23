@@ -14,6 +14,6 @@ class FirstPage extends \Magento\Framework\View\Element\Template
      */
     public function getNextPageUrl()
     {
-        return $this->getUrl($this->getData('url'));
+        return $this->getData('url');
     }
 }

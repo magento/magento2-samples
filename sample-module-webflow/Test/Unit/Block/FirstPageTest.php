@@ -9,12 +9,11 @@ class FirstPageTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetNextPageUrl()
     {
-        $nextUrl = 'url/to/next/page';
-        $urlBuilder = $this->getMock('Magento\Framework\UrlInterface');
-        $urlBuilder->expects($this->once())->method('getUrl')->with('webflow/nextpage')->willReturn($nextUrl);
+        $nextUrl = 'magento.com/url/to/next/page';
+        $inputData = ['url' => $nextUrl];
 
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $model = $objectManager->getObject('Magento\SampleWebFlow\Block\FirstPage', ['urlBuilder' => $urlBuilder]);
+        $model = $objectManager->getObject('Magento\SampleWebFlow\Block\FirstPage', ['data' => $inputData]);
         $this->assertSame($nextUrl, $model->getNextPageUrl());
     }
 }
