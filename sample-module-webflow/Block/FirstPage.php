@@ -7,8 +7,13 @@ namespace Magento\SampleWebFlow\Block;
 
 class FirstPage extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * Returns URL linking to the next page
+     *
+     * @return string
+     */
     public function getNextPageUrl()
     {
-        return $this->_urlBuilder->getUrl('webflow/nextpage');
+        return $this->getUrl($this->getData('url'));
     }
 }

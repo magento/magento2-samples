@@ -8,12 +8,16 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
     <head>
         <title>
-            Brand New Page
+            First Page
         </title>
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="Magento\SampleWebFlow\Block\FirstPage" template="Magento_SampleWebFlow::firstpage.phtml"/>
+            <block class="Magento\SampleWebFlow\Block\FirstPage" template="Magento_SampleWebFlow::firstpage.phtml">
+                <arguments>
+                    <argument name="url" xsi:type="url" path="webflow/nextpage" />
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
