@@ -1,34 +1,31 @@
 <?php
+/***
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 namespace Magento\SampleNewPage\Test\Unit\Controller\Index;
 
 class IndexTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
-        // Mock dependencies
-        $context = $this->getMockBuilder('Magento\Framework\App\Action\Context')
+        // Create dependency mocks
+        $page = $this->getMockBuilder('Magento\Framework\View\Result\Page')
             ->disableOriginalConstructor()
             ->getMock();
-        $response = $this->getMock('Magento\Framework\App\ResponseInterface');
-        $request = $this->getMock('Magento\Framework\App\RequestInterface');
-        $view = $this->getMock('Magento\Framework\App\ViewInterface');
-
-        $context->expects($this->any())->method('getRequest')->will($this->returnValue($request));
-        $context->expects($this->any())->method('getResponse')->will($this->returnValue($response));
-        $context->expects($this->any())->method('getView')->will($this->returnValue($view));
-
-        // Define test expectations
-        $view->expects($this->once())
-            ->method('loadLayout');
-        $view->expects($this->once())
-            ->method('renderLayout');
+        $resultFactory = $this->getMockBuilder('Magento\Framework\View\Result\PageFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         // Set up SUT
         $objectManager = new \Magento\Framework\TestFramework\Unit\Helper\ObjectManager($this);
-        $controller = $objectManager->getObject(
-            'Magento\SampleNewPage\Controller\Index\Index',
-            ['context' => $context]
+        $model = $objectManager->getObject('Magento\SampleNewPage\Controller\Index\Index',
+            ['resultPageFactory' => $resultFactory]
         );
-        $controller->execute();
+
+        // Expectations of test
+        $resultFactory->expects($this->once())->method('create')->willReturn($page);
+        $this->assertSame($page, $model->execute());
     }
 }
