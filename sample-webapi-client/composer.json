@@ -1,6 +1,6 @@
 {
   "name": "magento/sample-module-minimal",
-  "description": "A minimal skeleton Magento 2 module",
+  "description": "A module to demonstrate REST API functionality",
   "type": "magento2-module",
   "version": "1.0.0",
   "license": [
