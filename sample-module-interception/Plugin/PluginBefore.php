@@ -21,7 +21,7 @@ class PluginBefore
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeBaseMethod(ChildBefore $subject, $interceptedInput)
+    public function beforeBaseMethodUppercase(ChildBefore $subject, $interceptedInput)
     {
         return ["(before) $interceptedInput (/before)"];
     }

@@ -15,4 +15,7 @@
     <type name="Magento\SampleInterception\Model\Intercepted\ChildAround">
         <plugin name="Magento_SampleInterception::demoPluginAround" type="Magento\SampleInterception\Plugin\PluginAround" />
     </type>
+    <type name="Magento\SampleInterception\Model\Intercepted\ChildInherit">
+        <plugin name="Magento_SampleInterception::demoPluginInheritance" type="Magento\SampleInterception\Plugin\ParentPlugin" />
+    </type>
 </config>

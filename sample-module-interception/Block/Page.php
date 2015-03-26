@@ -36,10 +36,18 @@ class Page extends \Magento\Framework\View\Element\Template
     protected $aroundModel;
 
     /**
+     * Contains method used for generating page content. Its parent is intercepted.
+     *
+     * @var \Magento\SampleInterception\Model\Intercepted\ChildInherit
+     */
+    protected $inheritModel;
+
+    /**
      * @param Context $context
      * @param Intercepted\ChildBefore $beforeModel
      * @param Intercepted\ChildAfter $afterModel
      * @param Intercepted\ChildARound $aroundModel
+     * @param Intercepted\ChildInherit $inheritModel
      * @param array $data
      */
     public function __construct(
@@ -47,11 +55,13 @@ class Page extends \Magento\Framework\View\Element\Template
         Intercepted\ChildBefore $beforeModel,
         Intercepted\ChildAfter $afterModel,
         Intercepted\ChildARound $aroundModel,
+        Intercepted\ChildInherit $inheritModel,
         array $data = []
     ) {
         $this->beforeModel = $beforeModel;
         $this->afterModel = $afterModel;
         $this->aroundModel = $aroundModel;
+        $this->inheritModel = $inheritModel;
 
         parent::__construct($context, $data);
     }
@@ -78,5 +88,13 @@ class Page extends \Magento\Framework\View\Element\Template
     public function getModelAround()
     {
         return $this->aroundModel;
+    }
+
+    /**
+     * @return Intercepted\ChildInherit
+     */
+    public function getModelInherit()
+    {
+        return $this->inheritModel;
     }
 }

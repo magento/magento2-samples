@@ -27,7 +27,7 @@ class PluginAround
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function aroundBaseMethod(ChildAround $subject, \Closure $proceed, $interceptedInput)
+    public function aroundBaseMethodUppercase(ChildAround $subject, \Closure $proceed, $interceptedInput)
     {
         $argument = "(around: before base method) $interceptedInput (/around: before base method)";
         $result = $proceed($argument);

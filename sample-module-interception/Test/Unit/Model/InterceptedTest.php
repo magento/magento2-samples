@@ -8,11 +8,25 @@ namespace Magento\SampleInterception\Test\Unit\Model;
 
 class InterceptedTest extends \PHPUnit_Framework_TestCase
 {
-    public function testBaseMethod()
+    /** @var  \Magento\SampleInterception\Model\Intercepted */
+    protected $model;
+
+    public function setUp()
     {
-        $model = new \Magento\SampleInterception\Model\Intercepted();
+        $this->model = new \Magento\SampleInterception\Model\Intercepted();
+    }
+
+    public function testBaseMethodUppercase()
+    {
         $inStr = 'capitalize me';
         $outStr = 'CAPITALIZE ME';
-        $this->assertSame($outStr, $model->baseMethod($inStr));
+        $this->assertSame($outStr, $this->model->baseMethodUppercase($inStr));
+    }
+
+    public function testBaseMethodReverse()
+    {
+        $inStr = 'abcd';
+        $outStr = 'dcba';
+        $this->assertSame($outStr, $this->model->baseMethodReverse($inStr));
     }
 }

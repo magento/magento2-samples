@@ -15,6 +15,7 @@ class PageTest extends \PHPUnit_Framework_TestCase
         $before = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildBefore');
         $after = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildAfter');
         $around = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildAround');
+        $inherit = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildInherit');
 
 
         /** @var \Magento\SampleInterception\Block\Page $model */
@@ -23,12 +24,13 @@ class PageTest extends \PHPUnit_Framework_TestCase
             [
                 'beforeModel' => $before,
                 'afterModel' => $after,
-                'aroundModel' => $around
+                'aroundModel' => $around,
+                'inheritModel' => $inherit
             ]
         );
         $this->assertSame($before, $model->getModelBefore());
         $this->assertSame($after, $model->getModelAfter());
         $this->assertSame($around, $model->getModelAround());
-
+        $this->assertSame($inherit, $model->getModelInherit());
     }
 }

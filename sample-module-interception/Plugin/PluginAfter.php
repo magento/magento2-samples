@@ -21,7 +21,7 @@ class PluginAfter
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterBaseMethod(ChildAfter $subject, $interceptedOutput)
+    public function afterBaseMethodUppercase(ChildAfter $subject, $interceptedOutput)
     {
         return "(after) $interceptedOutput (/after)";
     }
