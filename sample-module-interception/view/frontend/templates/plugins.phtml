@@ -14,7 +14,6 @@
 ?>
 <?php
 $inputString = 'johnny cash';
-$beforeModel = $block->getModelBefore();
 ?>
 
 <ul>
@@ -26,37 +25,37 @@ $beforeModel = $block->getModelBefore();
 
 <?php
 $pluginType = "\"before\"";
-$output = $beforeModel->baseMethod($inputString);
+$output = $block->getModelBefore()->baseMethod($inputString);
 ?>
 
-<b>Plugin type: </b> <?php echo $pluginType;?><br/>
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
+    The "before" plugin modifies the input, so the tags become capitalized.
+</p>
 <b>Input: </b> <?php echo $inputString;?><br/>
 <b>Output: </b> <?php echo $output;?><br/>
 
-<br/><p>The "before" plugin modified the input, so the tags became capitalized.</p>
 
 <?php
 $pluginType = "\"after\"";
-$afterModel = $block->getModelAfter();
-$output = $afterModel->baseMethod($inputString);
+$output = $block->getModelAfter()->baseMethod($inputString);
 ?>
 
-<b>Plugin type: </b> <?php echo $pluginType;?><br/>
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
+    The "after" plugin modifies the output after it executes, so the tags do not become capitalized.
+</p>
 <b>Input: </b> <?php echo $inputString;?><br/>
 <b>Output: </b> <?php echo $output;?><br/>
-
-<br/><p>The "after" plugin modified the output after it executed, so the tags did not become capitalized.</p>
 
 <?php
 $pluginType = "\"around\"";
-$aroundModel = $block->getModelAround();
-$output = $aroundModel->baseMethod($inputString);
+$output = $block->getModelAround()->baseMethod($inputString);
 ?>
 
-<b>Plugin type: </b> <?php echo $pluginType;?><br/>
-<b>Input: </b> <?php echo $inputString;?><br/>
-<b>Output: </b> <?php echo $output;?><br/>
-
-<br/><p>
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
     The "around" plugin modifies the input with one set of tags, then calls the method, then modifies the output with the second set of tags.
 </p>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
