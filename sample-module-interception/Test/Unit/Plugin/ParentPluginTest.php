@@ -13,7 +13,7 @@ class ParentPluginTest extends \PHPUnit_Framework_TestCase
         $model = new \Magento\SampleInterception\Plugin\ParentPlugin();
         $subjectMock = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildInherit');
         $inStr = 'reverse me';
-        $output = ["(parent plugin) $inStr (/parent plugin)"];
-        $this->assertSame($output, $model->beforeBaseMethod($subjectMock, $inStr));
+        $output = "(parent plugin) $inStr (/parent plugin)";
+        $this->assertSame($output, $model->afterBaseMethodReverse($subjectMock, $inStr));
     }
 }

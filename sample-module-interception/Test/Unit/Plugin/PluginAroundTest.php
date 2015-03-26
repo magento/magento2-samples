@@ -23,7 +23,7 @@ class PluginAroundTest extends \PHPUnit_Framework_TestCase
             return $in;
         };
 
-        $this->assertSame($outStr, $model->aroundBaseMethod($subjectMock, $proceed, $inStr));
+        $this->assertSame($outStr, $model->aroundBaseMethodUppercase($subjectMock, $proceed, $inStr));
 
     }
 }

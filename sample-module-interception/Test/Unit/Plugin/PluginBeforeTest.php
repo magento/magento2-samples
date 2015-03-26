@@ -14,6 +14,6 @@ class PluginBeforeTest extends \PHPUnit_Framework_TestCase
         $subjectMock = $this->getMock('Magento\SampleInterception\Model\Intercepted\ChildBefore');
         $inStr = 'gruchenka';
         $output = ["(before) $inStr (/before)"];
-        $this->assertSame($output, $model->beforeBaseMethod($subjectMock, $inStr));
+        $this->assertSame($output, $model->beforeBaseMethodUppercase($subjectMock, $inStr));
     }
 }

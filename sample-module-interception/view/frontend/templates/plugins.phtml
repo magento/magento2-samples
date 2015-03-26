@@ -17,7 +17,7 @@ $inputString = 'johnny cash';
 ?>
 
 <ul>
-    <li>This page uses methods that CAPITALIZE input.</li>
+    <li>The first three examples use methods that CAPITALIZE input.</li>
     <li>The three identical methods are modified by three different plugins.</li>
     <li>The plugin types are "before", "after", and "around".</li>
     <li>Each plugin wraps content in a lowercase tag, like (before)content(/before).</li>
@@ -25,7 +25,7 @@ $inputString = 'johnny cash';
 
 <?php
 $pluginType = "\"before\"";
-$output = $block->getModelBefore()->baseMethod($inputString);
+$output = $block->getModelBefore()->baseMethodUppercase($inputString);
 ?>
 
 <h2>Plugin type: <?php echo $pluginType;?> </h2>
@@ -38,7 +38,7 @@ $output = $block->getModelBefore()->baseMethod($inputString);
 
 <?php
 $pluginType = "\"after\"";
-$output = $block->getModelAfter()->baseMethod($inputString);
+$output = $block->getModelAfter()->baseMethodUppercase($inputString);
 ?>
 
 <h2>Plugin type: <?php echo $pluginType;?> </h2>
@@ -50,7 +50,7 @@ $output = $block->getModelAfter()->baseMethod($inputString);
 
 <?php
 $pluginType = "\"around\"";
-$output = $block->getModelAround()->baseMethod($inputString);
+$output = $block->getModelAround()->baseMethodUppercase($inputString);
 ?>
 
 <h2>Plugin type: <?php echo $pluginType;?> </h2>
@@ -59,3 +59,17 @@ $output = $block->getModelAround()->baseMethod($inputString);
 </p>
 <b>Input: </b> <?php echo $inputString;?><br/>
 <b>Output: </b> <?php echo $output;?><br/>
+
+<?php
+$inputString = 'magento';
+$output = $block->getModelInherit()->baseMethodReverse($inputString);
+?>
+  <h2>Plugin Inheritance</h2>
+ <p>
+    The last example demonstrates the ability to define a plugin on a parent method and have that plugin modify 
+    a child method. Here, the plugin is defined on the parent but the method is called via an instance of the child.
+ </p>
+ <b>Input: </b> <?php echo $inputString;?><br/>
+ <b>Output: </b> <?php echo $output;?><br/>
+
+
