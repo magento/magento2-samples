@@ -69,4 +69,3 @@ Magento Core team
 ## License
 
 [Open Source License](LICENSE.txt)
-

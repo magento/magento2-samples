@@ -7,7 +7,10 @@
 namespace Magento\SampleNewPage\Controller\Index;
 
 /**
- * Responsible for loading the extension's hello world page
+ * Responsible for loading page content.
+ *
+ * This is a basic controller that only loads the corresponding layout file. It may duplicate other such
+ * controllers, and thus it is considered tech debt. This code duplication will be resolved in future releases.
  */
 class Index extends \Magento\Framework\App\Action\Action
 {
