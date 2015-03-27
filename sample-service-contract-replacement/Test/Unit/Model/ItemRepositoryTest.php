@@ -1,0 +1,166 @@
+<?php
+/**
+ *
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+namespace Magento\SampleServiceContractReplacement\Test\Unit\Model;
+
+use Magento\SampleServiceContractReplacement\Model\ItemRepository;
+
+class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var ItemRepository
+     */
+    protected $itemRepository;
+
+    /**
+     * @var \Magento\Quote\Api\Data\CartInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $quoteMock;
+
+    /**
+     * @var \Magento\Quote\Api\Data\CartItemInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $quoteItemMock;
+
+    /**
+     * @var \Magento\Framework\App\CacheInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $cacheMock;
+
+    /**
+     * @var \Magento\GiftMessage\Api\Data\MessageInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $messageMock;
+
+    /**
+     * @var int
+     */
+    protected $cartId = 1;
+
+    /**
+     * @var int
+     */
+    protected $itemId = 2;
+
+    protected function setUp()
+    {
+        $this->quoteMock = $this->getMock(
+            'Magento\Quote\Api\Data\CartInterface',
+            [],
+            [],
+            '',
+            false
+        );
+
+        $this->quoteItemMock = $this->getMock(
+            'Magento\Quote\Api\Data\CartItemInterface',
+            [],
+            [],
+            '',
+            false
+        );
+        $this->quoteMock->expects($this->any())
+            ->method('getItems')
+            ->willReturn([$this->quoteItemMock]);
+
+        /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepositoryMock */
+        $quoteRepositoryMock =
+            $this->getMock('Magento\Quote\Api\CartRepositoryInterface', ['get', 'getList'], [], '', false);
+        $quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
+
+        $this->cacheMock = $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false);
+        $this->messageMock = $this->getMock('Magento\GiftMessage\Api\Data\MessageInterface', [], [], '', false);
+
+        $this->itemRepository = new ItemRepository($quoteRepositoryMock, $this->cacheMock);
+    }
+
+    /**
+     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedExceptionMessage  There is no item with provided id in the cart
+     */
+    public function testGetNonExistingId()
+    {
+        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
+        $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
+        $this->itemRepository->get(0, 0);
+    }
+
+    public function testGet()
+    {
+        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
+        $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('load')
+            ->willReturn(serialize($this->messageMock));
+
+        $giftMsg = $this->itemRepository->get($this->cartId, $this->itemId);
+        $this->assertEquals($this->messageMock, $giftMsg);
+        $this->assertInstanceOf('Magento\GiftMessage\Api\Data\MessageInterface', $giftMsg);
+    }
+
+    /**
+     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedExceptionMessage No such entity with cartId = 0
+     */
+    public function testSaveWithNoSuchEntityException()
+    {
+        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(false);
+        $this->itemRepository->save(0, $this->messageMock, 0);
+    }
+
+    /**
+     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedExceptionMessage There is no item with provided id in the cart
+     */
+    public function testSaveWithNoSuchEntityExceptionItem()
+    {
+        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
+        $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
+        $this->itemRepository->save(0, $this->messageMock, 0);
+    }
+
+    /**
+     * @expectedException \Magento\Framework\Exception\State\InvalidTransitionException
+     * @expectedExceptionMessage Gift Messages is not applicable for virtual products
+     */
+    public function testSaveWithInvalidTransitionException()
+    {
+        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
+        $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
+        $this->quoteItemMock
+            ->expects($this->once())
+            ->method('getProductType')
+            ->willReturn(\Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL);
+
+        $this->itemRepository->save($this->cartId, $this->messageMock, $this->itemId);
+    }
+
+    public function testSave()
+    {
+        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
+        $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
+        $this->quoteItemMock
+            ->expects($this->once())
+            ->method('getProductType')
+            ->willReturn(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
+
+        $customerMock = $this->getMock('Magento\Customer\Api\Data\CustomerInterface', [], [], '', false);
+        $this->quoteMock->expects($this->once())->method('getCustomer')->willReturn($customerMock);
+
+        $this->messageMock->expects($this->any())->method('setCustomerId');
+        $this->messageMock->expects($this->any())->method('setGiftMessageId');
+
+        $this->cacheMock
+            ->expects($this->once())
+            ->method('save');
+
+        $this->assertTrue($this->itemRepository->save($this->cartId, $this->messageMock, $this->itemId));
+    }
+}

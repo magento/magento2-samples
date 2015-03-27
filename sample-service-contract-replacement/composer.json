@@ -1,0 +1,26 @@
+{
+  "name": "magento/sample-service-contract-replacement",
+  "description": "A module to demonstrate service contract replacement",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0",
+    "magento/magento-composer-installer": "*",
+    "magento/framework": "*",
+    "magento/module-quote": "*",
+    "magento/module-gift-message": "*",
+    "magento/module-catalog": "*"
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "Magento/SampleServiceContractReplacement"
+      ]
+    ]
+  }
+}
