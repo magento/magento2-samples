@@ -11,4 +11,4 @@
  */
 ?>
 
-<a href="<?php echo $block->getNextPageUrl() ?>"><span><?php echo __('Go to next page')?></span></a>
+<a href="<?php echo $block->escapeHtml($block->getNextPageUrl()) ?>"><span><?php echo __('Go to next page')?></span></a>

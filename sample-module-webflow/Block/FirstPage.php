@@ -20,6 +20,6 @@ class FirstPage extends \Magento\Framework\View\Element\Template
          * that path into a fully qualified URL based on the store's base url. This string is then passed into the
          * block via the $data array, and it is retrieved via the getData method.
          */
-        return $this->escapeHtml($this->getData('url'));
+        return $this->getData('url');
     }
 }
