@@ -8,12 +8,18 @@ namespace Magento\SampleWebFlow\Block;
 class FirstPage extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Returns URL linking to the next page
+     * Returns URL linking to the next page.
      *
      * @return string
      */
     public function getNextPageUrl()
     {
-        return $this->getData('url');
+        /**
+         * The layout file, webflow_firstpage_index.xml, provides an argument to this block. The argument contains
+         * the path to the next page: "webflow/nextpage". Because the argument is of type url, the application converts
+         * that path into a fully qualified URL based on the store's base url. This string is then passed into the
+         * block via the $data array, and it is retrieved via the getData method.
+         */
+        return $this->escapeHtml($this->getData('url'));
     }
 }
