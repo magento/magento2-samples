@@ -9,7 +9,8 @@
   ],
   "require": {
     "php": "~5.5.0|~5.6.0",
-    "magento/magento-composer-installer": "*"
+    "magento/magento-composer-installer": "*",
+    "magento/module-catalog": "*"
   },
   "extra": {
     "map": [
