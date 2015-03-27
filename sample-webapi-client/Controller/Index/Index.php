@@ -8,8 +8,10 @@ namespace Magento\SampleWebapiClient\Controller\Index;
 use Magento\Framework\App\Action\Context;
 
 /**
- * Class Index
- * @package Magento\SampleWebapiClient\Controller
+ * Loads the demo page.
+ *
+ * This is a basic controller that only loads the corresponding layout file. It may duplicate other such 
+ * controllers, and thus it is considered tech debt. This code duplication will be resolved in future releases.
  */
 class Index extends \Magento\Framework\App\Action\Action
 {
