@@ -17,14 +17,14 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     protected $itemRepository;
 
     /**
-     * @var \Magento\Quote\Api\Data\CartInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $quoteMock;
-
-    /**
      * @var \Magento\Quote\Api\Data\CartItemInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteItemMock;
+
+    /**
+     * @var \Magento\Quote\Api\Data\CartInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $quoteMock;
 
     /**
      * @var \Magento\Framework\App\CacheInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -48,25 +48,15 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->quoteMock = $this->getMock(
-            'Magento\Quote\Api\Data\CartInterface',
-            [],
-            [],
-            '',
-            false
-        );
+        $this->quoteItemMock = $this->getMock('Magento\Quote\Api\Data\CartItemInterface', [], [], '', false);
 
-        $this->quoteItemMock = $this->getMock(
-            'Magento\Quote\Api\Data\CartItemInterface',
-            [],
-            [],
-            '',
-            false
-        );
-        $this->quoteMock->expects($this->any())
-            ->method('getItems')
+        /** @var \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository */
+        $quoteItemRepository = $this->getMock('Magento\Quote\Api\CartItemRepositoryInterface', [], [], '', false);
+        $quoteItemRepository->expects($this->any())
+            ->method('getList')
             ->willReturn([$this->quoteItemMock]);
 
+        $this->quoteMock = $this->getMock('Magento\Quote\Api\Data\CartInterface', [], [], '', false);
         /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepositoryMock */
         $quoteRepositoryMock =
             $this->getMock('Magento\Quote\Api\CartRepositoryInterface', ['get', 'getList'], [], '', false);
@@ -77,7 +67,7 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->cacheMock = $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false);
         $this->messageMock = $this->getMock('Magento\GiftMessage\Api\Data\MessageInterface', [], [], '', false);
 
-        $this->itemRepository = new ItemRepository($quoteRepositoryMock, $this->cacheMock);
+        $this->itemRepository = new ItemRepository($quoteItemRepository, $quoteRepositoryMock, $this->cacheMock);
     }
 
     /**
