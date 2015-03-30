@@ -10,6 +10,8 @@ use Magento\Framework\App\Action\Context;
 
 /**
  * Class Index
+ *
+ * TODO: This controller should be removed after implementation of basic controller
  */
 class Index extends \Magento\Framework\App\Action\Action
 {
