@@ -55,6 +55,9 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
         $this->quoteRepository->get($cartId);
         $msgCacheId = $cartId . self::CACHE_ID_POSTFIX;
         $giftMsg = $this->cache->load($msgCacheId);
+        if (!$giftMsg) {
+            throw new NoSuchEntityException(__('There is no gift message in the cart with provided id'));
+        };
         return unserialize($giftMsg);
     }
 
