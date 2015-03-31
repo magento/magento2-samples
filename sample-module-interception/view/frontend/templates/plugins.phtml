@@ -1,0 +1,75 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<?php
+/**
+ * Plugin viewer template
+ *
+ * @var $block \Magento\SampleInterception\Block\Page
+ */
+?>
+<?php
+$inputString = 'johnny cash';
+?>
+
+<ul>
+    <li>The first three examples use methods that CAPITALIZE input.</li>
+    <li>The three identical methods are modified by three different plugins.</li>
+    <li>The plugin types are "before", "after", and "around".</li>
+    <li>Each plugin wraps content in a lowercase tag, like (before)content(/before).</li>
+</ul>
+
+<?php
+$pluginType = "\"before\"";
+$output = $block->getModelBefore()->baseMethodUppercase($inputString);
+?>
+
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
+    The "before" plugin modifies the input, so the tags become capitalized.
+</p>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+
+<?php
+$pluginType = "\"after\"";
+$output = $block->getModelAfter()->baseMethodUppercase($inputString);
+?>
+
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
+    The "after" plugin modifies the output after it executes, so the tags do not become capitalized.
+</p>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+<?php
+$pluginType = "\"around\"";
+$output = $block->getModelAround()->baseMethodUppercase($inputString);
+?>
+
+<h2>Plugin type: <?php echo $pluginType;?> </h2>
+<p>
+    The "around" plugin modifies the input with one set of tags, then calls the method, then modifies the output with the second set of tags.
+</p>
+<b>Input: </b> <?php echo $inputString;?><br/>
+<b>Output: </b> <?php echo $output;?><br/>
+
+<?php
+$inputString = 'magento';
+$output = $block->getModelInherit()->baseMethodReverse($inputString);
+?>
+  <h2>Plugin Inheritance</h2>
+ <p>
+    The last example demonstrates the ability to define a plugin on a parent method and have that plugin modify 
+    a child method. Here, the plugin is defined on the parent but the method is called via an instance of the child.
+ </p>
+ <b>Input: </b> <?php echo $inputString;?><br/>
+ <b>Output: </b> <?php echo $output;?><br/>
+
+
