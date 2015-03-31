@@ -1,5 +1,5 @@
 {
-  "name": "magento/sample-service-contract-replacement",
+  "name": "magento/sample-module-service-contract-replacement",
   "description": "A module to demonstrate service contract replacement",
   "type": "magento2-module",
   "version": "1.0.0",
