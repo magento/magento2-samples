@@ -8,6 +8,7 @@
 namespace Magento\SampleServiceContractReplacement\Test\Unit\Model;
 
 use Magento\SampleServiceContractReplacement\Model\ItemRepository;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,6 +16,11 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
      * @var ItemRepository
      */
     protected $itemRepository;
+
+    /**
+     * @var \Magento\Quote\Api\CartRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $quoteRepositoryMock;
 
     /**
      * @var \Magento\Quote\Api\Data\CartItemInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -58,16 +64,13 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->quoteMock = $this->getMock('Magento\Quote\Api\Data\CartInterface', [], [], '', false);
         /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepositoryMock */
-        $quoteRepositoryMock =
+        $this->quoteRepositoryMock =
             $this->getMock('Magento\Quote\Api\CartRepositoryInterface', ['get', 'getList'], [], '', false);
-        $quoteRepositoryMock->expects($this->any())
-            ->method('get')
-            ->willReturn($this->quoteMock);
 
         $this->cacheMock = $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false);
         $this->messageMock = $this->getMock('Magento\GiftMessage\Api\Data\MessageInterface', [], [], '', false);
 
-        $this->itemRepository = new ItemRepository($quoteItemRepository, $quoteRepositoryMock, $this->cacheMock);
+        $this->itemRepository = new ItemRepository($quoteItemRepository, $this->quoteRepositoryMock, $this->cacheMock);
     }
 
     /**
@@ -76,14 +79,12 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNonExistingId()
     {
-        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
         $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
         $this->itemRepository->get(0, 0);
     }
 
     public function testGet()
     {
-        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
         $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
         $this->cacheMock
             ->expects($this->once())
@@ -101,7 +102,9 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithNoSuchEntityException()
     {
-        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(false);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willThrowException(new NoSuchEntityException(__('No such entity with cartId = 0')));
         $this->itemRepository->save(0, $this->messageMock, 0);
     }
 
@@ -111,7 +114,9 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithNoSuchEntityExceptionItem()
     {
-        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(true);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
         $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
         $this->itemRepository->save(0, $this->messageMock, 0);
     }
@@ -122,7 +127,9 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithInvalidTransitionException()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
         $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
         $this->quoteItemMock
             ->expects($this->once())
@@ -134,7 +141,9 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSave()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
         $this->quoteItemMock->expects($this->once())->method('getItemId')->willReturn($this->itemId);
         $this->quoteItemMock
             ->expects($this->once())

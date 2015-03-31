@@ -8,6 +8,7 @@
 namespace Magento\SampleServiceContractReplacement\Test\Unit\Model;
 
 use Magento\SampleServiceContractReplacement\Model\CartRepository;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class CartRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,6 +16,11 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
      * @var CartRepository
      */
     protected $cartRepository;
+
+    /**
+     * @var \Magento\Quote\Api\CartRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $quoteRepositoryMock;
 
     /**
      * @var \Magento\Quote\Api\Data\CartInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -47,16 +53,13 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
         );
 
         /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepositoryMock */
-        $quoteRepositoryMock =
+        $this->quoteRepositoryMock =
             $this->getMock('Magento\Quote\Api\CartRepositoryInterface', ['get', 'getList'], [], '', false);
-        $quoteRepositoryMock->expects($this->any())
-            ->method('get')
-            ->willReturn($this->quoteMock);
 
         $this->cacheMock = $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false);
         $this->messageMock = $this->getMock('Magento\GiftMessage\Api\Data\MessageInterface', [], [], '', false);
 
-        $this->cartRepository = new CartRepository($quoteRepositoryMock, $this->cacheMock);
+        $this->cartRepository = new CartRepository($this->quoteRepositoryMock, $this->cacheMock);
     }
 
     /**
@@ -65,13 +68,14 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNonExistingId()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(false);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willThrowException(new NoSuchEntityException(__('No such entity with cartId = 0')));
         $this->cartRepository->get(0);
     }
 
     public function testGet()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
         $this->cacheMock
             ->expects($this->once())
             ->method('load')
@@ -88,7 +92,9 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithNoSuchEntityException()
     {
-        $this->quoteMock->expects($this->once())->method('getIsActive')->willReturn(false);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willThrowException(new NoSuchEntityException(__('No such entity with cartId = 1')));
         $this->cartRepository->save($this->cartId, $this->messageMock);
     }
 
@@ -98,8 +104,10 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithInputException()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
-        $this->quoteMock->expects($this->at(1))->method('getItemsCount')->willReturn(0);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
+        $this->quoteMock->expects($this->once())->method('getItemsCount')->willReturn(0);
         $this->cartRepository->save($this->cartId, $this->messageMock);
     }
 
@@ -109,8 +117,10 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveWithInvalidTransitionException()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
-        $this->quoteMock->expects($this->at(1))->method('getItemsCount')->willReturn(1);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
+        $this->quoteMock->expects($this->once())->method('getItemsCount')->willReturn(1);
         $this->quoteMock->expects($this->once())->method('getIsVirtual')->willReturn(true);
 
         $this->cartRepository->save($this->cartId, $this->messageMock);
@@ -118,8 +128,10 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testSave()
     {
-        $this->quoteMock->expects($this->at(0))->method('getIsActive')->willReturn(true);
-        $this->quoteMock->expects($this->at(1))->method('getItemsCount')->willReturn(1);
+        $this->quoteRepositoryMock->expects($this->any())
+            ->method('get')
+            ->willReturn($this->quoteMock);
+        $this->quoteMock->expects($this->once())->method('getItemsCount')->willReturn(1);
         $this->quoteMock->expects($this->once())->method('getIsVirtual')->willReturn(false);
 
         $customerMock = $this->getMock('Magento\Customer\Api\Data\CustomerInterface', [], [], '', false);

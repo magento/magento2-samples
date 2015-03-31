@@ -8,7 +8,7 @@ This is one of a collection of examples to demonstrate the features of Magento 2
 
 ## Technical feature
 
-Model\CartRepository and Model\ItemRepository implements service contracts of Magento 2.
+Model\CartRepository and Model\ItemRepository implement service contracts of Magento 2.
 
 Model\CartRepository implements CartRepositoryInterface of GiftMessage module.
 Model\ItemRepository implements ItemRepositoryInterface of GiftMessage module.

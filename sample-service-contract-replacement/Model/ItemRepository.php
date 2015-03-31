@@ -61,11 +61,13 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
      */
     public function get($cartId, $itemId)
     {
-        $this->getQuote($cartId);
         $this->getQuoteItem($cartId, $itemId);
 
         $msgCacheId = $itemId . self::CACHE_ID_POSTFIX;
         $giftMsg = $this->cache->load($msgCacheId);
+        if (!$giftMsg) {
+            throw new NoSuchEntityException(__('There is no gift message for item with provided id in the cart'));
+        };
         return unserialize($giftMsg);
     }
 
@@ -74,7 +76,7 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
      */
     public function save($cartId, \Magento\GiftMessage\Api\Data\MessageInterface $giftMessage, $itemId)
     {
-        $quote = $this->getQuote($cartId);
+        $quote = $this->quoteRepository->get($cartId);
 
         /** @var \Magento\Quote\Api\Data\CartItemInterface $item */
         $item = $this->getQuoteItem($cartId, $itemId);
@@ -115,22 +117,5 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
             throw new NoSuchEntityException(__('There is no item with provided id in the cart'));
         };
         return $quoteItem;
-    }
-
-    /**
-     * Get cart
-     *
-     * @param int $cartId
-     * @return \Magento\Quote\Api\Data\CartInterface
-     * @throws NoSuchEntityException
-     */
-    protected function getQuote($cartId)
-    {
-        /** @var \Magento\Quote\Api\Data\CartInterface $quote */
-        $quote = $this->quoteRepository->get($cartId);
-        if (!$quote->getIsActive()) {
-            throw NoSuchEntityException::singleField('cartId', $cartId);
-        }
-        return $quote;
     }
 }

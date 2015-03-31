@@ -52,7 +52,7 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
      */
     public function get($cartId)
     {
-        $this->getQuote($cartId);
+        $this->quoteRepository->get($cartId);
         $msgCacheId = $cartId . self::CACHE_ID_POSTFIX;
         $giftMsg = $this->cache->load($msgCacheId);
         return unserialize($giftMsg);
@@ -65,10 +65,6 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
     {
         /** @var \Magento\Quote\Api\Data\CartInterface $quote */
         $quote = $this->quoteRepository->get($cartId);
-        if (!$quote->getIsActive()) {
-            throw NoSuchEntityException::singleField('cartId', $cartId);
-        }
-
         if (0 == $quote->getItemsCount()) {
             throw new InputException(__('Gift Messages is not applicable for empty cart'));
         }
@@ -84,22 +80,5 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
         $this->cache->save(serialize($giftMessage), $msgCacheId);
 
         return true;
-    }
-
-    /**
-     * Get cart
-     *
-     * @param int $cartId
-     * @return \Magento\Quote\Api\Data\CartInterface
-     * @throws NoSuchEntityException
-     */
-    protected function getQuote($cartId)
-    {
-        /** @var \Magento\Quote\Api\Data\CartInterface $quote */
-        $quote = $this->quoteRepository->get($cartId);
-        if (!$quote->getIsActive()) {
-            throw NoSuchEntityException::singleField('cartId', $cartId);
-        }
-        return $quote;
     }
 }
