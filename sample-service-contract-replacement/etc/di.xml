@@ -7,16 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
     <preference for="Magento\GiftMessage\Api\Data\MessageInterface" type="Magento\SampleServiceContractReplacement\Model\Message"/>
-    <virtualType name="Magento\SampleServiceContractReplacement\Model\ActiveCartRepository" type="Magento\SampleServiceContractReplacement\Model\CartRepository">
-        <arguments>
-            <argument name="quoteRepository" xsi:type="object">Magento\SampleServiceContractReplacement\Model\QuoteRepository</argument>
-        </arguments>
-    </virtualType>
-    <preference for="Magento\GiftMessage\Api\CartRepositoryInterface" type="Magento\SampleServiceContractReplacement\Model\ActiveCartRepository"/>
-    <virtualType name="Magento\SampleServiceContractReplacement\Model\ActiveItemRepository" type="Magento\SampleServiceContractReplacement\Model\ItemRepository">
-        <arguments>
-            <argument name="quoteRepository" xsi:type="object">Magento\SampleServiceContractReplacement\Model\QuoteRepository</argument>
-        </arguments>
-    </virtualType>
-    <preference for="Magento\GiftMessage\Api\ItemRepositoryInterface" type="Magento\SampleServiceContractReplacement\Model\ActiveItemRepository"/>
+    <preference for="Magento\GiftMessage\Api\CartRepositoryInterface" type="Magento\SampleServiceContractReplacement\Model\CartRepository"/>
+    <preference for="Magento\GiftMessage\Api\ItemRepositoryInterface" type="Magento\SampleServiceContractReplacement\Model\ItemRepository"/>
 </config>

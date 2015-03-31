@@ -30,7 +30,7 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
     /**
      * Quote repository.
      *
-     * @var \Magento\Quote\Api\CartRepositoryInterface
+     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository
      */
     protected $quoteRepository;
 
@@ -43,12 +43,12 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
 
     /**
      * @param \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository
-     * @param \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
+     * @param QuoteRepository $quoteRepository
      * @param \Magento\Framework\App\CacheInterface $cache
      */
     public function __construct(
         \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository,
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        QuoteRepository $quoteRepository,
         \Magento\Framework\App\CacheInterface $cache
     ) {
         $this->quoteItemRepository = $quoteItemRepository;

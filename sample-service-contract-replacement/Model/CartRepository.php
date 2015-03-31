@@ -24,7 +24,7 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
     /**
      * Quote repository.
      *
-     * @var \Magento\Quote\Api\CartRepositoryInterface
+     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository
      */
     protected $quoteRepository;
 
@@ -36,11 +36,11 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
     protected $cache;
 
     /**
-     * @param \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
+     * @param QuoteRepository $quoteRepository
      * @param \Magento\Framework\App\CacheInterface $cache
      */
     public function __construct(
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+        QuoteRepository $quoteRepository,
         \Magento\Framework\App\CacheInterface $cache
     ) {
         $this->quoteRepository = $quoteRepository;

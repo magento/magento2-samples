@@ -18,7 +18,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
     protected $cartRepository;
 
     /**
-     * @var \Magento\Quote\Api\CartRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteRepositoryMock;
 
@@ -52,9 +52,13 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
             false
         );
 
-        /** @var \Magento\Quote\Api\CartRepositoryInterface $quoteRepositoryMock */
-        $this->quoteRepositoryMock =
-            $this->getMock('Magento\Quote\Api\CartRepositoryInterface', ['get', 'getList'], [], '', false);
+        $this->quoteRepositoryMock = $this->getMock(
+            'Magento\SampleServiceContractReplacement\Model\QuoteRepository',
+            ['get', 'getList'],
+            [],
+            '',
+            false
+        );
 
         $this->cacheMock = $this->getMock('Magento\Framework\App\CacheInterface', [], [], '', false);
         $this->messageMock = $this->getMock('Magento\GiftMessage\Api\Data\MessageInterface', [], [], '', false);
