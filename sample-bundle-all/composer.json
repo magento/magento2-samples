@@ -9,6 +9,6 @@
   ],
   "require": {
     "magento/sample-module-minimal": "~1.0",
-    "magento/sample-service-contract-replacement": "~1.0"
+    "magento/sample-module-service-contract-replacement": "~1.0"
   }
 }
