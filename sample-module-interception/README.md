@@ -12,16 +12,14 @@ The intent of this sample is to demonstrate the following:
 
 ## Technical features
 
-### Plugin Subject
-
-The code being modified by the plugins is a simple capitalization method, located in \Magento\SampleInterception\Model\Intercepted.
-Three empty classes extend this. In order to clearly demonstrate each plugin acting in isolation from other plugins, each 
-plugin is only assigned to one of the classes, and will modify the method's behavior when called through that class.
-
-### Plugins
+### Plugin Types
 
 The format of a plugin method in Magento is (before|after|around)<NameOfModifiedMethod>. Each plugin adds wrapper tags
-to the content it modifies.
+to the content it modifies. The following three plugins demonstrate these different types.
+
+The code being modified is a simple capitalization method, located in \Magento\SampleInterception\Model\Intercepted.
+Several empty classes extend this. In order to clearly demonstrate each plugin acting in isolation from other plugins, each 
+plugin is only assigned to one of the classes, and will modify the method's behavior when called through that class.
 
 #### Before Plugin
 
@@ -41,6 +39,12 @@ Wraps (after)(/after) tags around the base method's output.
 
 Wraps the input to the base method in (around: before base method)(/around: before base method) tags
 Wraps the output of the base method in (around: after base method)(/around: after base method) tags
+
+### Inheritance and Plugins
+
+The last plugin demonstrates the ability to define a plugin on a parent class, and have it modify anything that extends
+that class. The class [Intercepted](Model\Intercepted) has one plugin registered to it, but that plugin 
+is activated when the method is called through the [ChildInherit](Model\Intercepted\ChildInherit).
 
 ### Registering the Plugin
 
