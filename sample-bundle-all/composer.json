@@ -9,6 +9,7 @@
   ],
   "require": {
     "magento/sample-module-minimal": "~1.0",
-    "magento/sample-module-newpage": "~1.0"
+    "magento/sample-module-newpage": "~1.0",
+    "magento/sample-module-interception": "~1.0"
   }
 }

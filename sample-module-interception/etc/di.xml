@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\SampleInterception\Model\Intercepted\ChildBefore">
+        <plugin name="Magento_SampleInterception::demoPluginBefore" type="Magento\SampleInterception\Plugin\PluginBefore" />
+    </type>
+    <type name="Magento\SampleInterception\Model\Intercepted\ChildAfter">
+        <plugin name="Magento_SampleInterception::demoPluginAfter" type="Magento\SampleInterception\Plugin\PluginAfter" />
+    </type>
+    <type name="Magento\SampleInterception\Model\Intercepted\ChildAround">
+        <plugin name="Magento_SampleInterception::demoPluginAround" type="Magento\SampleInterception\Plugin\PluginAround" />
+    </type>
+    <type name="Magento\SampleInterception\Model\Intercepted\ChildInherit">
+        <plugin name="Magento_SampleInterception::demoPluginInheritance" type="Magento\SampleInterception\Plugin\ParentPlugin" />
+    </type>
+</config>
