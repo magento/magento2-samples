@@ -10,7 +10,7 @@ The intent of this sample is to demonstrate how to use service contracts.
 
 ## Technical feature
 
-Block\ProductsList demonstrates usage of service contracts of Magento 2.
+[Block\ProductsList](Block/ProductList.php) demonstrates usage of service contracts of Magento 2.
 
 It uses API of Catalog to get list of products and list of product types.
 Also it uses API from Framework to set filters in product list.
