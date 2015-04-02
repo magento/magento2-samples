@@ -1,6 +1,6 @@
 {
   "name": "magento/sample-module-service-contract-client",
-  "description": "A minimal skeleton Magento 2 module",
+  "description": "A module to demonstrate service contract client",
   "type": "magento2-module",
   "version": "1.0.0",
   "license": [
