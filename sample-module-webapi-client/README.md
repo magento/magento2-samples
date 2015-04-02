@@ -9,7 +9,7 @@ This is one of a collection of examples to demonstrate the features of Magento 2
 ## Technical feature
 
 A simple page is displayed to collect data from a user and an ajax call is executed to get list of products. Products are filtered with help of SearchCriteria filters set by user.
-(example.png)
+![Example](example.png)
 
 
 ## Installation
