@@ -1,5 +1,5 @@
 {
-  "name": "magento/sample-module-minimal",
+  "name": "magento/sample-module-webapi-client",
   "description": "A module to demonstrate REST API functionality",
   "type": "magento2-module",
   "version": "1.0.0",

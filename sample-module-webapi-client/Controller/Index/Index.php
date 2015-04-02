@@ -20,6 +20,10 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     private $resultPageFactory;
 
+    /**
+     * @param Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     */
     public function __construct(
         Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory

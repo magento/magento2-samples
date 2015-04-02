@@ -8,7 +8,9 @@ This is one of a collection of examples to demonstrate the features of Magento 2
 
 ## Technical feature
 
-This component demonstrates usage of Product REST API to get list of products filtered with help of SearchCriteria filters
+A simple page is displayed to collect data from a user and an ajax call is executed to get list of products. Products are filtered with help of SearchCriteria filters set by user.
+(example.png)
+
 
 ## Installation
 

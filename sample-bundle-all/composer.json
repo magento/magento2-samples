@@ -9,6 +9,6 @@
   ],
   "require": {
     "magento/sample-module-minimal": "~1.0",
-    "magento/sample-webapi-client": "~1.0"
+    "magento/sample-module-webapi-client": "~1.0"
   }
 }
