@@ -6,6 +6,7 @@
 namespace Magento\SampleServiceContractClient\Block;
 
 use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Api\Data\ProductTypeInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Api\ProductTypeListInterface;
 use Magento\Framework\Api\FilterBuilder;
@@ -69,18 +70,20 @@ class ProductList extends Template
     }
 
     /**
-     * @return array
+     * @return \Magento\Catalog\Api\Data\ProductTypeInterface[]
      */
     public function getProductTypes()
     {
-        $productTypes = [];
-        foreach ($this->productTypeList->getProductTypes() as $productType) {
-            $productTypes[$productType->getName()] = [
-                'label' => $productType->getLabel(),
-                'is_active' => $productType->getName() === $this->getType(),
-            ];
-        }
-        return $productTypes;
+        return $this->productTypeList->getProductTypes();
+    }
+
+    /**
+     * @param ProductTypeInterface $productType
+     * @return bool
+     */
+    public function isTypeActive(ProductTypeInterface $productType)
+    {
+        return $this->getType() === $productType->getName();
     }
 
     /**
