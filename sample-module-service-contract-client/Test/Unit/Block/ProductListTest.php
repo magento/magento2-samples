@@ -73,55 +73,51 @@ class ProductListTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testGetProductTypesWithoutFilter()
+    public function testGetProductTypes()
     {
-        $expectedResult = [
-            'ProductType1Name' => [
-                'label' => 'ProductType1Label',
-                'is_active' => false,
-            ],
-            'ProductType2Name' => [
-                'label' => 'ProductType2Label',
-                'is_active' => false,
-            ]
-        ];
         $productTypeOne = $this->createProductType('ProductType1Name', 'ProductType1Label');
         $productTypeTwo = $this->createProductType('ProductType2Name', 'ProductType2Label');
         $this->productTypeList->expects($this->once())
             ->method('getProductTypes')
             ->willReturn([$productTypeOne, $productTypeTwo]);
+        $expectedResult = [
+            $productTypeOne,
+            $productTypeTwo
+        ];
         $result = $this->block->getProductTypes();
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function testGetProductTypesWithFilter()
+    /**
+     * @param $requestedType
+     * @param $productType
+     * @param $expectedValue
+     * @dataProvider isTypeActiveDataProvider
+     */
+    public function testIsTypeActive($requestedType, $productType, $expectedValue)
     {
-        $expectedResult = [
-            'ProductType1Name' => [
-                'label' => 'ProductType1Label',
-                'is_active' => false,
-            ],
-            'ProductType2Name' => [
-                'label' => 'ProductType2Label',
-                'is_active' => true,
-            ],
-            'ProductType3Name' => [
-                'label' => 'ProductType3Label',
-                'is_active' => false,
-            ]
-        ];
-        $this->request->expects($this->exactly(3))
+        $this->request->expects($this->exactly(1))
             ->method('getParam')
             ->with($this->equalTo('type'))
-            ->willReturn('ProductType2Name');
-        $productTypeOne = $this->createProductType('ProductType1Name', 'ProductType1Label');
-        $productTypeTwo = $this->createProductType('ProductType2Name', 'ProductType2Label');
-        $productTypeThree = $this->createProductType('ProductType3Name', 'ProductType3Label');
-        $this->productTypeList->expects($this->once())
-            ->method('getProductTypes')
-            ->willReturn([$productTypeOne, $productTypeTwo, $productTypeThree]);
-        $result = $this->block->getProductTypes();
-        $this->assertEquals($expectedResult, $result);
+            ->willReturn($requestedType);
+        $this->assertEquals($expectedValue, $this->block->isTypeActive($productType));
+    }
+
+    public function isTypeActiveDataProvider()
+    {
+        return [
+            'activeType' => [
+                'requestedType' => 'FilteredProductType',
+                'productType' => $this->createProductType('FilteredProductType', 'FilteredProductTypeLabel'),
+                'expectedValue' => true,
+            ],
+            'notActiveType' => [
+                'requestedType' => 'FilteredProductType',
+                'productType' => $this->createProductType('ExampleProductType', 'FilteredProductTypeLabel'),
+                'expectedValue' => false,
+            ]
+
+        ];
     }
 
     public function testGetProductsWithoutFilter()
@@ -191,10 +187,10 @@ class ProductListTest extends \PHPUnit_Framework_TestCase
         $productType = $this->getMockBuilder('Magento\Catalog\Api\Data\ProductTypeInterface')
             ->setMethods(['getName', 'getLabel'])
             ->getMockForAbstractClass();
-        $productType->expects($this->exactly(2))
+        $productType->expects($this->any())
             ->method('getName')
             ->willReturn($name);
-        $productType->expects($this->once())
+        $productType->expects($this->any())
             ->method('getLabel')
             ->willReturn($label);
         return $productType;
