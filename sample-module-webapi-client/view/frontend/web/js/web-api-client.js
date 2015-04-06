@@ -60,6 +60,33 @@ define([
                 });
                 params.searchCriteria.filter_groups.push({"filters": filters});
             });
+            /*
+            Send REST api request. URL defined in the layout configuration(http://magento_root/rest/default/V1/products)
+            Request params looks like:
+            {
+                "searchCriteria":{
+                "filter_groups":[
+                    {
+                        "filters":[
+                            {
+                                "field":"sku",
+                                "value":"simple",
+                                "condition_type":"eq"
+                            },
+                            {
+                                "field":"name",
+                                "value":"product",
+                                "condition_type":"eq"
+                            }
+                        ]
+                    }
+                ],
+                    "current_page":1,
+                    "page_size":10
+            }
+            }
+            This request does not require authentication
+            */
             $.ajax({
                 url: self.options.url,
                 dataType: 'json',
