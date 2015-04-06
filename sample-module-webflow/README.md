@@ -1,6 +1,8 @@
 ## Synopsis
 
-An extension to link one webpage to another.
+This extension contains a simple demonstrate of two page linked together in a flow. The example can be accessed at the following url:
+
+`<magento2-url>/webflow/firstpage`
 
 ## Motivation
 
