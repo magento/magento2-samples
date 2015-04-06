@@ -14,4 +14,4 @@ This can be done by adding the following to the 'require' section.
     
 Ensure you have the package.magento.com added as a repository in your composer.json and then run `composer update` to have composer download the sample modules.
 
-Next run the Magento 2 setup application to have the modules show up in Magento 2.
+Once installed, run the Magento 2 setup application and enable each of the installed modules.
