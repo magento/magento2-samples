@@ -10,11 +10,14 @@ namespace Magento\SampleServiceContractReplacement\Model;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\State\InvalidTransitionException;
+use Magento\GiftMessage\Api\CartRepositoryInterface;
+use Magento\Framework\App\CacheInterface;
+use Magento\Quote\Api\Data\CartInterface;
 
 /**
  * Shopping cart gift message repository object.
  */
-class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
+class CartRepository implements CartRepositoryInterface
 {
     /**
      * Cache key postfix
@@ -24,24 +27,24 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
     /**
      * Quote repository.
      *
-     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository
+     * @var QuoteRepository
      */
     protected $quoteRepository;
 
     /**
      * Cache
      *
-     * @var \Magento\Framework\App\CacheInterface
+     * @var CacheInterface
      */
     protected $cache;
 
     /**
      * @param QuoteRepository $quoteRepository
-     * @param \Magento\Framework\App\CacheInterface $cache
+     * @param CacheInterface $cache
      */
     public function __construct(
         QuoteRepository $quoteRepository,
-        \Magento\Framework\App\CacheInterface $cache
+        CacheInterface $cache
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->cache = $cache;
@@ -66,7 +69,7 @@ class CartRepository implements \Magento\GiftMessage\Api\CartRepositoryInterface
      */
     public function save($cartId, \Magento\GiftMessage\Api\Data\MessageInterface $giftMessage)
     {
-        /** @var \Magento\Quote\Api\Data\CartInterface $quote */
+        /** @var CartInterface $quote */
         $quote = $this->quoteRepository->get($cartId);
         if (0 == $quote->getItemsCount()) {
             throw new InputException(__('Gift Messages is not applicable for empty cart'));

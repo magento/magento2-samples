@@ -9,11 +9,15 @@ namespace Magento\SampleServiceContractReplacement\Model;
 
 use Magento\Framework\Exception\State\InvalidTransitionException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\App\CacheInterface;
+use Magento\GiftMessage\Api\ItemRepositoryInterface;
+use Magento\Quote\Api\CartItemRepositoryInterface;
+use Magento\Quote\Api\Data\CartItemInterface;
 
 /**
  * Shopping cart gift message item repository object.
  */
-class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
+class ItemRepository implements ItemRepositoryInterface
 {
     /**
      * Cache key postfix
@@ -23,33 +27,33 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
     /**
      * Quote Item repository.
      *
-     * @var \Magento\Quote\Api\CartItemRepositoryInterface
+     * @var CartItemRepositoryInterface
      */
     protected $quoteItemRepository;
 
     /**
      * Quote repository.
      *
-     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository
+     * @var QuoteRepository
      */
     protected $quoteRepository;
 
     /**
      * Cache
      *
-     * @var \Magento\Framework\App\CacheInterface
+     * @var CacheInterface
      */
     protected $cache;
 
     /**
-     * @param \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository
+     * @param CartItemRepositoryInterface $quoteItemRepository
      * @param QuoteRepository $quoteRepository
-     * @param \Magento\Framework\App\CacheInterface $cache
+     * @param CacheInterface $cache
      */
     public function __construct(
-        \Magento\Quote\Api\CartItemRepositoryInterface $quoteItemRepository,
+        CartItemRepositoryInterface $quoteItemRepository,
         QuoteRepository $quoteRepository,
-        \Magento\Framework\App\CacheInterface $cache
+        CacheInterface $cache
     ) {
         $this->quoteItemRepository = $quoteItemRepository;
         $this->quoteRepository = $quoteRepository;
@@ -78,7 +82,7 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
     {
         $quote = $this->quoteRepository->get($cartId);
 
-        /** @var \Magento\Quote\Api\Data\CartItemInterface $item */
+        /** @var CartItemInterface $item */
         $item = $this->getQuoteItem($cartId, $itemId);
         if ($item->getProductType() == \Magento\Catalog\Model\Product\Type::TYPE_VIRTUAL) {
             throw new InvalidTransitionException(__('Gift Messages is not applicable for virtual products'));
@@ -98,14 +102,14 @@ class ItemRepository implements \Magento\GiftMessage\Api\ItemRepositoryInterface
      *
      * @param int $cartId
      * @param int $itemId
-     * @return \Magento\Quote\Api\Data\CartItemInterface|null
+     * @return CartItemInterface|null
      * @throws NoSuchEntityException
      */
     protected function getQuoteItem($cartId, $itemId)
     {
         $quoteItem = null;
 
-        /** @var \Magento\Quote\Api\Data\CartItemInterface[] $quoteItems */
+        /** @var CartItemInterface[] $quoteItems */
         $quoteItems = $this->quoteItemRepository->getList($cartId);
         foreach ($quoteItems as $item) {
             if ($item->getItemId() == $itemId) {

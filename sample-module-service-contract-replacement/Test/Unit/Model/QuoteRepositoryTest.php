@@ -7,7 +7,14 @@
 
 namespace Magento\SampleServiceContractReplacement\Test\Unit\Model;
 
-use \Magento\Quote\Model\QuoteRepository;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Model\Store;
+use Magento\SampleServiceContractReplacement\Model\QuoteRepository;
+use Magento\Quote\Model\QuoteFactory;
+use Magento\Quote\Model\Quote;
+use Magento\Quote\Model\Resource\Quote\Collection;
+use Magento\Quote\Api\Data\CartSearchResultsInterfaceFactory;
 
 class QuoteRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,32 +24,32 @@ class QuoteRepositoryTest extends \PHPUnit_Framework_TestCase
     protected $model;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var QuoteFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteFactoryMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var StoreManagerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $storeManagerMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var Store|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $storeMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var Quote|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var CartSearchResultsInterfaceFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $searchResultsDataFactory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var Collection|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteCollectionMock;
 
@@ -102,7 +109,7 @@ class QuoteRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedException NoSuchEntityException
      * @expectedExceptionMessage No such entity with cartId = 14
      */
     public function testGetWithExceptionById()
@@ -124,7 +131,7 @@ class QuoteRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedException NoSuchEntityException
      * @expectedExceptionMessage No such entity with cartId = 15
      */
     public function testGetWithExceptionByIsActive()

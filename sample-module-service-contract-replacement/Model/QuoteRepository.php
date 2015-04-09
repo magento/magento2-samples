@@ -7,8 +7,10 @@ namespace Magento\SampleServiceContractReplacement\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote;
+use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Api\Data\CartInterface;
 
-class QuoteRepository extends \Magento\Quote\Model\QuoteRepository implements \Magento\Quote\Api\CartRepositoryInterface
+class QuoteRepository extends \Magento\Quote\Model\QuoteRepository implements CartRepositoryInterface
 {
     /**
      * Get active quote by id
@@ -16,7 +18,7 @@ class QuoteRepository extends \Magento\Quote\Model\QuoteRepository implements \M
      * @param int $cartId
      * @param int[] $sharedStoreIds
      * @throws NoSuchEntityException
-     * @return \Magento\Quote\Api\Data\CartInterface
+     * @return CartInterface
      */
     public function get($cartId, array $sharedStoreIds = [])
     {

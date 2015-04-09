@@ -5,10 +5,13 @@
  */
 namespace Magento\SampleServiceContractReplacement\Model;
 
+use Magento\GiftMessage\Api\Data\MessageInterface;
+use Magento\GiftMessage\Api\Data\MessageExtensionInterface;
+
 /**
  * Gift Message model
  */
-class Message implements  \Magento\GiftMessage\Api\Data\MessageInterface
+class Message implements MessageInterface
 {
     /**
      * Data storage
@@ -108,7 +111,7 @@ class Message implements  \Magento\GiftMessage\Api\Data\MessageInterface
     /**
      * {@inheritdoc}
      */
-    public function setExtensionAttributes(\Magento\GiftMessage\Api\Data\MessageExtensionInterface $extensionAttributes)
+    public function setExtensionAttributes(MessageExtensionInterface $extensionAttributes)
     {
         return $this->setData(self::EXTENSION_ATTRIBUTES_KEY, $extensionAttributes);
     }

@@ -7,8 +7,14 @@
 
 namespace Magento\SampleServiceContractReplacement\Test\Unit\Model;
 
-use Magento\SampleServiceContractReplacement\Model\ItemRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\State\InvalidTransitionException;
+use Magento\Framework\App\CacheInterface;
+use Magento\SampleServiceContractReplacement\Model\ItemRepository;
+use Magento\SampleServiceContractReplacement\Model\QuoteRepository;
+use Magento\GiftMessage\Api\Data\MessageInterface;
+use Magento\Quote\Api\Data\CartItemInterface;
+use Magento\Quote\Api\Data\CartInterface;
 
 class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,27 +24,27 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     protected $itemRepository;
 
     /**
-     * @var \Magento\SampleServiceContractReplacement\Model\QuoteRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var QuoteRepository|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteRepositoryMock;
 
     /**
-     * @var \Magento\Quote\Api\Data\CartItemInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var CartItemInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteItemMock;
 
     /**
-     * @var \Magento\Quote\Api\Data\CartInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var CartInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $quoteMock;
 
     /**
-     * @var \Magento\Framework\App\CacheInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var CacheInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $cacheMock;
 
     /**
-     * @var \Magento\GiftMessage\Api\Data\MessageInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var MessageInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $messageMock;
 
@@ -78,7 +84,7 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedException NoSuchEntityException
      * @expectedExceptionMessage  There is no item with provided id in the cart
      */
     public function testGetNonExistingId()
@@ -101,7 +107,7 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedException NoSuchEntityException
      * @expectedExceptionMessage No such entity with cartId = 0
      */
     public function testSaveWithNoSuchEntityException()
@@ -113,7 +119,7 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
+     * @expectedException NoSuchEntityException
      * @expectedExceptionMessage There is no item with provided id in the cart
      */
     public function testSaveWithNoSuchEntityExceptionItem()
@@ -126,7 +132,7 @@ class ItemRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Magento\Framework\Exception\State\InvalidTransitionException
+     * @expectedException InvalidTransitionException
      * @expectedExceptionMessage Gift Messages is not applicable for virtual products
      */
     public function testSaveWithInvalidTransitionException()
