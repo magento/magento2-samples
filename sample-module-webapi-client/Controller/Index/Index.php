@@ -6,6 +6,9 @@
 namespace Magento\SampleWebapiClient\Controller\Index;
 
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\View\Result\Page;
+use Magento\Framework\View\Result\PageFactory;
 
 /**
  * Loads the demo page.
@@ -13,20 +16,20 @@ use Magento\Framework\App\Action\Context;
  * This is a basic controller that only loads the corresponding layout file. It may duplicate other such 
  * controllers, and thus it is considered tech debt. This code duplication will be resolved in future releases.
  */
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action
 {
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     private $resultPageFactory;
 
     /**
      * @param Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param PageFactory $resultPageFactory
      */
     public function __construct(
         Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
@@ -35,7 +38,7 @@ class Index extends \Magento\Framework\App\Action\Action
     /**
      * Index action
      *
-     * @return \Magento\Framework\View\Result\Page
+     * @return Page
      */
     public function execute()
     {
