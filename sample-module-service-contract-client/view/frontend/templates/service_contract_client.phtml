@@ -1,0 +1,53 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
+ * @var \Magento\SampleServiceContractClient\Block\ProductList $block
+ */
+?>
+<?php
+/** @var \Magento\Catalog\Api\Data\ProductSearchResultsInterface $products */
+$products = $block->getProducts();
+/** @var \Magento\Catalog\Api\Data\ProductTypeInterface[] $productTypes */
+$productTypes = $block->getProductTypes();
+?>
+<div class="toolbar toolbar-products">
+    <form method="get">
+        <div class="toolbar-sorter sorter">
+            <label class="sorter-label" for="filter"><?php echo __('Type') ?></label>
+            <select id="filter" name="type" class="sorter-options">
+                <option value="">All</option>
+                <?php foreach ($productTypes as $id => $type) : ?>
+                    <option value="<?php echo $type->getName() ?>"
+                            <?php if ($block->isTypeActive($type)) : ?>selected="selected"<?php endif ?>
+                        ><?php echo $block->escapeHtml($type->getLabel()) ?></option>
+                <?php endforeach ?>
+            </select>
+            <button type="submit" class="action"><?php echo __('Filter') ?></button>
+        </div>
+    </form>
+</div>
+<?php if ($products->getTotalCount()) : ?>
+    <table>
+        <thead>
+        <tr>
+            <th>SKU</th>
+            <th>Name</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($products->getItems() as $product) : ?>
+            <tr>
+                <td><?php echo $block->escapeHtml($product->getSku()) ?></td>
+                <td><?php echo $block->escapeHtml($product->getName()) ?></td>
+                <td><?php echo $block->escapeHtml($productTypes[$product->getTypeId()]['label']) ?></td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <?php echo __('Products not found') ?>
+<?php endif ?>
