@@ -9,6 +9,13 @@
   ],
   "require": {
     "magento/sample-module-minimal": "~1.0",
-    "magento/sample-module-webapi-client": "~1.0"
+    "magento/sample-module-theme": "~1.0",
+    "magento/sample-module-newpage": "~1.0",
+    "magento/sample-module-webflow": "~1.0",
+    "magento/sample-module-modifycontent": "~1.0",
+    "magento/sample-module-interception": "~1.0",
+    "magento/sample-module-service-contract-client": "~1.0",
+    "magento/sample-module-webapi-client": "~1.0",
+    "magento/sample-module-service-contract-replacement": "~1.0"
   }
 }

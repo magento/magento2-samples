@@ -1,0 +1,23 @@
+{
+  "name": "magento/sample-module-webflow",
+  "description": "A module to demonstrate navigating between two pages",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0",
+    "magento/framework": "~0.74",
+    "magento/magento-composer-installer": "*"
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "Magento/SampleWebFlow"
+      ]
+    ]
+  }
+}
