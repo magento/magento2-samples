@@ -1,6 +1,7 @@
 ## Synopsis
 
-This extension modifies product page.
+This extension modifies product page. It shows how to change page layout (from `1column` to `2column-right`)
+and how to replace part of the page (Block) with new template.
 
 ## Motivation
 
