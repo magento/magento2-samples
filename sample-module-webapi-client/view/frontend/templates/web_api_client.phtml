@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var Magento\Framework\View\Element\Template $block */
+?>
+<div data-mage-init='{"sampleWebapi":{"url": "<?php echo $block->getUrl('', ['rest' => 'default/V1/products']) ?>"}}'>
+    <fieldset class="fieldset" data-role="filter_group">
+        <?php include($block->getTemplateFile('Magento_SampleWebapiClient::filter.phtml')); ?>
+        <p>OR</p>
+        <?php include($block->getTemplateFile('Magento_SampleWebapiClient::filter.phtml')); ?>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button data-role="search_products" type="submit" title="<?php echo __('Search') ?>" class="action submit primary">
+                <span><?php echo __('Search') ?></span>
+            </button>
+        </div>
+    </div>
+    <div data-role="result"></div>
+</div>

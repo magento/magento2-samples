@@ -8,6 +8,7 @@
     "AFL-3.0"
   ],
   "require": {
-    "magento/sample-module-minimal": "~1.0"
+    "magento/sample-module-minimal": "~1.0",
+    "magento/sample-module-webapi-client": "~1.0"
   }
 }
