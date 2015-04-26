@@ -54,7 +54,7 @@ class Page extends \Magento\Framework\View\Element\Template
         Context $context,
         Intercepted\ChildBefore $beforeModel,
         Intercepted\ChildAfter $afterModel,
-        Intercepted\ChildARound $aroundModel,
+        Intercepted\ChildAround $aroundModel,
         Intercepted\ChildInherit $inheritModel,
         array $data = []
     ) {
