@@ -126,11 +126,11 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     protected function buildRateForLocation($locationId, array $location)
     {
-        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
-        $method = $this->rateMethodFactory->create();
-        $method->setCarrier($this->getCarrierCode());
+        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rateResultMethod */
+        $rateResultMethod = $this->rateMethodFactory->create();
+        $rateResultMethod->setCarrier($this->getCarrierCode());
         $carrierTitle = $this->getConfigData('title');
-        $method->setCarrierTitle($carrierTitle);
+        $rateResultMethod->setCarrierTitle($carrierTitle);
 
         /**
          * Displayed as shipping method under Carrier(In-Store Pickup)
@@ -142,12 +142,12 @@ class Carrier extends AbstractCarrier implements CarrierInterface
             $location['postcode'],
             $location['message']
         );
-        $method->setMethodTitle($methodTitle);
-        $method->setMethod($locationId);
+        $rateResultMethod->setMethodTitle($methodTitle);
+        $rateResultMethod->setMethod($locationId);
 
-        $method->setPrice(0);
-        $method->setCost(0);
-        return $method;
+        $rateResultMethod->setPrice(0);
+        $rateResultMethod->setCost(0);
+        return $rateResultMethod;
     }
 
     /**
