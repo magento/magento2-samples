@@ -21,6 +21,10 @@ In order to be able to install any of these samples you'll need to be sure that 
     ]
 ```
 
+The above can also be added via the composer cli with the command: 
+
+    composer config repositories.magento composer http://packages.magento.com/
+
 ## Contributors
 
 Magento Core team
