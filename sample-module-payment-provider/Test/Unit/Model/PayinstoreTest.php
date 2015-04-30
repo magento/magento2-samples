@@ -87,14 +87,15 @@ class PayinstoreTest extends \PHPUnit_Framework_TestCase
     public function testIsAvailableNotActive()
     {
         $this->scopeConfig->expects($this->at(0))->method('getValue')->willReturn(0);
-        $this->assertFalse($this->model->isAvailable());
+        /** @var /PHPUnit_Framework_MockObject_MockObject $quote */
+        $quote = $this->getMockBuilder('Magento\Quote\Api\Data\CartInterface')
+            ->setMethods(array('getStoreId'))
+            ->getMockForAbstractClass();
+        $this->assertFalse($this->model->isAvailable($quote));
     }
 
     public function testIsAvailableNoQuote()
     {
-        $this->scopeConfig->expects($this->at(0))->method('getValue')->willReturn(1);
-        $this->scopeConfig->expects($this->at(1))->method('getValue')->willReturn('flatrate_flatrate');
-
         $this->assertFalse($this->model->isAvailable());
     }
 

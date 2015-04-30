@@ -10,7 +10,7 @@ use Magento\Payment\Model\Method\AbstractMethod;
 
 
 /**
- * Class
+ * Pay In Store payment method model
  */
 class Payinstore extends AbstractMethod
 {
@@ -80,8 +80,11 @@ class Payinstore extends AbstractMethod
      */
     public function isAvailable($quote = null)
     {
+        if ($quote === null) {
+            return false;
+        }
         return parent::isAvailable($quote) && $this->isCarrierAllowed(
-            $quote ? $quote->getShippingAddress()->getShippingMethod() : null
+            $quote->getShippingAddress()->getShippingMethod()
         );
     }
 
