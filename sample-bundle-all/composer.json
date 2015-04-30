@@ -16,6 +16,7 @@
     "magento/sample-module-interception": "~1.0",
     "magento/sample-module-service-contract-client": "~1.0",
     "magento/sample-module-webapi-client": "~1.0",
-    "magento/sample-module-service-contract-replacement": "~1.0"
+    "magento/sample-module-service-contract-replacement": "~1.0",
+    "magento/sample-module-payment-provider": "~1.0"
   }
 }
