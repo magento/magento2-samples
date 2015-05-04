@@ -1,11 +1,12 @@
 ## Synopsis
 
-This module contains a page which can be viewed at <m2root>/sampleinterception. This page features a demo of plugins being 
+This module contains a page which can be viewed at [m2root]/sampleinterception. This page features a demo of plugins being 
 used to directly modify page content.
 
 ## Motivation
 
 The intent of this sample is to demonstrate the following:
+
 1. Conventions for writing a plugin
 2. Integration of plugins with other code
 3. Behavior of different plugin types
@@ -14,7 +15,7 @@ The intent of this sample is to demonstrate the following:
 
 ### Plugin Types
 
-The format of a plugin method in Magento is (before|after|around)<NameOfModifiedMethod>. Each plugin adds wrapper tags
+The format of a plugin method in Magento is (before|after|around)NameOfModifiedMethod. Each plugin adds wrapper tags
 to the content it modifies. The following three plugins demonstrate these different types.
 
 The code being modified is a simple capitalization method, located in \Magento\SampleInterception\Model\Intercepted.
@@ -48,13 +49,13 @@ is activated when the method is called through the [ChildInherit](Model\Intercep
 
 ### Registering the Plugin
 
-A plugin is registered in a module's di.xml config file, located in <module>/etc/<areacode>/di.xml, or <module>/etc/di.xml.
+A plugin is registered in a module's di.xml config file, located in [module]/etc/[areacode]/di.xml, or [module]/etc/di.xml.
 
 The format to add the plugin is:
 
 ```xml
 <type name="Class\To\Modify">
-            <plugin name="someUniqueName" type="Class\Containing\Plugins" sortOrder="1" />
+    <plugin name="someUniqueName" type="Class\Containing\Plugins" sortOrder="1" />
 </type>
 ```
 
