@@ -1,6 +1,7 @@
 ## Synopsis
 
-An extension to add Payment method
+An extension to add Payment method.
+This payment method can be restricted to work only with specific Shipping method.
 
 ## Motivation
 
