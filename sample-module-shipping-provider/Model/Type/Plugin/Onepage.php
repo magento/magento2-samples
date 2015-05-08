@@ -27,6 +27,8 @@ class Onepage
     }
 
     /**
+     * Replace shipping address with pickup location address
+     *
      * @param CheckoutOnePage $subject
      * @param array $result
      * @return $this

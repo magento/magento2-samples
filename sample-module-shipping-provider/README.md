@@ -1,6 +1,7 @@
 ## Synopsis
 
-An extension to add Shipping carrier
+An extension to add Shipping carrier. This extension add "In-Store Pickup" shipping carrier.
+Several pickup locations can be configured with this shipping carrier. In addition this shipping method can be restricted to work only with specific Payment methods
 
 ## Motivation
 
