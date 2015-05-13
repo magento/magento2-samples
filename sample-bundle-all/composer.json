@@ -1,17 +1,22 @@
 {
-  "name": "magento/sample-bundle-all",
-  "description": "A package that pulls in all Magento 2 sample modules",
-  "type": "metapackage",
-  "version": "1.0.0",
-  "license": [
-    "OSL-3.0",
-    "AFL-3.0"
-  ],
-  "require": {
-    "magento/sample-module-minimal": "~1.0",
-    "magento/sample-module-newpage": "~1.0",
-    "magento/sample-module-interception": "~1.0",
-    "magento/sample-module-webflow": "~1.0",
-    "magento/sample-module-servicecontract-new": "~1.0"
-  }
+    "name": "magento/sample-bundle-all",
+    "description": "A package that pulls in all Magento 2 sample modules",
+    "type": "metapackage",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "magento/sample-module-minimal": "~1.0",
+        "magento/sample-module-theme": "~1.0",
+        "magento/sample-module-newpage": "~1.0",
+        "magento/sample-module-webflow": "~1.0",
+        "magento/sample-module-modifycontent": "~1.0",
+        "magento/sample-module-interception": "~1.0",
+        "magento/sample-module-service-contract-client": "~1.0",
+        "magento/sample-module-webapi-client": "~1.0",
+        "magento/sample-module-service-contract-replacement": "~1.0",
+        "magento/sample-module-servicecontract-new": "~1.0"
+    }
 }
