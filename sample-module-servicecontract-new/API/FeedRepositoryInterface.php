@@ -6,6 +6,8 @@
 
 namespace Magento\SampleServiceContractNew\API;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Data\SearchResultInterface;
 use Magento\SampleServiceContractNew\API\Data\FeedInterface;
 
 /**
@@ -16,9 +18,10 @@ interface FeedRepositoryInterface
     /**
      * Get array of all possible feeds
      *
-     * @return FeedInterface[]
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return SearchResultInterface
      */
-    public function getList();
+    public function getList(SearchCriteriaInterface $searchCriteria);
 
     /**
      * Get feed by it's identifier
