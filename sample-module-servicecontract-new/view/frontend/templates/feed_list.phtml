@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
+ * @var \Magento\SampleServiceContractNew\Block\FeedList $block
+ */
+?>
+<?php
+/**
+ * @var \Magento\SampleServiceContractNew\API\Data\FeedInterface[] $feeds
+ */
+$feeds = $block->getFeeds();
+?>
+<?php if ($feeds): ?>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Link</th>
+        </tr>
+        <?php foreach ($feeds as $feed): ?>
+            <tr>
+                <td><?php echo __($feed->getTitle()) ?></td>
+                <td><?php echo __($feed->getDescription()) ?></td>
+                <td><a href="<?php echo $feed->getLink() ?>"><?php echo $feed->getLink() ?></a></td>
+            </tr>
+        <?php endforeach ?>
+    </table>
+<?php endif ?>
