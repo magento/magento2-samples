@@ -73,7 +73,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException NoSuchEntityException
+     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
      * @expectedExceptionMessage No such entity with cartId = 0
      */
     public function testGetNonExistingId()
@@ -97,7 +97,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException NoSuchEntityException
+     * @expectedException \Magento\Framework\Exception\NoSuchEntityException
      * @expectedExceptionMessage No such entity with cartId = 1
      */
     public function testSaveWithNoSuchEntityException()
@@ -109,7 +109,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InputException
+     * @expectedException \Magento\Framework\Exception\InputException
      * @expectedExceptionMessage Gift Messages is not applicable for empty cart
      */
     public function testSaveWithInputException()
@@ -122,7 +122,7 @@ class CartRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidTransitionException
+     * @expectedException \Magento\Framework\Exception\State\InvalidTransitionException
      * @expectedExceptionMessage Gift Messages is not applicable for virtual products
      */
     public function testSaveWithInvalidTransitionException()
