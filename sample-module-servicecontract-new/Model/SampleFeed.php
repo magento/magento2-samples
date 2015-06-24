@@ -7,9 +7,9 @@
 namespace Magento\SampleServiceContractNew\Model;
 
 use Magento\SampleServiceContractNew\API\Data\FeedInterface;
-use Magento\SampleServiceContractNew\Model\Data\Feed;
+use Magento\SampleServiceContractNew\Model\Data\Feed as DataFeed;
 
-class SampleFeed extends Feed implements FeedInterface
+class SampleFeed extends DataFeed implements FeedInterface
 {
     /**
      * @return string
