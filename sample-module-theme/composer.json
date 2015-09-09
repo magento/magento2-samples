@@ -3,8 +3,8 @@
     "description": "N/A",
     "require": {
         "php": "~5.5.0|~5.6.0",
-        "magento/theme-frontend-luma": "~0.74",
-        "magento/framework": "~0.74",
+        "magento/theme-frontend-luma": "~1.0.0",
+        "magento/framework": "~1.0.0",
         "magento/magento-composer-installer": "*"
     },
     "type": "magento2-theme",
