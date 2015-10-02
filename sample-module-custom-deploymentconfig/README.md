@@ -19,9 +19,9 @@ setup:install command, allowing user to specify custom configuration during inst
 Magento\Framework\Setup\ConfigOptionsListInterface
 
 * Implement required methods:
-** getOptions(): Returns list of custom options that should be added to setup:config:set command
-** createConfigData(): Creates the required array structure to be stored in deployment config
-** validate(): Validates user input
+ * getOptions(): Returns list of custom options that should be added to setup:config:set command
+ * createConfigData(): Creates the required array structure to be stored in deployment config
+ * validate(): Validates user input
 
 * Clear cache
 
