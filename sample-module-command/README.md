@@ -1,72 +1,120 @@
-## Synopsis
+#### Contents
+*   <a href="#syn">Synopsis</a>
+*   <a href="#over">Overview</a>
+*   <a href="#install">Install the sample module</a>
+*   <a href="#add-register">Add and register the command</a>
+*   <a href="#tests">Tests</a>
+*   <a href="#contrib">Contributors</a>
+*   <a href="#lic">License</a>
 
-This module contains few commands under example: section.
 
-## Motivation
+<h2 id="syn">Synopsis</h2>
 
-This is one of a collection of examples to demonstrate the features of Magento 2.
-The intent of this sample is to demonstrate how to create Magento Cli commands.
+This sample module creates two new command-line commands:
 
-## Technical feature
+*   `magento example:check-active-modules` (displays the list of enabled modules)
+*   `magento example:greeting` (displays a greeting)
 
-CLI tool is a script on php which is executable from the CLI. It will be located under %root_dir%/bin/ and called magento.
-In order to run a script, user will make it executable and type a path to it in the shell
-> cd %magento_root%
-> ./bin/magento
+You can use this sample module as an example to create your own custom commands.
 
-CLI tool itself will not have any commands other than default things like "help".
-All the commands will be provided by the modules which are register them through the mechanism of registration provided by a tool.
+<h2 id="over">Overview</h2>
+As with all other Magento command-line utilities, you run this sample command from the `<your Magento install dir>bin` directory. For more information, see the <a href="http://devdocs.magento.com/guides/v2.0/install-gde/install/cli/install-cli.html#instgde-install-cli-first" target="_blank">Magento Installation Guide</a>.
 
-Module commands always rely on Magento application and will need to have access to its context, dependency injections, plugins etc.
-Also module command should be implemented in scope of particular module and depends on the module status.
-Command can use Object Manager and Magento DI features, for example it can use injection via constructor.
+Before you begin, make sure you understand the following:
 
-## Adding Command And Registration Mechanism
+*   All Magento command-line interface (CLI) commands rely on the Magento application and must have access to its context, dependency injections, plugins, and so on.
+*   All CLI commands should be implemented in the scope of your module and should depend on the module's status.
+*   Your command can use the Object Manager and Magento dependency injection features; for example, it can use <a href="http://devdocs.magento.com/guides/v2.0/extension-dev-guide/depend-inj.html#dep-inj-preview-cons" target="_blank">constructor dependency injection</a>.
+*   You must register your command as discussed in <a href="#add-register">Add and register the command</a>.
 
-* Create Command class (recomended <module_dir>/Console/Command/) which represents Command in CLI extends base class (Symfony\Component\Console\Command\Command) and overrides 2 protected methods:
+<h2 id="install">Install the sample module</h2>
+You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-register">Add and register the command</a>.
 
-    class CacheClearCommand extends Command
-    {
-        $cacheModel;
+### Clone the magento2-samples repository
+Clone the <a href="https://github.com/magento/magento2-samples" target="_blank">magento2-samples</a> repository using either the HTTPS or SSH protocols. 
 
-        public function __construct(CacheModel $cacheModel)
+### Copy the code
+Create a directory for the sample module and copy `magento2-samples/sample-module-command` to it:
+
+    mkdir -p <your Magento install dir>/app/code/Magento/CommandExample
+    cp -R <magento2-samples clone dir>/sample-module-command/* <your Magento install dir>/app/code/Magento/CommandExample
+
+### Update the Magento database and schema
+If you haven't installed the Magento application yet, install it now. After it's installed, run the following command:
+
+    php <your Magento install dir>/bin/magento setup:upgrade
+
+Clean the cache and compiled code directories:
+
+    cd <your Magento install dir>/var
+    rm -rf cache/* page_cache/* di/* generation/* 
+
+### Verify the module is installed
+Enter the following command:
+
+    php <your Magento install dir>/bin/magento --list
+
+The following confirms you installed the module correctly:
+
+    example
+        example:check-active-modules              Checks application status (installed or not)
+        example:greeting                          Greeting command
+
+<h2 id="add-register">Add and register the command</h2>
+To add the command and register it:
+
+1.  Create a Command class (the recommended location is `<module_dir>/Console/Command`).
+
+    This class represents each of your module's CLI commands. (See `app/code/Magento/CommandExample/Console/Command` for examples.)
+
+    Your Command class extends base class (`Symfony\Component\Console\Command\Command`) and overrides two protected methods:
+
+        class CacheClearCommand extends Command
         {
-            $this->cacheModel = $cacheModel;
-            parent::__construct();
+            $cacheModel;
+
+            public function __construct(CacheModel $cacheModel)
+            {
+                $this->cacheModel = $cacheModel;
+                parent::__construct();
+         }
+
+           protected function configure()
+            {
+                $this->setName('cache:clear')
+                    ->setDescription('Clear cache');
+            }
+
+            protected function execute(InputInterface $input, OutputInterface $output)
+            {
+                $this->cacheModel->clearCache();
+                $output->writeln('Cache is cleared.');
+            }
         }
 
-        protected function configure()
-        {
-            $this->setName('cache:clear')
-                ->setDescription('Clear cache');
-        }
+2.  Declare your Command class in `Magento\Framework\Console\CommandList` using dependency injection (`<module_dir>/etc/di.xml`):
 
-        protected function execute(InputInterface $input, OutputInterface $output)
-        {
-            $this->cacheModel->clearCache();
-            $output->writeln('Cache is cleared.');
-        }
-    }
-* Declare command class in Magento\Framework\Console\CommandList using DI (<module_dir>/etc/di.xml).
-    <type name="Magento\Framework\Console\CommandList">
-        <arguments>
-            <argument name="commands" xsi:type="array">
-                <item name="cache_cleaner" xsi:type="object">Magento\Cache\Console\Command\CacheClearCommand</item>
-            </argument>
-        </arguments>
-    </type>
-* Clear application cache
+        <type name="Magento\Framework\Console\CommandList">
+            <arguments>
+                <argument name="commands" xsi:type="array">
+                    <item name="cache_cleaner" xsi:type="object">Magento\Cache\Console\Command\CacheClearCommand</item>
+                </argument>
+            </arguments>
+        </type>
 
-* run "php <path to magento app>/bin/magento list" to make sure that command is present
+2.  Clean the cache and compiled code directories:
 
-## Tests
+        cd <your Magento install dir>/var
+        rm -rf cache/* page_cache/* di/* generation/* 
 
-Unit tests could be found in the [Test/Unit](Test/Unit) directory.
+<h2 id="tests">Tests</h2>
 
-## Contributors
+Unit tests can be found in the [Test/Unit](Test/Unit) directory.
+
+<h2 id="contrib">Contributors</h2>
 
 Magento Core team
 
-## License
+<h2 id="lic">License</h2>
 
 [Open Source License](LICENSE.txt)
