@@ -13,8 +13,14 @@ use Magento\Framework\Setup\Option\TextConfigOption;
 
 class ConfigOptionsList implements ConfigOptionsListInterface
 {
+    /**
+     * Name of custom option in setup:config:set command
+     */
     const INPUT_KEY_CUSTOM_OPTION = 'custom-option';
 
+    /**
+     * Path to the custom configuration in deployment config
+     */
     const CONFIG_PATH_CUSTOM_OPTION = 'example/custom-option';
 
     /**
