@@ -8,13 +8,13 @@
 *   <a href="#lic">License</a>
 
 <h2 id="syn">Synopsis</h2>
-This module contains one command-line command under `example:show-custom-deployment-config` that enables you to add custom options to the Magento deployment configuration.
+This module contains one command-line command under `example:show-custom-deployment-config` that enables you to display custom options you added to the Magento deployment configuration.
 
-You can use this sample module as an example to create your own custom commands with custom options to the <a href="http://devdocs.magento.com/guides/v2.0/install-gde/install/cli/install-cli-subcommands-deployment.html">`setup:config:set`</a> command.
+Creating custom options is discussed in <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
 
 <h2 id="over">Overview</h2>
-`setup:config:set` is a command for managing Magento deployment configuration. Modules are able to store their own custom
-configuration in the Magento deployment configuration and later retrieve from it. Custom options will also appear in the
+`setup:config:set` is a command for managing Magento deployment configuration. Modules store their custom
+configuration in the Magento deployment configuration and later retrieve from it. Custom options also display in the
 `setup:install` command, allowing the user to specify custom configuration during installation.
 
 <h2 id="install">Install the sample module</h2>
@@ -48,10 +48,10 @@ The following confirms you installed the module correctly:
 To use the sample command:
 
 	cd <your Magento install dir>/bin
-	php magento example:show-custom-deployment-config --command=test
+	php magento example:show-custom-deployment-config
 	php magento setup:config:set --help
 
-The preceding commands add `test` as an option to `setup:config:set`. The last command confirms it was added.
+`magento example:show-custom-deployment-config` displays only custom options in `magento setup:config:set` while `magento setup:config:set --help` displays all options. Your custom option should display in both commands.
 
 <h2 id="add-options">Add custom options to <code>setup:config:set</code></h2>
 To implement this command:
@@ -65,9 +65,9 @@ To implement this command:
 	* `createConfigData()`: Creates the required array structure to be stored in the deployment configuration
 	* `validate()`: Validates user input
 
-3.	Clean the Magento cache
+3.	Clean the Magento cache.
 
-4.	Run `php <path to Magento root>/bin/magento setup:config:set --help` to make sure the custom option is present
+4.	Run `php <path to Magento root>/bin/magento setup:config:set --help` to make sure the custom option is present.
 
 ## Tests
 
