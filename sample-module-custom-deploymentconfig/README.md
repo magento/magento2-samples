@@ -51,7 +51,7 @@ To use the sample command:
 	php magento example:show-custom-deployment-config
 	php magento setup:config:set --help
 
-`magento example:show-custom-deployment-config` displays the value assigned to the custom option defined in `Magento\CustomDeploymentConfigExample\Setup\ConfigOptionsList` while `magento setup:config:set --help` displays all options.
+`magento example:show-custom-deployment-config` displays the value assigned to the custom option defined in `Magento\CustomDeploymentConfigExample\Setup\ConfigOptionsList` while `magento setup:config:set --help` displays all options available for set.
 
 <h2 id="add-options">Add custom options to <code>setup:config:set</code></h2>
 To implement this command:
