@@ -1,31 +1,73 @@
-## Synopsis
+#### Contents
+*   <a href="#syn">Synopsis</a>
+*   <a href="#over">Overview</a>
+*   <a href="#install">Install the sample module</a>
+*   <a href="#add-options">Add custom options to <code>setup:config:set</code></a>
+*   <a href="#tests">Tests</a>
+*   <a href="#contrib">Contributors</a>
+*   <a href="#lic">License</a>
 
-This module contains one command under example: section. and one ConfigOptionsList class in Setup
+<h2 id="syn">Synopsis</h2>
+This module contains one command-line command under `example:show-custom-deployment-config` that enables you to display custom options you added to the Magento deployment configuration.
 
-## Motivation
+Creating custom options is discussed in <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
 
-This is one of a collection of examples to demonstrate the features of Magento 2.
-The intent of this sample is to demonstrate how to add custom option to setup:config:set command
+<h2 id="over">Overview</h2>
+`setup:config:set` is a command for managing Magento deployment configuration. Modules store their custom
+configuration in the Magento deployment configuration and later retrieve from it. Custom options also display in the
+`setup:install` command, allowing the user to specify custom configuration during installation.
 
-## Technical feature
+<h2 id="install">Install the sample module</h2>
+You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
 
-setup:config:set is a command for managing Magento deployment configuration. Modules are able to store their own custom
-configuration in the Magento deployment configuration and later retrieve from it. Custom options will also appear in
-setup:install command, allowing user to specify custom configuration during installation.
+### Clone the magento2-samples repository
+Clone the <a href="https://github.com/magento/magento2-samples" target="_blank">magento2-samples</a> repository using either the HTTPS or SSH protocols. 
 
-## Adding custom options to setup:config:set mechanism
+### Copy the code
+Create a directory for the sample module and copy `magento2-samples/sample-module-custom-deploymentconfig` to it:
 
-* Create class ConfigOptionsList in <module_dir>/Setup which implements
-Magento\Framework\Setup\ConfigOptionsListInterface
+    mkdir -p <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
+    cp -R <magento2-samples clone dir>/sample-module-custom-deploymentconfig/* <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
 
-* Implement required methods:
- * getOptions(): Returns list of custom options that should be added to setup:config:set command
- * createConfigData(): Creates the required array structure to be stored in deployment config
- * validate(): Validates user input
+### Update the Magento database and schema
+If you haven't installed the Magento application yet, install it now. After it's installed, run the following command:
 
-* Clear cache
+    php <your Magento install dir>/bin/magento setup:upgrade
 
-* Run php <path to Magento root>/bin/magento setup:config:set --help to make sure custom option is present
+### Verify the module is installed
+Enter the following command:
+
+    php <your Magento install dir>/bin/magento --list
+
+The following confirms you installed the module correctly:
+
+    example
+         example:show-custom-deployment-config     Show custom deployment configuration option
+
+### Command usage
+To use the sample command:
+
+	cd <your Magento install dir>/bin
+	php magento example:show-custom-deployment-config
+	php magento setup:config:set --help
+
+`magento example:show-custom-deployment-config` displays only custom options in `magento setup:config:set` while `magento setup:config:set --help` displays all options. Your custom option should display in both commands.
+
+<h2 id="add-options">Add custom options to <code>setup:config:set</code></h2>
+To implement this command:
+
+1.	Create class `ConfigOptionsList` in `<module_dir>/Setup` that implements
+`Magento\Framework\Setup\ConfigOptionsListInterface`
+
+2.	Implement required methods:
+
+	* `getOptions()`: Returns list of custom options that should be added to the `setup:config:set` command
+	* `createConfigData()`: Creates the required array structure to be stored in the deployment configuration
+	* `validate()`: Validates user input
+
+3.	Clean the Magento cache.
+
+4.	Run `php <path to Magento root>/bin/magento setup:config:set --help` to make sure the custom option is present.
 
 ## Tests
 
