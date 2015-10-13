@@ -3,15 +3,13 @@
   "description": "Custom deployment config option example",
   "type":"magento2-module",
   "require": {
-    "php": "~5.5.0|~5.6.0"
+    "php": "~5.5.0|~5.6.0|~7.0.0"
   },
   "version": "1.0.0",
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Magento/CustomDeploymentConfigExample"
-      ]
-    ]
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Magento\\CustomDeploymentConfigExample\\": ""
+    }
   }
 }
