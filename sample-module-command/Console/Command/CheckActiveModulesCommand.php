@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\Module\ModuleListInterface;
 
-class CheckActiveModulesCommand  extends Command
+class CheckActiveModulesCommand extends Command
 {
     /**
      * Module list
