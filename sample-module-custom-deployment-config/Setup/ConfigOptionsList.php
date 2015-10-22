@@ -11,6 +11,10 @@ use Magento\Framework\Config\File\ConfigFilePool;
 use Magento\Framework\Setup\ConfigOptionsListInterface;
 use Magento\Framework\Setup\Option\TextConfigOption;
 
+/**
+ * This class adds the custom option to the deployment configuration.
+ * A DeploymentConfig object is available to be used when creating config data and validating option values.
+ */
 class ConfigOptionsList implements ConfigOptionsListInterface
 {
     /**
@@ -19,7 +23,8 @@ class ConfigOptionsList implements ConfigOptionsListInterface
     const INPUT_KEY_CUSTOM_OPTION = 'custom-option';
 
     /**
-     * Path to the custom configuration in deployment config
+     * Path to the custom configuration in deployment configuration.
+     * This path will be used to retrieve the option value
      */
     const CONFIG_PATH_CUSTOM_OPTION = 'example/custom-option';
 
@@ -40,18 +45,22 @@ class ConfigOptionsList implements ConfigOptionsListInterface
 
     /**
      * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function createConfig(array $options, DeploymentConfig $deploymentConfig)
     {
         $configData = new ConfigData(ConfigFilePool::APP_CONFIG);
         if (isset($options[self::INPUT_KEY_CUSTOM_OPTION])) {
             $configData->set(self::CONFIG_PATH_CUSTOM_OPTION, $options[self::INPUT_KEY_CUSTOM_OPTION]);
+        } elseif ($deploymentConfig->get(self::CONFIG_PATH_CUSTOM_OPTION) === null) {
+            // set to default value if it is not already set in deployment configuration
+            $configData->set(self::CONFIG_PATH_CUSTOM_OPTION, 'default custom value');
         }
         return [$configData];
     }
 
     /**
+     * Suppress warning added because we are not using DeploymentConfig to validate user input here
+     *
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ShowCustomDeploymentConfigCommand
+ * Command to show the custom option set in the deployment configuration
  */
 class ShowCustomDeploymentConfigCommand extends Command
 {
@@ -39,8 +39,8 @@ class ShowCustomDeploymentConfigCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('example:show-custom-deployment-config')
-            ->setDescription('Show custom deployment configuration option');
+        $this->setName('example:custom-deployment-config:show')
+            ->setDescription('Shows custom deployment configuration option');
 
         parent::configure();
     }
@@ -56,7 +56,7 @@ class ShowCustomDeploymentConfigCommand extends Command
                 '<info>The custom deployment configuration value is ' . $value  . '</info>'
             );
         } else {
-            $output->writeln('<info>The custom deployment configuration value is not yet set.</info>');
+            $output->writeln('<info>The custom deployment configuration value is not set.</info>');
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "magento/sample-module-custom-deploymentconfig",
+  "name": "magento/sample-module-custom-deployment-config",
   "description": "Custom deployment config option example",
   "type":"magento2-module",
   "require": {

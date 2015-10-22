@@ -8,14 +8,15 @@
 *   <a href="#lic">License</a>
 
 <h2 id="syn">Synopsis</h2>
-This module contains one command-line command under `example:show-custom-deployment-config` that enables you to display custom options you added to the Magento deployment configuration.
+This module contains a ConfigOptionsList class which adds a custom option to the deployment configuration.
+It also contains one command-line command named `example:custom-deployment-config:show` that enables you to display custom options you added to the Magento deployment configuration.
 
 Creating custom options is discussed in <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
 
 <h2 id="over">Overview</h2>
-`setup:config:set` is a command for managing Magento deployment configuration. Modules store their custom
-configuration in the Magento deployment configuration and later retrieve from it. Custom options also display in the
-`setup:install` command, allowing the user to specify custom configuration during installation.
+Modules can store their custom configuration in the Magento deployment configuration and later retrieve from it.
+`setup:config:set` is a command for managing Magento deployment configuration.
+Custom options also display in the `setup:install` command, allowing the user to specify custom configuration during installation.
 
 <h2 id="install">Install the sample module</h2>
 You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
@@ -30,7 +31,7 @@ Create a directory for the sample module and copy `magento2-samples/sample-modul
     cp -R <magento2-samples clone dir>/sample-module-custom-deploymentconfig/* <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
 
 ### Update the Magento database and schema
-If you haven't installed the Magento application yet, install it now. After it's installed, run the following command:
+If you added the module to an existing Magento installation, run the following command:
 
     php <your Magento install dir>/bin/magento setup:upgrade
 
@@ -42,28 +43,28 @@ Enter the following command:
 The following confirms you installed the module correctly:
 
     example
-         example:show-custom-deployment-config     Show custom deployment configuration option
+         example:custom-deployment-config:show     Show custom deployment configuration option
 
 ### Command usage
 To use the sample command:
 
 	cd <your Magento install dir>/bin
-	php magento example:show-custom-deployment-config
+	php magento example:custom-deployment-config:show
 	php magento setup:config:set --help
 
-`magento example:show-custom-deployment-config` displays the value assigned to the custom option defined in `Magento\CustomDeploymentConfigExample\Setup\ConfigOptionsList` while `magento setup:config:set --help` displays all options available for set.
+`magento example:custom-deployment-config:show` displays the value assigned to the custom option defined in `Magento\CustomDeploymentConfigExample\Setup\ConfigOptionsList` while `magento setup:config:set --help` displays all options available for set.
 
-<h2 id="add-options">Add custom options to <code>setup:config:set</code></h2>
-To implement this command:
+<h2 id="add-options">Add custom options to the deployment Configuration</h2>
+To add custom options to the deployment configuration:
 
 1.	Create class `ConfigOptionsList` in `<module_dir>/Setup` that implements
 `Magento\Framework\Setup\ConfigOptionsListInterface`
 
 2.	Implement required methods:
 
-	* `getOptions()`: Returns list of custom options that should be added to the `setup:config:set` command
+	* `getOptions()`: Returns list of custom options that should be added to the deployment configuration
 	* `createConfigData()`: Creates the required array structure to be stored in the deployment configuration
-	* `validate()`: Validates user input
+	* `validate()`: Validates option values
 
 3.	Clean the Magento cache.
 
