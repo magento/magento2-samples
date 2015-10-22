@@ -19,16 +19,16 @@ Modules can store their custom configuration in the Magento deployment configura
 Custom options also display in the `setup:install` command, allowing the user to specify custom configuration during installation.
 
 <h2 id="install">Install the sample module</h2>
-You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
+You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-options">Add custom options to the deployment configuration</a>.
 
 ### Clone the magento2-samples repository
 Clone the <a href="https://github.com/magento/magento2-samples" target="_blank">magento2-samples</a> repository using either the HTTPS or SSH protocols. 
 
 ### Copy the code
-Create a directory for the sample module and copy `magento2-samples/sample-module-custom-deploymentconfig` to it:
+Create a directory for the sample module and copy `magento2-samples/sample-module-custom-deployment-config` to it:
 
     mkdir -p <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
-    cp -R <magento2-samples clone dir>/sample-module-custom-deploymentconfig/* <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
+    cp -R <magento2-samples clone dir>/sample-module-custom-deployment-config/* <your Magento install dir>/app/code/Magento/CustomDeploymentConfigExample
 
 ### Update the Magento database and schema
 If you added the module to an existing Magento installation, run the following command:
@@ -54,7 +54,7 @@ To use the sample command:
 
 `magento example:custom-deployment-config:show` displays the value assigned to the custom option defined in `Magento\CustomDeploymentConfigExample\Setup\ConfigOptionsList` while `magento setup:config:set --help` displays all options available for set.
 
-<h2 id="add-options">Add custom options to the deployment Configuration</h2>
+<h2 id="add-options">Add custom options to the deployment configuration</h2>
 To add custom options to the deployment configuration:
 
 1.	Create class `ConfigOptionsList` in `<module_dir>/Setup` that implements
