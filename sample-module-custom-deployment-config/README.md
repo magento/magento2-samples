@@ -2,13 +2,13 @@
 *   <a href="#syn">Synopsis</a>
 *   <a href="#over">Overview</a>
 *   <a href="#install">Install the sample module</a>
-*   <a href="#add-options">Add custom options to <code>setup:config:set</code></a>
+*   <a href="#add-options">Add custom options to deployment configuration</a>
 *   <a href="#tests">Tests</a>
 *   <a href="#contrib">Contributors</a>
 *   <a href="#lic">License</a>
 
 <h2 id="syn">Synopsis</h2>
-This module contains a ConfigOptionsList class which adds a custom option to the deployment configuration.
+This module contains a `ConfigOptionsList` class which adds a custom option to the deployment configuration.
 It also contains one command-line command named `example:custom-deployment-config:show` that enables you to display custom options you added to the Magento deployment configuration.
 
 Creating custom options is discussed in <a href="#add-options">Add custom options to <code>setup:config:set</code></a>.
