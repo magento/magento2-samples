@@ -30,6 +30,8 @@ Before you begin, make sure you understand the following:
 <h2 id="install">Install the sample module</h2>
 You'll find it useful to install this sample module so you can refer to it when you're coding your own custom commands. If you'd prefer not to, continue with <a href="#add-register">Add and register the command</a>.
 
+**Note**: Following is one way to install the sample modules. With the release of Magento 2.0, you'll also be able to install modules using the Magento Marketplaces.
+
 ### Clone the magento2-samples repository
 Clone the <a href="https://github.com/magento/magento2-samples" target="_blank">magento2-samples</a> repository using either the HTTPS or SSH protocols. 
 
