@@ -54,7 +54,7 @@ Enter the following command:
 The following confirms you installed the module correctly:
 
     example
-        example:check-active-modules              Checks application status (installed or not)
+        example:modules:check-active              Checks application status (installed or not)
         example:greeting                          Greeting command
 
 <h2 id="add-register">Add and register the command</h2>
@@ -66,26 +66,44 @@ To add the command and register it:
 
     Your Command class extends base class (`Symfony\Component\Console\Command\Command`) and overrides two protected methods:
 
-        class CacheClearCommand extends Command
+        class CheckActiveModulesCommand extends Command
         {
-            $cacheModel;
+            /**
+             * Module list
+             *
+             * @var ModuleListInterface
+             */
+            private $moduleList;
 
-            public function __construct(CacheModel $cacheModel)
+            /**
+             * @param ModuleListInterface $moduleList
+             */
+            public function __construct(ModuleListInterface $moduleList)
             {
-                $this->cacheModel = $cacheModel;
+                $this->moduleList = $moduleList;
                 parent::__construct();
-         }
-
-           protected function configure()
-            {
-                $this->setName('cache:clear')
-                    ->setDescription('Clear cache');
             }
 
+            /**
+             * {@inheritdoc}
+             */
+            protected function configure()
+            {
+                $this->setName('example:modules:check-active')
+                    ->setDescription('Checks application status (installed or not)');
+
+                parent::configure();
+            }
+
+            /**
+             * {@inheritdoc}
+             */
             protected function execute(InputInterface $input, OutputInterface $output)
             {
-                $this->cacheModel->clearCache();
-                $output->writeln('Cache is cleared.');
+                $output->writeln('<info>List of active modules:<info>');
+                foreach ($this->moduleList->getNames() as $moduleName) {
+                    $output->writeln('<info>' . $moduleName . '<info>');
+                }
             }
         }
 
@@ -94,7 +112,7 @@ To add the command and register it:
         <type name="Magento\Framework\Console\CommandList">
             <arguments>
                 <argument name="commands" xsi:type="array">
-                    <item name="cache_cleaner" xsi:type="object">Magento\Cache\Console\Command\CacheClearCommand</item>
+                    <item name="check_active_status_command" xsi:type="object">Magento\CommandExample\Console\Command\CheckActiveModulesCommand</item>
                 </argument>
             </arguments>
         </type>
