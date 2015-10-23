@@ -34,7 +34,7 @@ class CheckActiveModulesCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('example:check-active-modules')
+        $this->setName('example:modules:check-active')
             ->setDescription('Checks application status (installed or not)');
 
         parent::configure();

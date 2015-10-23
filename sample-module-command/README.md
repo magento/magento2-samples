@@ -12,13 +12,13 @@
 
 This sample module creates two new command-line commands:
 
-*   `magento example:check-active-modules` (displays the list of enabled modules)
+*   `magento example:modules:check-active` (displays the list of enabled modules)
 *   `magento example:greeting` (displays a greeting)
 
 You can use this sample module as an example to create your own custom commands.
 
 <h2 id="over">Overview</h2>
-As with all other Magento command-line utilities, you run this sample command from the `<your Magento install dir>bin` directory. For more information, see the <a href="http://devdocs.magento.com/guides/v2.0/install-gde/install/cli/install-cli.html#instgde-install-cli-first" target="_blank">Magento Installation Guide</a>.
+As with all other Magento command-line utilities, you run this sample command from the `<your Magento install dir>/bin` directory. For more information, see the <a href="http://devdocs.magento.com/guides/v2.0/install-gde/install/cli/install-cli.html#instgde-install-cli-first" target="_blank">Magento Installation Guide</a>.
 
 Before you begin, make sure you understand the following:
 
@@ -40,14 +40,9 @@ Create a directory for the sample module and copy `magento2-samples/sample-modul
     cp -R <magento2-samples clone dir>/sample-module-command/* <your Magento install dir>/app/code/Magento/CommandExample
 
 ### Update the Magento database and schema
-If you haven't installed the Magento application yet, install it now. After it's installed, run the following command:
+If you added the module to an existing Magento installation, run the following command:
 
     php <your Magento install dir>/bin/magento setup:upgrade
-
-Clean the cache and compiled code directories:
-
-    cd <your Magento install dir>/var
-    rm -rf cache/* page_cache/* di/* generation/* 
 
 ### Verify the module is installed
 Enter the following command:

@@ -47,7 +47,7 @@ class GreetingCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument:name missed
+     * @expectedExceptionMessage Argument name is missing
      */
     public function testExecuteError()
     {

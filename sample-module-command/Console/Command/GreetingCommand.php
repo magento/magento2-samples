@@ -17,10 +17,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GreetingCommand extends Command
 {
+    /**
+     * Name argument
+     */
     const NAME_ARGUMENT = 'name';
+
+    /**
+     * Allow option
+     */
     const ALLOW_ANONYMOUS = 'allow-anonymous';
 
-    const ANONYMOUS = 'Anonymous';
+    /**
+     * Anonymous name
+     */
+    const ANONYMOUS_NAME = 'Anonymous';
 
     /**
      * {@inheritdoc}
@@ -54,11 +64,12 @@ class GreetingCommand extends Command
     {
         $name = $input->getArgument(self::NAME_ARGUMENT);
         $allowAnonymous = $input->getOption(self::ALLOW_ANONYMOUS);
-        if (is_null($name) && !$allowAnonymous) {
-            throw new \InvalidArgumentException('Argument:' . self::NAME_ARGUMENT . ' missed.');
-        }
-        if ($allowAnonymous) {
-            $name = self::ANONYMOUS;
+        if (is_null($name)) {
+            if ($allowAnonymous) {
+                $name = self::ANONYMOUS_NAME;
+            } else {
+                throw new \InvalidArgumentException('Argument ' . self::NAME_ARGUMENT . ' is missing.');
+            }
         }
         $output->writeln('<info>Hello ' . $name . '!</info>');
     }
