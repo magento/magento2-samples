@@ -8,16 +8,13 @@
     "AFL-3.0"
   ],
   "require": {
-    "php": "~5.5.0|~5.6.0",
-    "magento/framework": "~0.42",
-    "magento/magento-composer-installer": "*"
+    "php": "~5.5.0|~5.6.0|~7.0.0",
+    "magento/framework": "~0.42"
   },
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Magento/SampleServiceContractNew"
-      ]
-    ]
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Magento\\SampleServiceContractNew\\": ""
+    }
   }
 }
