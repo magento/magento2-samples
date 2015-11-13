@@ -2,10 +2,9 @@
     "name": "magento/sample-module-theme",
     "description": "N/A",
     "require": {
-        "php": "~5.5.0|~5.6.0",
+        "php": "~5.5.0|~5.6.0|~7.0.0",
         "magento/theme-frontend-luma": "~1.0.0",
-        "magento/framework": "~1.0.0",
-        "magento/magento-composer-installer": "*"
+        "magento/framework": "~1.0.0"
     },
     "type": "magento2-theme",
     "version": "1.0.0",
@@ -13,12 +12,7 @@
         "OSL-3.0",
         "AFL-3.0"
     ],
-    "extra": {
-        "map": [
-            [
-                "*",
-                "frontend/Magento/SampleModuleTheme"
-            ]
-        ]
+    "autoload": {
+        "files": [ "registration.php" ]
     }
 }
