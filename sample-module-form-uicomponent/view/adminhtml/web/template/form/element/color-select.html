@@ -1,0 +1,12 @@
+<!--/**
+* Copyright © 2015 Magento. All rights reserved.
+* See COPYING.txt for license details.
+*/-->
+
+<ul class="color-select" data-bind="foreach: items">
+    <li data-bind="click: $parent.selectColor(name),
+    style: { backgroundColor: val },
+    attr: { name: name },
+    css: $parent.isSelected(name)">
+    </li>
+</ul>
