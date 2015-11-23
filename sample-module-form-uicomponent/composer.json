@@ -1,5 +1,5 @@
 {
-  "name": "magento/module-sample-form-uicomponent",
+  "name": "magento/sample-module-form-uicomponent",
   "description": "A Magento 2 module that demonstrate Form UI Component with customized field",
   "type": "magento2-module",
   "version": "1.0.0-beta",
