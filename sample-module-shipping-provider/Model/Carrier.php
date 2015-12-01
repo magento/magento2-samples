@@ -5,27 +5,34 @@
  */
 namespace Magento\SampleShippingProvider\Model;
 
-use Psr\Log\LoggerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\DataObject;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Config;
 use Magento\Shipping\Model\Rate\ResultFactory;
-use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
+use Magento\Quote\Model\Quote\Address\RateResult\Method;
+use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
+use Magento\Quote\Model\Quote\Address\RateRequest;
+use Psr\Log\LoggerInterface;
 
 /**
- * In-Store Pickup shipping model
+ * Class Carrier In-Store Pickup shipping model
  */
 class Carrier extends AbstractCarrier implements CarrierInterface
 {
     /**
+     * Carrier's code
+     *
      * @var string
      */
     protected $_code = 'storepickup';
 
     /**
+     * Whether this carrier has fixed rates calculation
+     *
      * @var bool
      */
     protected $_isFixed = true;
@@ -62,9 +69,11 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     }
 
     /**
-     * Get allowed shipping methods
+     * Generates list of allowed carrier`s shipping methods
+     * Displays on cart price rules page
      *
      * @return array
+     * @api
      */
     public function getAllowedMethods()
     {
@@ -72,12 +81,14 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     }
 
     /**
-     * Collect and get rates
+     * Collect and get rates for storefront
      *
-     * @param \Magento\Framework\Object $request
-     * @return \Magento\Shipping\Model\Rate\Result|bool
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @param RateRequest $request
+     * @return DataObject|bool|null
+     * @api
      */
-    public function collectRates(\Magento\Framework\Object $request)
+    public function collectRates(RateRequest $request)
     {
         /**
          * Make sure that Shipping method is enabled
@@ -90,9 +101,8 @@ class Carrier extends AbstractCarrier implements CarrierInterface
          * Build Rate for each location
          * Each Rate displayed as shipping method under Carrier(In-Store Pickup) on frontend
          */
-        /** @var \Magento\Shipping\Model\Rate\Result $result */
         $result = $this->rateResultFactory->create();
-        foreach($this->getLocations() as $locationId => $location) {
+        foreach ($this->getLocations() as $locationId => $location) {
             $method = $this->buildRateForLocation($locationId, $location);
             $result->append($method);
         }
@@ -101,52 +111,38 @@ class Carrier extends AbstractCarrier implements CarrierInterface
     }
 
     /**
-     * Get location info for selected Shipping Method
-     *
-     * @param string $shippingMethod
-     * @return array
-     */
-    public function getLocationInfo($shippingMethod)
-    {
-        /**
-         * Extract location identifier
-         * $shippingMethod = CarrierCode_Method i.e. storepickup_store_1
-         */
-        $locationId = str_replace($this->getCarrierCode() . '_', '', $shippingMethod);
-        $locations = $this->getLocations();
-        return array_key_exists($locationId, $locations) ? $locations[$locationId] : [];
-    }
-
-    /**
      * Build Rate based on location data
      *
      * @param string $locationId Shipping method(location) identifier
      * @param array $location Location info
-     * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
+     * @return Method
      */
     protected function buildRateForLocation($locationId, array $location)
     {
-        /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $rateResultMethod */
         $rateResultMethod = $this->rateMethodFactory->create();
-        $rateResultMethod->setCarrier($this->getCarrierCode());
-        $carrierTitle = $this->getConfigData('title');
-        $rateResultMethod->setCarrierTitle($carrierTitle);
+        /**
+         * Set carrier's method data
+         */
+        $rateResultMethod->setData('carrier', $this->getCarrierCode());
+        $rateResultMethod->setData('carrier_title', $this->getConfigData('title'));
 
         /**
          * Displayed as shipping method under Carrier(In-Store Pickup)
          */
-        $methodTitle = sprintf('%s, %s, %s, %s (%s)',
+        $methodTitle = sprintf(
+            '%s, %s, %s, %s (%s)',
             $location['street'],
             $location['city'],
             $location['country_id'],
             $location['postcode'],
             $location['message']
         );
-        $rateResultMethod->setMethodTitle($methodTitle);
-        $rateResultMethod->setMethod($locationId);
+        $rateResultMethod->setData('method_title', $methodTitle);
+        $rateResultMethod->setData('method', $locationId);
 
-        $rateResultMethod->setPrice(0);
-        $rateResultMethod->setCost(0);
+        $rateResultMethod->setPrice(10);
+        $rateResultMethod->setData('cost', 10);
+
         return $rateResultMethod;
     }
 
@@ -178,6 +174,7 @@ class Carrier extends AbstractCarrier implements CarrierInterface
             ];
             $result[$locationId] = array_merge($result[$locationId], $shippingOrigin);
         }
+
         return $result;
     }
 
@@ -188,23 +185,31 @@ class Carrier extends AbstractCarrier implements CarrierInterface
      */
     protected function getShippingOrigin()
     {
+        /**
+         * Get Shipping origin data from store scope config
+         * Displays data on storefront
+         */
         return [
             'country_id' => $this->_scopeConfig->getValue(
                 Config::XML_PATH_ORIGIN_COUNTRY_ID,
                 ScopeInterface::SCOPE_STORE,
-                $this->getStore()),
+                $this->getData('store')
+            ),
             'region_id' => $this->_scopeConfig->getValue(
                 Config::XML_PATH_ORIGIN_REGION_ID,
                 ScopeInterface::SCOPE_STORE,
-                $this->getStore()),
+                $this->getData('store')
+            ),
             'postcode' => $this->_scopeConfig->getValue(
                 Config::XML_PATH_ORIGIN_POSTCODE,
                 ScopeInterface::SCOPE_STORE,
-                $this->getStore()),
+                $this->getData('store')
+            ),
             'city' => $this->_scopeConfig->getValue(
                 Config::XML_PATH_ORIGIN_CITY,
                 ScopeInterface::SCOPE_STORE,
-                $this->getStore())
+                $this->getData('store')
+            )
         ];
     }
 }
