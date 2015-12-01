@@ -1,0 +1,22 @@
+{
+    "name": "magento/module-sample-scss",
+    "description": "Demonstrates integration with new scss processor",
+    "version": "1.0.0-beta",
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0",
+        "leafo/scssphp": "0.0.12",
+        "magento/framework": "*",
+        "magento/magento-composer-installer": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Magento\\SampleScss\\": ""
+        }
+    }
+}
