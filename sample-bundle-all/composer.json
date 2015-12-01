@@ -19,6 +19,7 @@
         "magento/sample-module-service-contract-replacement": "~1.0",
 		"magento/sample-module-shipping-provider": "~1.0",
 		"magento/sample-module-payment-provider": "~1.0",
-        "magento/sample-module-servicecontract-new": "~1.0"
+        "magento/sample-module-servicecontract-new": "~1.0",
+        "magento/module-sample-scss": "~1.0"
     }
 }
