@@ -1,0 +1,21 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+$myColor: #009a82;
+$myString: "Test text";
+$myFontSize: 13px;
+$myMargin: 0px auto;
+$myWidth: 460px;
+
+h1 {
+  color: $myColor;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  width: $myWidth;
+  margin: $myMargin;
+}

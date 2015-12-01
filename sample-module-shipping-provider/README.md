@@ -5,7 +5,7 @@ Several pickup locations can be configured with this shipping carrier.
 
 ## Motivation
 
-This is one of a collection of examples to demonstrate the features of Magento 2.  The intent of this sample is to demonstrate how to create own Shipping extension
+This is one of a collection of examples to demonstrate the features of Magento 2.  The intent of this sample is to demonstrate how to create own Shipping extension.
 
 ## Technical feature
 
@@ -14,7 +14,6 @@ Shipping method should have carrier code, carrier title, method code, method tit
 [Carrier class](Model/Carrier.php) has 'collectRates' method used to get applicable shipping methods.
 [Configuration](etc/config.xml) 'registers' [Carrier class](Model/Carrier.php) as a shipping carrier.
 [system.xml](etc/adminhtml/system.xml) makes our module configurable in the admin panel.
-[Onepage plugin](Model/Type/Plugin/Onepage.php) used to replace shipping address with a selected pickup location address
 
 ## Installation
 
