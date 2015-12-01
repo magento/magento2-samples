@@ -8,15 +8,12 @@
     "AFL-3.0"
   ],
   "require": {
-    "php": "~5.5.0|~5.6.0",
-    "magento/magento-composer-installer": "*"
+    "php": "~5.5.0|~5.6.0|~7.0.0"
   },
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Magento/SampleMinimal"
-      ]
-    ]
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Magento\\SampleMinimal\\": ""
+    }
   }
 }
