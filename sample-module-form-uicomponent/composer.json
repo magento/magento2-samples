@@ -1,0 +1,32 @@
+{
+  "name": "magento/sample-module-form-uicomponent",
+  "description": "A Magento 2 module that demonstrate Form UI Component with customized field",
+  "type": "magento2-module",
+  "version": "1.0.0-beta",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0",
+    "magento/framework": "*",
+    "magento/module-ui": "*",
+    "magento/magento-composer-installer": "*"
+  },
+  "extra": {
+    "map": [
+      [
+        "*",
+        "Magento/SampleForm"
+      ]
+    ]
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Magento\\SampleForm\\": ""
+    }
+  }
+}
