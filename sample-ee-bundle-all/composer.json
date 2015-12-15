@@ -1,0 +1,12 @@
+{
+    "name": "magento/sample-ee-bundle-all",
+    "description": "A package that pulls in all Magento 2 EE sample modules",
+    "type": "metapackage",
+    "version": "1.0.0",
+    "license": [
+        "proprietary"
+    ],
+    "require": {
+        "magento/sample-module-sample-message-queue": "~1.0"
+    }
+}
