@@ -8,6 +8,9 @@ namespace Magento\SampleMessageQueue\Model;
 
 use Magento\Checkout\Model\Cart;
 
+/**
+ * Test plugin to demonstrate sync and async queue messages
+ */
 class AddToCartPlugin
 {
     /**
@@ -20,16 +23,31 @@ class AddToCartPlugin
      */
     private $logger;
 
+    /**
+     * @var \Magento\GiftCardAccount\Model\GiftcardaccountFactory
+     */
+    protected $giftCardAccountFactory;
 
+    /**
+     * Initialize dependencies.
+     *
+     * @param \Magento\Framework\MessageQueue\PublisherPool $publisherPool
+     * @param \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory
+     * @param \Psr\Log\LoggerInterface $logger
+     */
     public function __construct(
         \Magento\Framework\MessageQueue\PublisherPool $publisherPool,
+        \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->publisherPool = $publisherPool;
         $this->logger = $logger;
+        $this->giftCardAccountFactory = $giftCardAccountFactory;
     }
 
     /**
+     * Add gift card account to notify customer via email
+     *
      * @param Cart $subject
      * @param \Closure $proceed
      * @return Cart
@@ -44,18 +62,36 @@ class AddToCartPlugin
 
         if ($subject->getQuote()->getCustomerId() && $before == 0 && $after > $before) {
             $this->logger->debug('Plugin Start: Before items QTY: ' . $before . '; After Items QTY: ' . $after);
-            $syncRequestResult = $this->publisherPool
-                ->getByTopicType('add.to.cart.product.added')
-                ->publish('add.to.cart.product.added', $subject->getQuote()->getId());
+            try {
+                $customer = $subject->getQuote()->getCustomer();
+                $giftCardAccountCode = $this->publisherPool
+                    ->getByTopicType('add.to.cart.product.added')
+                    ->publish('add.to.cart.product.added', $subject->getQuote()->getId());
 
-            $this->publisherPool
-                ->getByTopicType('add.to.cart.giftcard.added')
-                ->publish('add.to.cart.giftcard.added', $syncRequestResult);
+                /** @var \Magento\GiftCardAccount\Model\Giftcardaccount $giftCard */
+                $giftCard = $this->giftCardAccountFactory->create();
+                $giftCard->loadByCode($giftCardAccountCode);
+                if (!$giftCard->getId()) {
+                    throw new \Exception('Invalid gift card code');
+                }
+                $payload = [
+                    'amount' => $giftCard->getGiftCardsAmount(),
+                    'customer_email' => $customer->getEmail(),
+                    'customer_name' => $customer->getFirstname() . ' ' . $customer->getLastname(),
+                    'cart_id' => $subject->getQuote()->getId(),
+                ];
 
-            $this->publisherPool
-                ->getByTopicType('add.to.cart.giftcard.added.success')
-                ->publish('add.to.cart.giftcard.added.success', ['amount', 'customer email', 'cart id']);
+                $this->publisherPool
+                    ->getByTopicType('add.to.cart.giftcard.added')
+                    ->publish('add.to.cart.giftcard.added', $payload);
 
+                $this->publisherPool
+                    ->getByTopicType('add.to.cart.giftcard.added.success')
+                    ->publish('add.to.cart.giftcard.added.success', $payload);
+
+            } catch (\Exception $e) {
+                $this->logger->debug('Plugin Error: ' . $e->getMessage());
+            }
             $this->logger->debug('Plugin End');
         } else {
             //Just for debugging
@@ -63,5 +99,4 @@ class AddToCartPlugin
         }
         return $result;
     }
-
 }

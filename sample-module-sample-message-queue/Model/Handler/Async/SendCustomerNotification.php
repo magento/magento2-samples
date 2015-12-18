@@ -34,58 +34,48 @@ class SendCustomerNotification
     protected $storeManager;
 
     /**
-     * @var \Magento\Framework\App\State
-     */
-    private $appState;
-
-    /**
      * Initialize dependencies.
      *
      * @param LoggerInterface $logger
      * @param TransportBuilder $transportBuilder
      * @param CartRepositoryInterface $cartRepository
      * @param StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\State $appState
      */
     public function __construct(
         LoggerInterface $logger,
         TransportBuilder $transportBuilder,
         CartRepositoryInterface $cartRepository,
-        StoreManagerInterface $storeManager,
-        \Magento\Framework\App\State $appState
+        StoreManagerInterface $storeManager
     ) {
         $this->logger = $logger;
         $this->transportBuilder = $transportBuilder;
         $this->cartRepository = $cartRepository;
         $this->storeManager = $storeManager;
-        $this->appState = $appState;
-        $this->appState->setAreaCode('global');
     }
 
-    public function send($quoteId)
+    /**
+     * Send customer notification
+     *
+     * @param $payload
+     */
+    public function send($payload)
     {
+        $quoteId = $payload['cart_id'];
         $quote = $this->cartRepository->get($quoteId);
-        $storeName = $this->storeManager->getStore($quote->getStoreId())->getName();
-        $customer = $quote->getCustomer();
-        if (!$customer->getId()) {
-            $this->logger->debug('ASYNC Handler: Not a registered customer. No notification email sent.');
-            return;
-        }
-        $customerEmail = $customer->getEmail();
-        $customerName = $customer->getFirstname() . ' ' . $customer->getLastname();
+        $store = $this->storeManager->getStore($quote->getStoreId());
+        $storeName = $store->getName();
 
         $transport = $this->transportBuilder->setTemplateIdentifier('giftcard_email_template')
             ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $quote->getStoreId()])
             ->setTemplateVars([
-                'name' => $customerName,
+                'name' => $payload['customer_name'],
                 'sender_name' => 'Your Friends at ' . $storeName,
-                'balance' => '$5.00'
+                'balance' => '$' . $payload['amount']
             ])
             ->setFrom(['name' => 'Your Friends at ' . $storeName, 'email' => ''])
-            ->addTo($customerEmail)
+            ->addTo($payload['customer_email'])
             ->getTransport();
         $transport->sendMessage();
-
-        $this->logger->debug('ASYNC Handler: Sent customer notification email to: ' . $customerEmail);
+        $this->logger->debug('ASYNC Handler: Sent customer notification email to: ' . $payload['customer_email']);
     }
 }

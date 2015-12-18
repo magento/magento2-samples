@@ -33,18 +33,12 @@ class AddGiftCardAccount
     protected $storeManager;
 
     /**
-     * @var \Magento\Framework\App\State
-     */
-    private $appState;
-
-    /**
      * Initialize dependencies.
      *
      * @param LoggerInterface $logger
      * @param \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory
      * @param \Magento\Quote\Api\CartRepositoryInterface $cartRepository
      * @param StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\State $appState
      */
     public function __construct(
         LoggerInterface $logger,
@@ -57,8 +51,6 @@ class AddGiftCardAccount
         $this->giftCardAccountFactory = $giftCardAccountFactory;
         $this->cartRepository = $cartRepository;
         $this->storeManager = $storeManager;
-        $this->appState = $appState;
-        $this->appState->setAreaCode('global');
     }
 
 
@@ -76,7 +68,9 @@ class AddGiftCardAccount
             $quote = $this->cartRepository->get($quoteId);
             $websiteId = $this->storeManager->getStore($quote->getStoreId())->getWebsiteId();
 
-            $this->logger->debug('SYNC Handler: Add git card #' . $giftCardCode . ' to customer shopping cart #' . $quoteId);
+            $this->logger->debug(
+                'SYNC Handler: Add git card #' . $giftCardCode . ' to customer shopping cart #' . $quoteId
+            );
 
             /** @var Giftcardaccount $giftCardAccount */
             $giftCardAccount = $this->giftCardAccountFactory->create();
@@ -93,6 +87,6 @@ class AddGiftCardAccount
             $this->logger->debug('Handler: ' . __METHOD__ . '. Error: '. $e->getMessage());
             throw $e;
         }
-        return $quoteId;
+        return $giftCardCode;
     }
 }

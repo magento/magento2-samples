@@ -1,6 +1,6 @@
 ## Synopsis
 
-This is a meta package that pulls in all the sample Magento 2 modules from [packages.magento.com](http://packages.magento.com/)
+This is a meta package that pulls in all the sample Magento 2 modules from [repo.magento.com](http://repo.magento.com/)
 
 ## Installation
 
