@@ -83,9 +83,6 @@ class AddToCartPlugin
                 $this->publisherPool
                     ->publish('add.to.cart.giftcard.added', json_encode($payload));
 
-                $this->publisherPool
-                    ->publish('add.to.cart.giftcard.added.success', json_encode($payload));
-
             } catch (\Exception $e) {
                 $this->logger->debug('Plugin Error: ' . $e->getMessage());
             }
