@@ -28,10 +28,10 @@ class GitCardAddedSuccess
     /**
      * Log information about added gift card
      *
-     * @param string[] $data
+     * @param $data
      */
-    public function log(array $data)
+    public function log($data)
     {
-        $this->logger->debug('ASYNC Handler: Git Card Added Successfully: ' . serialize($data));
+        $this->logger->debug('ASYNC Handler: Gift Card Added Successfully: ' . $data);
     }
 }

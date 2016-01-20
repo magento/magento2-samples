@@ -60,6 +60,7 @@ class SendCustomerNotification
      */
     public function send($payload)
     {
+        $payload = json_decode($payload, true);
         $quoteId = $payload['cart_id'];
         $quote = $this->cartRepository->get($quoteId);
         $store = $this->storeManager->getStore($quote->getStoreId());

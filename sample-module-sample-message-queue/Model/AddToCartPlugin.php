@@ -65,7 +65,6 @@ class AddToCartPlugin
             try {
                 $customer = $subject->getQuote()->getCustomer();
                 $giftCardAccountCode = $this->publisherPool
-                    ->getByTopicType('add.to.cart.product.added')
                     ->publish('add.to.cart.product.added', $subject->getQuote()->getId());
 
                 /** @var \Magento\GiftCardAccount\Model\Giftcardaccount $giftCard */
@@ -82,12 +81,10 @@ class AddToCartPlugin
                 ];
 
                 $this->publisherPool
-                    ->getByTopicType('add.to.cart.giftcard.added')
-                    ->publish('add.to.cart.giftcard.added', $payload);
+                    ->publish('add.to.cart.giftcard.added', json_encode($payload));
 
                 $this->publisherPool
-                    ->getByTopicType('add.to.cart.giftcard.added.success')
-                    ->publish('add.to.cart.giftcard.added.success', $payload);
+                    ->publish('add.to.cart.giftcard.added.success', json_encode($payload));
 
             } catch (\Exception $e) {
                 $this->logger->debug('Plugin Error: ' . $e->getMessage());

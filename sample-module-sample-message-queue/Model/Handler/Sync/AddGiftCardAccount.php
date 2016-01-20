@@ -56,7 +56,7 @@ class AddGiftCardAccount
 
     /**
      * Add Gift Card Account to Shopping Card
-     * 
+     *
      * @param int $quoteId
      * @return string
      * @throws \Exception
