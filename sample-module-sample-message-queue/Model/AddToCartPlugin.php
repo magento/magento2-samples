@@ -74,10 +74,11 @@ class AddToCartPlugin
                     throw new \Exception('Invalid gift card code');
                 }
                 $payload = [
-                    'amount' => $giftCard->getGiftCardsAmount(),
+                    'balance' => $giftCard->getBalance(),
                     'customer_email' => $customer->getEmail(),
                     'customer_name' => $customer->getFirstname() . ' ' . $customer->getLastname(),
                     'cart_id' => $subject->getQuote()->getId(),
+                    'giftcard_id' => $giftCard->getId()
                 ];
 
                 $this->publisherPool

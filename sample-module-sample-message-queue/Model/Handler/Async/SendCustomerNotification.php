@@ -71,7 +71,8 @@ class SendCustomerNotification
             ->setTemplateVars([
                 'name' => $payload['customer_name'],
                 'sender_name' => 'Your Friends at ' . $storeName,
-                'balance' => '$' . $payload['amount']
+                'balance' => '$' . $payload['balance'],
+                'code' => $payload['giftcard_id']
             ])
             ->setFrom(['name' => 'Your Friends at ' . $storeName, 'email' => ''])
             ->addTo($payload['customer_email'])
