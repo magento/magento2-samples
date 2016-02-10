@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <!--[Carrier's system identifier]-->
+            <storepickup>
+                <!--[Carrier's activate/deactivate flag default value]-->
+                <active>0</active>
+                <!--[Carrier's title default value]-->
+                <title>Sample Shipping Provider</title>
+                <!--[Carrier's model class]-->
+                <model>Magento\SampleShippingProvider\Model\Carrier</model>
+                <!--[Error message displays on storefront if carrier's methods unavailable]-->
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </storepickup>
+        </carriers>
+    </default>
+</config>
