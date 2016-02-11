@@ -78,7 +78,8 @@ class AddToCartPlugin
                     'customer_email' => $customer->getEmail(),
                     'customer_name' => $customer->getFirstname() . ' ' . $customer->getLastname(),
                     'cart_id' => $subject->getQuote()->getId(),
-                    'giftcard_id' => $giftCard->getId()
+                    'giftcard_code' => $giftCard->getCode(),
+                    'giftcard_is_redeemable' => $giftCard->getIsRedeemable()
                 ];
 
                 $this->publisherPool

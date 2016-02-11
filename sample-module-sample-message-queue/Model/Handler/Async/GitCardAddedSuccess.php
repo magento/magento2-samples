@@ -6,7 +6,7 @@
 
 namespace Magento\SampleMessageQueue\Model\Handler\Async;
 
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class GitCardAddedSuccess
 {

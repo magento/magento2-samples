@@ -3,13 +3,14 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Magento\SampleMessageQueue\Model\Handler\Async;
 
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
+use Magento\GiftCard\Helper\Data as GiftCardData;
+use Magento\Framework\Locale\CurrencyInterface as LocaleCurrency;
 
 class SendCustomerNotification
 {
@@ -34,29 +35,45 @@ class SendCustomerNotification
     protected $storeManager;
 
     /**
+     * @var GiftCardData
+     */
+    protected $giftCardData;
+
+    /**
+     * @var LocaleCurrency
+     */
+    protected $localeCurrency;
+
+    /**
      * Initialize dependencies.
      *
      * @param LoggerInterface $logger
      * @param TransportBuilder $transportBuilder
      * @param CartRepositoryInterface $cartRepository
      * @param StoreManagerInterface $storeManager
+     * @param GiftCardData $giftCardData
+     * @param LocaleCurrency $localeCurrency
      */
     public function __construct(
         LoggerInterface $logger,
         TransportBuilder $transportBuilder,
         CartRepositoryInterface $cartRepository,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        GiftCardData $giftCardData,
+        LocaleCurrency $localeCurrency
     ) {
         $this->logger = $logger;
         $this->transportBuilder = $transportBuilder;
         $this->cartRepository = $cartRepository;
         $this->storeManager = $storeManager;
+        $this->giftCardData = $giftCardData;
+        $this->localeCurrency = $localeCurrency;
     }
 
     /**
      * Send customer notification
      *
-     * @param $payload
+     * @param string $payload
      */
     public function send($payload)
     {
@@ -67,17 +84,62 @@ class SendCustomerNotification
         $storeName = $store->getName();
 
         $transport = $this->transportBuilder->setTemplateIdentifier('giftcard_email_template')
-            ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $quote->getStoreId()])
-            ->setTemplateVars([
-                'name' => $payload['customer_name'],
-                'sender_name' => 'Your Friends at ' . $storeName,
-                'balance' => '$' . $payload['balance'],
-                'code' => $payload['giftcard_id']
-            ])
+            ->setTemplateOptions(
+                ['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $quote->getStoreId()]
+            )
+            ->setTemplateVars(
+                [
+                    'name' => $payload['customer_name'],
+                    'sender_name' => 'Your Friends at ' . $storeName,
+                    'balance' => $this->getFormattedBalance($payload['balance'], $quote->getStoreId()),
+                    'giftcards' => $this->getCodeHtml($payload, $quote->getStoreId()),
+                    'is_redeemable' => $payload['giftcard_is_redeemable'],
+                    'store' => $store,
+                    'store_name' => $storeName,
+                    'is_multiple_codes' => 0
+                ]
+            )
             ->setFrom(['name' => 'Your Friends at ' . $storeName, 'email' => ''])
             ->addTo($payload['customer_email'])
             ->getTransport();
         $transport->sendMessage();
         $this->logger->debug('ASYNC Handler: Sent customer notification email to: ' . $payload['customer_email']);
+    }
+
+    /**
+     * Return gift card code html
+     *
+     * @param array $payload
+     * @param int $storeId
+     * @return string
+     */
+    private function getCodeHtml(array $payload, $storeId)
+    {
+        return $this->giftCardData->getEmailGeneratedItemsBlock()->setCodes(
+            [$payload['giftcard_code']]
+        )->setArea(
+            \Magento\Framework\App\Area::AREA_FRONTEND
+        )->setIsRedeemable(
+            $payload['giftcard_is_redeemable']
+        )->setStore(
+            $this->storeManager->getStore($storeId)
+        )->toHtml();
+    }
+
+    /**
+     * Return formatted Balance
+     *
+     * @param int|float $balance
+     * @param int $storeId
+     * @return string
+     * @throws \Zend_Currency_Exception
+     */
+    private function getFormattedBalance($balance, $storeId)
+    {
+        return $this->localeCurrency->getCurrency(
+            $this->storeManager->getStore($storeId)->getBaseCurrencyCode()
+        )->toCurrency(
+            $balance
+        );
     }
 }
