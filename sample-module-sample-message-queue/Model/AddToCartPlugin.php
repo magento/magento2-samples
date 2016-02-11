@@ -14,9 +14,9 @@ use Magento\Checkout\Model\Cart;
 class AddToCartPlugin
 {
     /**
-     * @var \Magento\Framework\MessageQueue\PublisherPool
+     * @var \Magento\Framework\MessageQueue\PublisherInterface
      */
-    protected $publisherPool;
+    protected $publisher;
 
     /**
      * @var \Psr\Log\LoggerInterface $logger
@@ -31,16 +31,16 @@ class AddToCartPlugin
     /**
      * Initialize dependencies.
      *
-     * @param \Magento\Framework\MessageQueue\PublisherPool $publisherPool
+     * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
      * @param \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Framework\MessageQueue\PublisherPool $publisherPool,
+        \Magento\Framework\MessageQueue\PublisherInterface $publisher,
         \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory,
         \Psr\Log\LoggerInterface $logger
     ) {
-        $this->publisherPool = $publisherPool;
+        $this->publisher = $publisher;
         $this->logger = $logger;
         $this->giftCardAccountFactory = $giftCardAccountFactory;
     }
@@ -64,9 +64,11 @@ class AddToCartPlugin
             $this->logger->debug('Plugin Start: Before items QTY: ' . $before . '; After Items QTY: ' . $after);
             try {
                 $customer = $subject->getQuote()->getCustomer();
-                $giftCardAccountCode = $this->publisherPool
-                    ->getByTopicType('add.to.cart.product.added')
-                    ->publish('add.to.cart.product.added', $subject->getQuote()->getId());
+                $giftCardAccountCode = $this->publisher
+                    ->publish(
+                        'add.to.cart.product.added',
+                        $subject->getQuote()->getId()
+                    );
 
                 /** @var \Magento\GiftCardAccount\Model\Giftcardaccount $giftCard */
                 $giftCard = $this->giftCardAccountFactory->create();
@@ -81,13 +83,9 @@ class AddToCartPlugin
                     'cart_id' => $subject->getQuote()->getId(),
                 ];
 
-                $this->publisherPool
-                    ->getByTopicType('add.to.cart.giftcard.added')
-                    ->publish('add.to.cart.giftcard.added', $payload);
+                $this->publisher->publish('add.to.cart.giftcard.added', $payload);
 
-                $this->publisherPool
-                    ->getByTopicType('add.to.cart.giftcard.added.success')
-                    ->publish('add.to.cart.giftcard.added.success', $payload);
+                $this->publisher->publish('add.to.cart.giftcard.added.success', $payload);
 
             } catch (\Exception $e) {
                 $this->logger->debug('Plugin Error: ' . $e->getMessage());
