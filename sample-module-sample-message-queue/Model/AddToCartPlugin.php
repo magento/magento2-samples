@@ -60,6 +60,9 @@ class AddToCartPlugin
         $result = $proceed();
         $after = $subject->getItemsQty();
 
+        /**
+         * Note. Logger is used to demonstrate different execution phases of synchronous and asynchronous messages
+         */
         if ($subject->getQuote()->getCustomerId() && $before == 0 && $after > $before) {
             $this->logger->debug('Plugin Start: Before items QTY: ' . $before . '; After Items QTY: ' . $after);
             try {

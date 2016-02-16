@@ -56,26 +56,43 @@ class SendCustomerNotification
     /**
      * Send customer notification
      *
-     * @param $payload
+     * @param array $payload
+     * @throws \InvalidArgumentException
+     * @return void
      */
-    public function send($payload)
+    public function send(array $payload)
     {
+        if (!isset($payload['cart_id'])) {
+            throw new \InvalidArgumentException('Cart ID is required');
+        }
         $quoteId = $payload['cart_id'];
         $quote = $this->cartRepository->get($quoteId);
         $store = $this->storeManager->getStore($quote->getStoreId());
         $storeName = $store->getName();
 
+        if (!isset($payload['customer_email'])) {
+            throw new \InvalidArgumentException('Customer email is required');
+        }
+
         $transport = $this->transportBuilder->setTemplateIdentifier('giftcard_email_template')
-            ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $quote->getStoreId()])
-            ->setTemplateVars([
-                'name' => $payload['customer_name'],
+            ->setTemplateOptions(
+                [
+                    'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                    'store' => $quote->getStoreId()
+                ]
+            )
+            ->setTemplateVars(
+                [
+                'name' => isset($payload['customer_name']) ? $payload['customer_name'] : '',
                 'sender_name' => 'Your Friends at ' . $storeName,
-                'balance' => '$' . $payload['amount']
-            ])
+                'balance' => '$' . isset($payload['amount']) ? $payload['amount'] : 0
+                ]
+            )
             ->setFrom(['name' => 'Your Friends at ' . $storeName, 'email' => ''])
             ->addTo($payload['customer_email'])
             ->getTransport();
         $transport->sendMessage();
+
         $this->logger->debug('ASYNC Handler: Sent customer notification email to: ' . $payload['customer_email']);
     }
 }
