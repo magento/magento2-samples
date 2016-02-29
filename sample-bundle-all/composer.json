@@ -21,6 +21,8 @@
         "magento/sample-module-command": "~1.0",
         "magento/sample-module-custom-deployment-config": "~1.0",
         "magento/module-sample-scss": "~1.0",
-        "magento/sample-module-form-uicomponent": "~1.0"
+        "magento/sample-module-form-uicomponent": "~1.0",
+		"magento/module-sample-payment-gateway": "~1.0",
+        "magento/sample-module-shipping-provider": "~1.0"
     }
 }

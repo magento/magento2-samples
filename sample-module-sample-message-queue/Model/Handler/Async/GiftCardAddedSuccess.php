@@ -8,7 +8,7 @@ namespace Magento\SampleMessageQueue\Model\Handler\Async;
 
 use Psr\Log\LoggerInterface;
 
-class GitCardAddedSuccess
+class GiftCardAddedSuccess
 {
     /**
      * @var LoggerInterface
@@ -28,7 +28,7 @@ class GitCardAddedSuccess
     /**
      * Log information about added gift card
      *
-     * @param $data
+     * @param string $data
      */
     public function log($data)
     {

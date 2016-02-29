@@ -1,6 +1,6 @@
 ## Synopsis
 
-An extension to add demonstrate sending and processing synchronous/asynchronous queue messages.
+An extension to demonstrate sending and processing of synchronous/asynchronous queue messages.
 
 ## Motivation
 

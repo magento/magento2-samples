@@ -14,9 +14,9 @@ use Magento\Checkout\Model\Cart;
 class AddToCartPlugin
 {
     /**
-     * @var \Magento\Framework\MessageQueue\PublisherPool
+     * @var \Magento\Framework\MessageQueue\PublisherInterface
      */
-    protected $publisherPool;
+    protected $publisher;
 
     /**
      * @var \Psr\Log\LoggerInterface $logger
@@ -31,16 +31,16 @@ class AddToCartPlugin
     /**
      * Initialize dependencies.
      *
-     * @param \Magento\Framework\MessageQueue\PublisherPool $publisherPool
+     * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
      * @param \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Framework\MessageQueue\PublisherPool $publisherPool,
+        \Magento\Framework\MessageQueue\PublisherInterface $publisher,
         \Magento\GiftCardAccount\Model\GiftcardaccountFactory $giftCardAccountFactory,
         \Psr\Log\LoggerInterface $logger
     ) {
-        $this->publisherPool = $publisherPool;
+        $this->publisher = $publisher;
         $this->logger = $logger;
         $this->giftCardAccountFactory = $giftCardAccountFactory;
     }
@@ -60,12 +60,18 @@ class AddToCartPlugin
         $result = $proceed();
         $after = $subject->getItemsQty();
 
+        /**
+         * Note. Logger is used to demonstrate different execution phases of synchronous and asynchronous messages
+         */
         if ($subject->getQuote()->getCustomerId() && $before == 0 && $after > $before) {
             $this->logger->debug('Plugin Start: Before items QTY: ' . $before . '; After Items QTY: ' . $after);
             try {
                 $customer = $subject->getQuote()->getCustomer();
-                $giftCardAccountCode = $this->publisherPool
-                    ->publish('add.to.cart.product.added', $subject->getQuote()->getId());
+                $giftCardAccountCode = $this->publisher
+                    ->publish(
+                        'add.to.cart.product.added',
+                        $subject->getQuote()->getId()
+                    );
 
                 /** @var \Magento\GiftCardAccount\Model\Giftcardaccount $giftCard */
                 $giftCard = $this->giftCardAccountFactory->create();
@@ -82,7 +88,7 @@ class AddToCartPlugin
                     'giftcard_is_redeemable' => $giftCard->getIsRedeemable()
                 ];
 
-                $this->publisherPool
+                $this->publisher
                     ->publish('add.to.cart.giftcard.added', json_encode($payload));
 
             } catch (\Exception $e) {

@@ -69,7 +69,7 @@ class AddGiftCardAccount
             $websiteId = $this->storeManager->getStore($quote->getStoreId())->getWebsiteId();
 
             $this->logger->debug(
-                'SYNC Handler: Add git card #' . $giftCardCode . ' to customer shopping cart #' . $quoteId
+                'SYNC Handler: Add gift card #' . $giftCardCode . ' to customer shopping cart #' . $quoteId
             );
 
             /** @var Giftcardaccount $giftCardAccount */

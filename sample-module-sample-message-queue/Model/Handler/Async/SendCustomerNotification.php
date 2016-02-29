@@ -74,14 +74,23 @@ class SendCustomerNotification
      * Send customer notification
      *
      * @param string $payload
+     * @throws \InvalidArgumentException
+     * @return void
      */
-    public function send($payload)
+    public function send(array $payload)
     {
         $payload = json_decode($payload, true);
+        if (!isset($payload['cart_id'])) {
+            throw new \InvalidArgumentException('Cart ID is required');
+        }
         $quoteId = $payload['cart_id'];
         $quote = $this->cartRepository->get($quoteId);
         $store = $this->storeManager->getStore($quote->getStoreId());
         $storeName = $store->getName();
+
+        if (!isset($payload['customer_email'])) {
+            throw new \InvalidArgumentException('Customer email is required');
+        }
 
         $transport = $this->transportBuilder->setTemplateIdentifier('giftcard_email_template')
             ->setTemplateOptions(
@@ -89,9 +98,9 @@ class SendCustomerNotification
             )
             ->setTemplateVars(
                 [
-                    'name' => $payload['customer_name'],
+                    'name' => isset($payload['customer_name']) ? $payload['customer_name'] : '',
                     'sender_name' => 'Your Friends at ' . $storeName,
-                    'balance' => $this->getFormattedBalance($payload['balance'], $quote->getStoreId()),
+                    'balance' => $this->getFormattedBalance(isset($payload['amount']) ? $payload['amount'] : 0, $quote->getStoreId()),
                     'giftcards' => $this->getCodeHtml($payload, $quote->getStoreId()),
                     'is_redeemable' => $payload['giftcard_is_redeemable'],
                     'store' => $store,
@@ -103,6 +112,7 @@ class SendCustomerNotification
             ->addTo($payload['customer_email'])
             ->getTransport();
         $transport->sendMessage();
+
         $this->logger->debug('ASYNC Handler: Sent customer notification email to: ' . $payload['customer_email']);
     }
 
