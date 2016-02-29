@@ -8,7 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:MessageQueue/etc/queue.xsd">
     <broker topic="add.to.cart.giftcard.added" type="amqp" exchange="magento">
         <queue name="async.giftcard.added" handler="Magento\SampleMessageQueue\Model\Handler\Async\SendCustomerNotification::send" consumer="async.consumer" />
-        <queue name="async.giftcard.added.success" handler="Magento\SampleMessageQueue\Model\Handler\Async\GitCardAddedSuccess::log" consumer="async.consumer.success" />
+        <queue name="async.giftcard.added.success" handler="Magento\SampleMessageQueue\Model\Handler\Async\GiftCardAddedSuccess::log" consumer="async.consumer.success" />
     </broker>
     <broker topic="add.to.cart.product.added" type="amqp" exchange="magento">
         <queue name="sync.product.added" consumer="sync.consumer" />
