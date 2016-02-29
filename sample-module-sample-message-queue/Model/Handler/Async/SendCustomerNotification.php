@@ -77,7 +77,7 @@ class SendCustomerNotification
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function send(array $payload)
+    public function send($payload)
     {
         $payload = json_decode($payload, true);
         if (!isset($payload['cart_id'])) {
