@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2015 Magento. All rights reserved.
+ * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace Magento\SampleMessageQueue\Model\Handler\Async;
@@ -100,7 +100,10 @@ class SendCustomerNotification
                 [
                     'name' => isset($payload['customer_name']) ? $payload['customer_name'] : '',
                     'sender_name' => 'Your Friends at ' . $storeName,
-                    'balance' => $this->getFormattedBalance(isset($payload['amount']) ? $payload['amount'] : 0, $quote->getStoreId()),
+                    'balance' => $this->getFormattedBalance(
+                        isset($payload['amount']) ? $payload['amount'] : 0,
+                        $quote->getStoreId()
+                    ),
                     'giftcards' => $this->getCodeHtml($payload, $quote->getStoreId()),
                     'is_redeemable' => $payload['giftcard_is_redeemable'],
                     'store' => $store,
