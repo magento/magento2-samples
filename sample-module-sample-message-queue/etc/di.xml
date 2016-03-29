@@ -9,4 +9,12 @@
    <type name="Magento\Checkout\Model\Cart">
        <plugin name="add.to.cart.queue" type="Magento\SampleMessageQueue\Model\AddToCartPlugin" />
    </type>
+    <type name="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">main</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="debug" xsi:type="object">Magento\Framework\Logger\Handler\Debug</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

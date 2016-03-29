@@ -6,14 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:communication/etc/communication.xsd">
-    <topic name="add.to.cart.giftcard.added" request="string">
-        <handler name="add.to.cart.giftcard.handler" type="Magento\SampleMessageQueue\Model\Handler\Async\SendCustomerNotification" method="send" />
-    </topic>
-
-    <topic name="add.to.cart.giftcard.added.success" request="string[]">
-        <handler name="add.to.cart.giftcard.added.success.handler" type="Magento\SampleMessageQueue\Model\Handler\Async\GiftCardAddedSuccess" method="log" />
-    </topic>
-
+    <topic name="add.to.cart.giftcard.added" request="string" />
     <topic name="add.to.cart.product.added" request="string" response="string">
         <handler name="add.to.cart.product.handler" type="Magento\SampleMessageQueue\Model\Handler\Sync\AddGiftCardAccount" method="add" />
     </topic>

@@ -6,7 +6,7 @@
 
 namespace Magento\SampleMessageQueue\Model\Handler\Async;
 
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class GiftCardAddedSuccess
 {
@@ -28,11 +28,10 @@ class GiftCardAddedSuccess
     /**
      * Log information about added gift card
      *
-     * @param array $data
-     * @return void
+     * @param string $data
      */
-    public function log(array $data)
+    public function log($data)
     {
-        $this->logger->debug('ASYNC Handler: Gift Card Added Successfully: ' . serialize($data));
+        $this->logger->debug('ASYNC Handler: Gift Card Added Successfully: ' . $data);
     }
 }

@@ -6,7 +6,7 @@
 
 namespace Magento\SampleMessageQueue\Model\Handler\Sync;
 
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\GiftCardAccount\Model\Giftcardaccount;
 
@@ -56,7 +56,7 @@ class AddGiftCardAccount
 
     /**
      * Add Gift Card Account to Shopping Card
-     * 
+     *
      * @param int $quoteId
      * @return string
      * @throws \Exception

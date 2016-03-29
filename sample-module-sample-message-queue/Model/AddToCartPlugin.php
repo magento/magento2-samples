@@ -80,15 +80,16 @@ class AddToCartPlugin
                     throw new \Exception('Invalid gift card code');
                 }
                 $payload = [
-                    'amount' => $giftCard->getGiftCardsAmount(),
+                    'balance' => $giftCard->getBalance(),
                     'customer_email' => $customer->getEmail(),
                     'customer_name' => $customer->getFirstname() . ' ' . $customer->getLastname(),
                     'cart_id' => $subject->getQuote()->getId(),
+                    'giftcard_code' => $giftCard->getCode(),
+                    'giftcard_is_redeemable' => $giftCard->getIsRedeemable()
                 ];
 
-                $this->publisher->publish('add.to.cart.giftcard.added', $payload);
-
-                $this->publisher->publish('add.to.cart.giftcard.added.success', $payload);
+                $this->publisher
+                    ->publish('add.to.cart.giftcard.added', json_encode($payload));
 
             } catch (\Exception $e) {
                 $this->logger->debug('Plugin Error: ' . $e->getMessage());
