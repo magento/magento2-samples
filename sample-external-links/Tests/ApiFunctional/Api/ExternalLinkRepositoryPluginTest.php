@@ -9,20 +9,28 @@ use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Store\Model\Store;
+use Magento\TestFramework\Authentication\OauthHelper;
 use Magento\TestFramework\TestCase\WebapiAbstract;
 
 /**
+ * Class ExternalLinkRepositoryInterfaceTest
+ * @package Magento\ExternalLinks\Api
  * @magentoAppIsolation enabled
  */
-class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
+class ExternalLinkRepositoryPluginTest extends WebapiAbstract
 {
     const SERVICE_NAME = 'catalogProductRepositoryV1';
     const SERVICE_VERSION = 'V1';
     const RESOURCE_PATH = '/V1/products';
 
-    /** @var  AdapterInterface */
-    private $connection;
-    
+    public function setUp()
+    {
+        OauthHelper::clearApiAccessCredentials(); //clearing Api credentials in order to generate new one for each test
+    }
+
+    /**
+     * @magentoDbIsolation enabled
+     */
     public function testGetListWithExternalLinks()
     {
         require_once __DIR__ . '/../_files/one_simple_product.php';
@@ -53,17 +61,19 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
 
         foreach ($response['items'] as $item) {
             $this->assertArrayHasKey('extension_attributes', $item);
-            $this->assertArrayHasKey('id', $item);
+            $this->assertArrayHasKey('sku', $item);
             $this->assertArrayHasKey('external_links', $item['extension_attributes']);
 
             foreach($item['extension_attributes']['external_links'] as $link) {
-                $this->assertArrayHasKey('product_id', $link);
-                $this->assertArrayHasKey('link', $link);
-                $this->assertArrayHasKey('link_type', $link);
-                $this->assertEquals(
-                    $link['link'],
-                    $dynamicData[$item['id']][$link['link_type'] . '_link']
-                );
+                if (isset($dynamicData[$item['sku']])) {
+                    $this->assertArrayHasKey('product_id', $link);
+                    $this->assertArrayHasKey('link', $link);
+                    $this->assertArrayHasKey('link_type', $link);
+                    $this->assertEquals(
+                        $link['link'],
+                        $dynamicData[$item['sku']][$link['link_type'] . '_link']
+                    );
+                }
             }
         }
     }
@@ -101,6 +111,9 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
         ];
     }
 
+    /**
+     * @magentoDbIsolation enabled
+     */
     public function testSaveWithExternalLinks()
     {
         $productData = $this->getSimpleProductData();
@@ -121,7 +134,7 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
             ],
         ];
 
-        $product = $this->_webApiCall($serviceInfo, ["product" => $productData]);
+        $product = $this->_webApiCall($serviceInfo, ["product" => $productData, 'XDEBUG_SESSION_START' => 'PHPSTORM']);
 
         $this->assertArrayHasKey('id', $product);
         $this->assertArrayHasKey('extension_attributes', $product);
@@ -160,6 +173,9 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
         return $this->_webApiCall($serviceInfo, ['sku' => $sku]);
     }
 
+    /**
+     * @magentoDbIsolation enabled
+     */
     public function testGetWithExternalLinks()
     {
         require_once __DIR__ . '/../_files/two_simple_products.php';
@@ -191,13 +207,13 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
     private function getDynamicProductData()
     {
         return [
-            1 => [
+            'first-product' => [
                 'id' => 1,
                 'sku' => 'first-product',
                 'ebay_link' => 'http://ebay.com/some-address-1',
                 'amazon_link' => 'http://amazon.com/some-address-1'
             ],
-            2 => [
+            'second-product' => [
                 'id' => 2,
                 'sku' => 'second-product',
                 'ebay_link' => 'http://ebay.com/some-address-2',
@@ -205,5 +221,4 @@ class ExternalLinkRepositoryInterfaceTest extends WebapiAbstract
             ]
         ];
     }
-
 }

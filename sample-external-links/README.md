@@ -51,6 +51,7 @@ In Database this module is represented by one table: product_external_links and 
 
 Unit tests are found in the [Test/Unit](Test/Unit) directory.
 Api Functional Test is stored in the [Test/ApiFunctional] directory
+You need to create new database for api-functional test
 In order to run Api Functional Test you need to add it in dev/tests/api-functional/phpunit.xml.dist
 Also you can run this test directly from your IDE.
 
