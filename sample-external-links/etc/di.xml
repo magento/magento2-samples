@@ -9,7 +9,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\ExternalLinks\Api\Data\ExternalLinkInterface"
                 type="Magento\ExternalLinks\Model\ExternalLink"/>
-    <preference for="Magento\ExternalLinks\Api\ExternalLinksProvider"
+    <preference for="Magento\ExternalLinks\Api\ExternalLinksProviderInterface"
                 type="Magento\ExternalLinks\Model\ExternalLinks\Provider"/>
     <type name="Magento\Catalog\Api\ProductRepositoryInterface">
         <plugin name="joinExternalLinksToProductRepositoryList"

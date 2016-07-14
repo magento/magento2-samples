@@ -56,7 +56,7 @@ class ProviderTest extends \PHPUnit_Framework_TestCase
         $this->entityManager->expects($this->exactly(2))
             ->method("load");
 
-        $this->provider->getExternalLinks($productId);
+        $this->provider->getLinks($productId);
     }
 }
 

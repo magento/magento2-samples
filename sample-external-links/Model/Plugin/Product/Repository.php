@@ -9,7 +9,7 @@ use Magento\Catalog\Api\Data\ProductExtensionFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\EntityManager\EntityManager;
 use Magento\ExternalLinks\Api\Data\ExternalLinkInterface;
-use Magento\ExternalLinks\Api\ExternalLinksProvider;
+use Magento\ExternalLinks\Api\ExternalLinksProviderInterface;
 
 /**
  * Class Repository
@@ -26,7 +26,7 @@ class Repository
     /** @var  EntityManager */
     private $entityManager;
 
-    /** @var ExternalLinksProvider */
+    /** @var ExternalLinksProviderInterface */
     private $externalLinksProvider;
 
     /**
@@ -37,7 +37,7 @@ class Repository
     public function __construct(
         ProductExtensionFactory $productExtensionFactory,
         EntityManager $entityManager,
-        ExternalLinksProvider $externalLinksProvider
+        ExternalLinksProviderInterface $externalLinksProvider
     )
     {
         $this->productExtensionFactory = $productExtensionFactory;
@@ -135,7 +135,7 @@ class Repository
         if (empty($extensionAttributes)) {
             $extensionAttributes = $this->productExtensionFactory->create();
         }
-        $externalLinks = $this->externalLinksProvider->getExternalLinks($product->getId());
+        $externalLinks = $this->externalLinksProvider->getLinks($product->getId());
 
         if (!empty($externalLinks)) {
             $extensionAttributes->setExternalLinks($externalLinks);

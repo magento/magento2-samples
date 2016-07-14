@@ -6,11 +6,11 @@
 
 namespace Magento\ExternalLinks\Api;
 
-interface ExternalLinksProvider
+interface ExternalLinksProviderInterface
 {
     /**
      * @param int $productId
      * @return array
      */
-    public function getExternalLinks($productId);
+    public function getLinks($productId);
 }

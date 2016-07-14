@@ -9,10 +9,9 @@ use Magento\Catalog\Api\Data\ProductExtensionFactory;
 use Magento\Catalog\Api\Data\ProductExtensionInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\ExternalLinks\Api\ExternalLinksProviderInterface;
 use Magento\Framework\EntityManager\EntityManager;
 use Magento\ExternalLinks\Api\Data\ExternalLinkInterface;
-use Magento\ExternalLinks\Api\ExternalLinksProvider;
-use Magento\ExternalLinks\Model\ExternalLinkRepository;
 
 class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +33,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     /** @var  ProductInterface | \PHPUnit_Framework_MockObject_MockObject */
     private $product;
 
-    /** @var  ExternalLinksProvider | \PHPUnit_Framework_MockObject_MockObject */
+    /** @var  ExternalLinksProviderInterface | \PHPUnit_Framework_MockObject_MockObject */
     private $externalLinkProvider;
 
     public function setUp()
@@ -46,7 +45,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->product = $this->getMock(ProductInterface::class);
         $this->productExtensionAttributes = $this->getMock(ProductExtensionInterface::class);
 
-        $this->externalLinkProvider = $this->getMockBuilder(ExternalLinksProvider::class)
+        $this->externalLinkProvider = $this->getMockBuilder(ExternalLinksProviderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->subject = $this->getMock(ProductRepositoryInterface::class);
@@ -73,7 +72,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             ->method("create")
             ->willReturn($this->productExtensionAttributes);
         $this->externalLinkProvider->expects($this->once())
-            ->method("getExternalLinks")
+            ->method("getLinks")
             ->with($productId)
             ->willReturn($externalLinks);
         $this->productExtensionAttributes->expects($this->once())
@@ -97,7 +96,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             ->method("getExtensionAttributes")
             ->willReturn($this->productExtensionAttributes);
         $this->externalLinkProvider->expects($this->once())
-            ->method("getExternalLinks")
+            ->method("getLinks")
             ->with($productId)
             ->willReturn($externalLinks);
         $this->productExtensionAttributes->expects($this->once())
@@ -134,7 +133,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             ->method("create")
             ->willReturn($this->productExtensionAttributes);
         $this->externalLinkProvider->expects($this->exactly(2))
-            ->method("getExternalLinks")
+            ->method("getLinks")
             ->willReturn($externalLinks);
         $this->productExtensionAttributes->expects($this->exactly(2))
             ->method("setExternalLinks")

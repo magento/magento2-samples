@@ -5,15 +5,15 @@
  */
 namespace Magento\ExternalLinks\Model\ExternalLinks;
 
+use Magento\ExternalLinks\Api\ExternalLinksProviderInterface;
 use Magento\Framework\EntityManager\EntityManager;
-use Magento\ExternalLinks\Api\ExternalLinksProvider;
 use Magento\ExternalLinks\Model\ExternalLinkFactory;
 
 /**
  * Class Provider
  * @package Magento\ExternalLinks\Model\ExternalLinks
  */
-class Provider implements ExternalLinksProvider
+class Provider implements ExternalLinksProviderInterface
 {
     /** @var  EntityManager */
     private $entityManager;
@@ -43,7 +43,7 @@ class Provider implements ExternalLinksProvider
     /**
      * @inheritdoc
      */
-    public function getExternalLinks($productId)
+    public function getLinks($productId)
     {
         $externalLinks = [];
         $ids = $this->loader->getIdsByProductId($productId);
