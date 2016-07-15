@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\ExternalLinks\Model\ExternalLinks;
+namespace Magento\ExternalLinks\Model\ResourceModel\ExternalLinks;
 
 use Magento\Framework\App\ResourceConnection;
 use Magento\ExternalLinks\Api\Data\ExternalLinkInterface;

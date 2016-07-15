@@ -20,8 +20,8 @@ class Repository
     /** @var ProductExtensionFactory */
     private $productExtensionFactory;
 
-    /** @var array  */
-    private $productsWithNonSavedExtensionAttributes = [];
+    /** @var ProductInterface  */
+    private $currentProduct;
 
     /** @var  EntityManager */
     private $entityManager;
@@ -75,7 +75,7 @@ class Repository
         \Magento\Catalog\Api\ProductRepositoryInterface $subject,
         \Magento\Catalog\Api\Data\ProductInterface $product
     ) {
-        $this->productsWithNonSavedExtensionAttributes[$product->getSku()] = $product;
+        $this->currentProduct = $product;
     }
 
     /**
@@ -93,6 +93,26 @@ class Repository
     }
 
     /**
+     * Compare old and new links. And if old links has the same as new one -> delete them
+     *
+     * @param array $newLinks
+     * @param array $oldLinks
+     * @throws \Exception
+     */
+    private function cleanOldLinks(array $newLinks, array $oldLinks)
+    {
+        /** @var ExternalLinkInterface $link */
+        foreach($newLinks as $link) {
+            /** @var ExternalLinkInterface $oldLink */
+            foreach($oldLinks as $oldLink) {
+                if ($oldLink->getLinkType() === $link->getLinkType()) {
+                    $this->entityManager->delete($oldLink);
+                }
+            }
+        }
+    }
+
+    /**
      * @param \Magento\Catalog\Api\ProductRepositoryInterface $subject
      * @param ProductInterface $product
      * @throws \Exception
@@ -103,15 +123,17 @@ class Repository
         \Magento\Catalog\Api\ProductRepositoryInterface $subject,
         \Magento\Catalog\Api\Data\ProductInterface $product
     ) {
-        if (isset($this->productsWithNonSavedExtensionAttributes[$product->getSku()])) {
+        if ($this->currentProduct !== null) {
             /** @var ProductInterface $previosProduct */
-            $previosProduct = $this->productsWithNonSavedExtensionAttributes[$product->getSku()];
-            $extensionAttributes = $previosProduct->getExtensionAttributes();
+            $extensionAttributes = $this->currentProduct->getExtensionAttributes();
 
             if ($extensionAttributes && $extensionAttributes->getExternalLinks()) {
                 /** @var ExternalLinkInterface $externalLink */
                 $externalLinks = $extensionAttributes->getExternalLinks();
+                $oldExternalLinks = $product->getExtensionAttributes()->getExternalLinks();
+
                 if (is_array($externalLinks)) {
+                    $this->cleanOldLinks($externalLinks, $oldExternalLinks);
                     /** @var ExternalLinkInterface $link */
                     foreach($externalLinks as $link) {
                         $link->setProductId($product->getId());
@@ -119,6 +141,8 @@ class Repository
                     }
                 }
             }
+
+            $this->currentProduct = null;
         }
 
         return $product;
@@ -136,11 +160,8 @@ class Repository
             $extensionAttributes = $this->productExtensionFactory->create();
         }
         $externalLinks = $this->externalLinksProvider->getLinks($product->getId());
-
-        if (!empty($externalLinks)) {
-            $extensionAttributes->setExternalLinks($externalLinks);
-            $product->setExtensionAttributes($extensionAttributes);
-        }
+        $extensionAttributes->setExternalLinks($externalLinks);
+        $product->setExtensionAttributes($extensionAttributes);
 
         return $this;
     }

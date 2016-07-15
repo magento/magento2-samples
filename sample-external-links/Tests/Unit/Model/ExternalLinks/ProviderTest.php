@@ -5,6 +5,7 @@
  */
 namespace Magento\ExternalLinks\Model\ExternalLinks;
 
+use Magento\ExternalLinks\Model\ResourceModel\ExternalLinks\Loader;
 use Magento\Framework\EntityManager\EntityManager;
 use Magento\ExternalLinks\Api\Data\ExternalLinkInterface;
 use Magento\ExternalLinks\Model\ExternalLink;

@@ -168,14 +168,14 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             ->method("getExtensionAttributes")
             ->willReturn($this->productExtensionAttributes);
 
-        $this->product->expects($this->atLeastOnce())
-            ->method("getSku")
-            ->willReturn($productSku);
+        $this->product->expects($this->once())
+            ->method("getExtensionAttributes")
+            ->willReturn($this->productExtensionAttributes);
 
         $reflection = new \ReflectionClass($this->repository);
-        $reflectionProperty = $reflection->getProperty('productsWithNonSavedExtensionAttributes');
+        $reflectionProperty = $reflection->getProperty('currentProduct');
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($this->repository, [$productSku => $previousProduct]);
+        $reflectionProperty->setValue($this->repository, $previousProduct);
 
         $this->productExtensionAttributes->expects($this->atLeastOnce())
             ->method("getExternalLinks")
