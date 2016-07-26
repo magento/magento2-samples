@@ -1,0 +1,20 @@
+{
+    "name": "Magento/ExternalLinks",
+    "description": "N/A",
+    "require": {
+        "php": "~5.6.0|7.0.2|~7.0.6"
+    },
+    "type": "magento2-module",
+    "version": "dev-master",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magento\\ExternalLinks\\": ""
+        }
+    }
+}

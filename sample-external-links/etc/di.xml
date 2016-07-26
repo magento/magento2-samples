@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\ExternalLinks\Api\Data\ExternalLinkInterface"
+                type="Magento\ExternalLinks\Model\ExternalLink"/>
+    <preference for="Magento\ExternalLinks\Api\ExternalLinksProviderInterface"
+                type="Magento\ExternalLinks\Model\ExternalLinks\Provider"/>
+    <type name="Magento\Catalog\Api\ProductRepositoryInterface">
+        <plugin name="joinExternalLinksToProductRepositoryList"
+                type="Magento\ExternalLinks\Model\Plugin\Product\Repository"/>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Magento\ExternalLinks\Api\Data\ExternalLinkInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">product_external_links</item>
+                    <item name="identifierField" xsi:type="string">link_id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
