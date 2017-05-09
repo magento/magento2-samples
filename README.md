@@ -1,3 +1,5 @@
+```The sample code included in this repository was developed for Magento 2.0.x. Please be aware of this, and also know that PRs are welcomed to help us improve and/or update the 2.0.x code samples and extensions! We welcome your feedback and ideas about also creating a series of 2.1.x code examples; in our shared reality of constrained resources and a million fun projects to work on, we acknowledge that it will take some time for us to provide the 2.1.x samples.```
+
 ## Synopsis
 
 This project is a collection of samples to demonstrate technologies introduced in Magento 2. You will find the most simple extension along with samples that incrementally add features to lead you through a exploration and education of the Magento 2 platform.
